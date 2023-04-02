@@ -6,7 +6,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^12.0.0",
@@ -21,5 +22,9 @@
     "pinia": "^2.0.33",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.6"
+  },
+  "dependencies": {
+    "@nuxt/test-utils": "^3.3.2",
+    "vitest": "^0.29.8"
   }
 }
