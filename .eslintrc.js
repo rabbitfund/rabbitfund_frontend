@@ -16,6 +16,8 @@ module.exports = {
   plugins: ['prettier'],
   rules: {
     'no-undef': 'off',
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    'vue/multi-word-component-names': 0,
+    'vue/no-multiple-template-root': 0
   }
 };
