@@ -1,10 +1,5 @@
-<script setup lang="ts">
-import { useCounterStore } from '@/stores/counter';
-
-const counterStore = useCounterStore();
-const count = counterStore.count;
-</script>
-
 <template>
-  <div>Pinia test: {{ count }}</div>
+  <NuxtLayout name="default">
+    <NuxtPage />
+  </NuxtLayout>
 </template>
