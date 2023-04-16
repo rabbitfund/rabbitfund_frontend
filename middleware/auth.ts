@@ -1,7 +1,7 @@
-import { useCounterStore } from '@/stores/counter';
+import { useAuthStore } from '@/stores/auth';
 export default defineNuxtRouteMiddleware(() => {
-  const counterStore = useCounterStore();
-  if (counterStore.count < 0) {
-    return abortNavigation('abortNavigation! count need >= 0');
+  const authStore = useAuthStore();
+  if (!authStore.isAuthenticated) {
+    return navigateTo('/login');
   }
 });

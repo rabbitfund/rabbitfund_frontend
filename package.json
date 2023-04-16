@@ -21,7 +21,8 @@
     "nuxt": "^3.3.2",
     "pinia": "^2.0.33",
     "prettier": "^2.8.7",
-    "prettier-plugin-tailwindcss": "^0.2.6"
+    "prettier-plugin-tailwindcss": "^0.2.6",
+    "vue3-google-login": "^2.0.15"
   },
   "dependencies": {
     "@nuxt/test-utils": "^3.3.2",

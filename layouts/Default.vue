@@ -12,10 +12,16 @@
             Home
           </NuxtLink>
           <NuxtLink
-            to="/helloWorld"
+            to="/login"
             class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
           >
-            Hello World
+            login
+          </NuxtLink>
+          <NuxtLink
+            to="/admin"
+            class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
+          >
+            admin
           </NuxtLink>
         </ul>
       </div>
