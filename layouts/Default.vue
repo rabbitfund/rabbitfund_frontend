@@ -1,3 +1,8 @@
+<script setup>
+import { useAuthStore } from '@/stores/auth';
+
+const authStore = useAuthStore();
+</script>
 <template>
   <section class="flex h-full min-h-screen flex-col overflow-hidden">
     <nav class="border-gray-200 bg-white dark:bg-gray-900">
@@ -10,19 +15,27 @@
               to="/"
               class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
             >
-              Home
+              首頁
             </NuxtLink>
             <NuxtLink
+              to="/member-center"
+              class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
+            >
+              會員中心
+            </NuxtLink>
+            <NuxtLink
+              v-if="!authStore.token"
               to="/signin"
               class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
             >
-              signin
+              登入
             </NuxtLink>
             <NuxtLink
-              to="/admin"
+              v-if="authStore.token"
+              @click="authStore.handleSignOut()"
               class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
             >
-              admin
+              登出
             </NuxtLink>
           </ul>
         </div>
