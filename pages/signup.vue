@@ -1,5 +1,8 @@
 <script setup>
-const { signup } = useApi();
+import { decodeCredential } from 'vue3-google-login';
+import { useAuthStore } from '@/stores/auth';
+
+const { handleSignUp } = useAuthStore();
 const { errors, useFieldModel } = useVeeValidate();
 const [email, password, name] = useFieldModel(['email', 'password', 'name']);
 
@@ -9,14 +12,26 @@ const inputState = reactive({
   name: false
 });
 
-function handleRegistration() {
-  signup({
+function generalSignUp() {
+  handleSignUp({
     method: 0,
     email: email.value,
     pass: password.value,
     name: name.value
   });
 }
+
+const googleSignUp = (response) => {
+  const responsePayload = decodeCredential(response.credential);
+
+  handleSignUp({
+    method: 1,
+    email: responsePayload.email,
+    pass: '',
+    oauth_google_id: responsePayload.sub,
+    name: responsePayload.name
+  });
+};
 
 definePageMeta({
   title: '註冊'
@@ -72,7 +87,7 @@ definePageMeta({
         <button
           class="mb-2 w-full rounded-md bg-lime-500 py-1 font-bold text-white transition-all duration-200 ease-in-out hover:bg-white hover:text-lime-500 disabled:cursor-not-allowed disabled:bg-red-300 disabled:text-white"
           :disabled="errors.email || errors.password || errors.name"
-          @click="handleRegistration"
+          @click="generalSignUp"
         >
           註冊
         </button>
@@ -80,6 +95,16 @@ definePageMeta({
         <NuxtLink to="/signin" class="cursor-pointer text-lime-500 hover:text-lime-700"
           >返回登入</NuxtLink
         >
+
+        <div class="mt-7">
+          <p class="text-l mb-5 border-b-2 border-lime-500 font-extrabold text-lime-500">
+            或使用以下方式註冊
+          </p>
+
+          <ClientOnly>
+            <GoogleLogin :callback="googleSignUp" />
+          </ClientOnly>
+        </div>
       </div>
     </div>
   </section>

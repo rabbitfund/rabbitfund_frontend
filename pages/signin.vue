@@ -1,7 +1,8 @@
 <script setup>
 import { decodeCredential } from 'vue3-google-login';
+import { useAuthStore } from '@/stores/auth';
 
-const { signin } = useApi();
+const { handleSignIn } = useAuthStore();
 const { errors, useFieldModel } = useVeeValidate();
 const [email, password] = useFieldModel(['email', 'password']);
 
@@ -10,8 +11,8 @@ const inputState = reactive({
   password: false
 });
 
-function handleLogin() {
-  signin({
+function generalSignIn() {
+  handleSignIn({
     method: 0,
     email: email.value,
     pass: password.value,
@@ -19,10 +20,10 @@ function handleLogin() {
   });
 }
 
-const callback = (response) => {
+const googleSignIn = (response) => {
   const responsePayload = decodeCredential(response.credential);
 
-  signin({
+  handleSignIn({
     method: 1,
     email: responsePayload.email,
     oauth_google_id: responsePayload.sub,
@@ -71,7 +72,7 @@ definePageMeta({
         <button
           class="mb-2 w-full rounded-md bg-lime-500 py-1 font-bold text-white transition-all duration-200 ease-in-out hover:bg-white hover:text-lime-500 disabled:cursor-not-allowed disabled:bg-red-300 disabled:text-white"
           :disabled="errors.email || errors.password"
-          @click="handleLogin"
+          @click="generalSignIn"
         >
           登入
         </button>
@@ -88,7 +89,7 @@ definePageMeta({
         </p>
 
         <ClientOnly>
-          <GoogleLogin :callback="callback" />
+          <GoogleLogin :callback="googleSignIn" />
         </ClientOnly>
       </div>
     </div>
