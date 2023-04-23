@@ -1,6 +1,7 @@
 <script setup>
 import { decodeCredential } from 'vue3-google-login';
 
+const { signin } = useApi();
 const { errors, useFieldModel } = useVeeValidate();
 const [email, password] = useFieldModel(['email', 'password']);
 
@@ -8,8 +9,6 @@ const inputState = reactive({
   email: false,
   password: false
 });
-
-const signin = (data) => useFetch('/api/signin', { method: 'POST', body: JSON.stringify(data) });
 
 function handleLogin() {
   signin({

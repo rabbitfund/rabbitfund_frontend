@@ -1,4 +1,5 @@
 <script setup>
+const { signup } = useApi();
 const { errors, useFieldModel } = useVeeValidate();
 const [email, password, name] = useFieldModel(['email', 'password', 'name']);
 
@@ -8,7 +9,6 @@ const inputState = reactive({
   name: false
 });
 
-const signup = (data) => useFetch('/api/signup', { method: 'POST', body: JSON.stringify(data) });
 function handleRegistration() {
   signup({
     method: 0,
