@@ -8,9 +8,14 @@ const inputState = reactive({
   name: false
 });
 
+const signup = (data) => useFetch('/api/signup', { method: 'POST', body: JSON.stringify(data) });
 function handleRegistration() {
-  console.dir(email.value, password.value, name.value);
-  //   await registerUser(email.value, password.value);
+  signup({
+    method: 0,
+    email: email.value,
+    pass: password.value,
+    name: name.value
+  });
 }
 
 definePageMeta({
