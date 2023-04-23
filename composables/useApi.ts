@@ -27,9 +27,10 @@ export default function useApi() {
       navigateTo('/signin');
       alert('token 過期，請重新登入');
     });
-  const postUserDetail = (data) =>
-    useFetch('/me/user', { method: 'POST', body: JSON.stringify(data) })
+  const putUserDetail = (data) =>
+    useFetch('/me/user', { method: 'PUT', body: JSON.stringify(data) })
       .then((res) => {
+        alert('修改成功');
         return res;
       })
       .catch((err) => {
@@ -40,6 +41,6 @@ export default function useApi() {
     signin,
     signup,
     getUserDetail,
-    postUserDetail
+    putUserDetail
   };
 }

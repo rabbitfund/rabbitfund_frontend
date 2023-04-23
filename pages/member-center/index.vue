@@ -1,5 +1,5 @@
 <script setup>
-const { getUserDetail, postUserDetail } = useApi();
+const { getUserDetail, putUserDetail } = useApi();
 const userName = ref('');
 const { data } = await getUserDetail();
 
@@ -9,7 +9,7 @@ if (res && res.ok) {
 }
 
 function handlePostUserDetail() {
-  postUserDetail({ name: userName.value });
+  putUserDetail({ name: userName.value });
 }
 
 definePageMeta({
