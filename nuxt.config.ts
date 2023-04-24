@@ -6,5 +6,8 @@ export default defineNuxtConfig({
       GOOGLE_CLIENT_ID: '',
       API_BASE: ''
     }
+  },
+  routeRules: {
+    '/member-center/**': { ssr: false }
   }
 });

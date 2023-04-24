@@ -4,6 +4,7 @@ const userName = ref('');
 const { data } = await getUserDetail();
 
 const res = data.value;
+
 if (res && res.ok) {
   userName.value = res.data.user_name;
 }
