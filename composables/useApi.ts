@@ -6,7 +6,7 @@ export default function useApi() {
   // 會員中心
   const getUserDetail = () =>
     useFetch('/me/user').catch(() => {
-      navigateTo('/signin');
+      navigateTo('/users/signin');
     });
   const putUserDetail = (data) =>
     useFetch('/me/user', { method: 'PUT', body: JSON.stringify(data) });

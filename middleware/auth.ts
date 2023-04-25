@@ -4,6 +4,6 @@ export default defineNuxtRouteMiddleware(() => {
   console.log(authStore);
   console.log(authStore?.token);
   if (!authStore.token) {
-    return navigateTo('/signin');
+    return navigateTo('/users/signin');
   }
 });

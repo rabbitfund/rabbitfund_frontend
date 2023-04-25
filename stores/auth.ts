@@ -27,12 +27,12 @@ export const useAuthStore = defineStore('auth', {
       const { data } = await signup(_data);
       const res = data.value;
       if (res && res?.ok) {
-        navigateTo('/signin');
+        navigateTo('/users/signin');
       }
     },
     handleSignOut() {
       this._token = {} as UserTokenStorage;
-      navigateTo('/signin');
+      navigateTo('/users/signin');
     }
   },
 

@@ -18,14 +18,26 @@ const authStore = useAuthStore();
               首頁
             </NuxtLink>
             <NuxtLink
-              to="/member-center"
+              to="/member"
               class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
             >
               會員中心
             </NuxtLink>
             <NuxtLink
+              to="/projects"
+              class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
+            >
+              探索
+            </NuxtLink>
+            <NuxtLink
+              to="/proposal"
+              class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
+            >
+              提案
+            </NuxtLink>
+            <NuxtLink
               v-if="!authStore.token"
-              to="/signin"
+              to="/users/signin"
               class="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
             >
               登入
