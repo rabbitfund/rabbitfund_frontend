@@ -1,9 +1,9 @@
 <template>
   <section class="py-8">
     <div class="flex justify-center gap-3">
-      <Badge class="bg-primary-light text-primary"></Badge>
-      <Badge class="bg-success-emphasis text-success"></Badge>
-      <Badge class="bg-secondary-emphasis text-secondary"></Badge>
+      <Badge type="校園" />
+      <Badge type="公益" />
+      <Badge type="市集" />
     </div>
   </section>
 
