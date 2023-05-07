@@ -1,11 +1,12 @@
 <script setup>
-import { useAuthStore } from '@/stores/auth';
+// import { useAuthStore } from '@/stores/auth';
 
-const authStore = useAuthStore();
+// const authStore = useAuthStore();
 </script>
 <template>
   <section class="flex h-full min-h-screen flex-col overflow-hidden">
-    <nav class="border-gray-200 bg-white dark:bg-gray-900">
+    <LayoutNavbar />
+    <!-- <nav class="border-gray-200 bg-white dark:bg-gray-900">
       <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-end p-4">
         <div class="hidden w-full md:block md:w-auto">
           <ul
@@ -52,8 +53,9 @@ const authStore = useAuthStore();
           </ul>
         </div>
       </div>
-    </nav>
+    </nav> -->
 
-    <slot></slot>
+    <slot />
+    <LayoutFooter />
   </section>
 </template>
