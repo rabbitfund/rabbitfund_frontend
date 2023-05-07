@@ -54,7 +54,7 @@ const handleSignIn = () => {
                 <ul class="mb-8 flex min-w-[124px] flex-col gap-7">
                   <li class="inline-block">
                     <NuxtLink
-                      to="/member"
+                      to="/member/proposals"
                       class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
                     >
                       <img class="w-5" src="@/assets/images/icons/time.svg" alt="提案紀錄" />
@@ -63,7 +63,7 @@ const handleSignIn = () => {
                   </li>
                   <li>
                     <NuxtLink
-                      to="/member"
+                      to="/member/sponsorships"
                       class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
                     >
                       <img class="w-5" src="@/assets/images/icons/heart.svg" alt="贊助紀錄" />
@@ -145,13 +145,15 @@ const handleSignIn = () => {
 
                 <template v-else>
                   <div class="my-5 border-t border-primary"></div>
-                  <li class="mb-3 mt-6 flex items-center justify-center">
-                    <img class="mr-2 h-12" :src="user.avatar" alt="avatar" />
-                    <span class="text-base font-bold text-primary">{{ user.name }}</span>
+                  <li class="mb-3 mt-6">
+                    <NuxtLink to="/member" class="flex items-center justify-center">
+                      <img class="mr-2 h-12" :src="user.avatar" alt="avatar" />
+                      <span class="text-base font-bold text-primary">{{ user.name }}</span>
+                    </NuxtLink>
                   </li>
                   <li>
                     <NuxtLink
-                      to="/member"
+                      to="/member/proposals"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
                       <img class="w-5" src="@/assets/images/icons/time-fill.svg" alt="提案紀錄" />
@@ -160,7 +162,7 @@ const handleSignIn = () => {
                   </li>
                   <li>
                     <NuxtLink
-                      to="/member"
+                      to="/member/sponsorships"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
                       <img class="w-5" src="@/assets/images/icons/heart-fill.svg" alt="贊助紀錄" />
