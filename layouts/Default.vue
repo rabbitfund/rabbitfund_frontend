@@ -5,7 +5,7 @@
 </script>
 <template>
   <section class="flex h-full min-h-screen flex-col overflow-hidden">
-    <Navbar />
+    <LayoutNavbar />
     <!-- <nav class="border-gray-200 bg-white dark:bg-gray-900">
       <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-end p-4">
         <div class="hidden w-full md:block md:w-auto">
@@ -55,6 +55,7 @@
       </div>
     </nav> -->
 
-    <slot></slot>
+    <slot />
+    <LayoutFooter />
   </section>
 </template>
