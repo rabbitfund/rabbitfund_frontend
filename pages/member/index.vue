@@ -1,6 +1,5 @@
 <template>
-  <section class="flex">
-    <aside class="bg-light-emphasis px-4 py-6"></aside>
-    <div></div>
+  <section>
+    <h2>會員中心</h2>
   </section>
 </template>

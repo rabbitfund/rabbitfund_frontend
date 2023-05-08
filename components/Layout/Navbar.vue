@@ -5,10 +5,6 @@ const user = ref({
   name: '倍兔兔',
   avatar: '' || avatar
 });
-const isMobileDropdownOpen = ref(false);
-const toggleMobileDropdown = (value) => {
-  isMobileDropdownOpen.value = typeof value === 'boolean' ? value : !isMobileDropdownOpen.value;
-};
 
 const handleSignOut = () => {
   isSigned.value = false;
@@ -19,8 +15,8 @@ const handleSignIn = () => {
 </script>
 <template>
   <section class="relative bg-light">
-    <div class="container flex items-center justify-between py-3">
-      <NuxtLink to="/">
+    <div class="container flex items-center justify-between">
+      <NuxtLink to="/" class="py-3">
         <img class="h-[58px]" src="@/assets/images/logo.png" alt="logo" />
       </NuxtLink>
 
@@ -102,15 +98,13 @@ const handleSignIn = () => {
           </button>
         </div>
         <!-- 手機板 -->
-        <div class="flex items-center font-bold text-primary md:hidden">
-          <button @click="toggleMobileDropdown">
+        <div class="group flex self-stretch font-bold text-primary md:hidden">
+          <button>
             <img class="h-10" src="@/assets/images/icons/bars.svg" alt="bars" />
           </button>
 
           <div
-            class="transition-height absolute left-0 top-full z-10 w-full overflow-hidden duration-1000 ease-in-out"
-            :class="isMobileDropdownOpen ? 'h-auto' : 'h-0'"
-            @click="toggleMobileDropdown(false)"
+            class="transition-height absolute left-0 top-full z-10 h-0 w-full overflow-hidden duration-1000 ease-in-out group-hover:h-auto group-focus:h-auto"
           >
             <div class="bg-light px-3">
               <ul class="flex flex-col gap-1 pb-7 text-center text-xl">

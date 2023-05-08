@@ -1,16 +1,11 @@
 <script setup>
 const route = useRoute();
-console.log(route.path);
-
-computed(() => {
-  console.log(route.path);
-});
 </script>
 
 <template>
-  <section class="container flex flex-col gap-8 md:flex-row md:py-16">
+  <section class="container grid grid-cols-12 gap-8 py-6 md:py-16">
     <aside
-      class="custom-scrollbar gap-4 overflow-auto whitespace-nowrap border-b px-3 py-6 text-grey-400 md:flex md:w-[306px] md:flex-col md:rounded-xl md:bg-light-emphasis md:px-4"
+      class="col-span-12 flex flex-row gap-1 overflow-auto overflow-y-hidden whitespace-nowrap px-3 py-1 text-grey-400 lg:col-span-3 lg:flex-col lg:gap-4 lg:rounded-xl lg:bg-light-emphasis lg:px-4 lg:py-6"
     >
       <NuxtLink
         to="/member"
@@ -49,7 +44,7 @@ computed(() => {
         >密碼變更</NuxtLink
       >
     </aside>
-    <div>
+    <div class="col-span-12 lg:col-span-9">
       <NuxtPage />
     </div>
   </section>
@@ -63,7 +58,23 @@ computed(() => {
   @apply bg-light text-lg font-bold text-grey-600;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  display: none;
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
 }
 </style>
