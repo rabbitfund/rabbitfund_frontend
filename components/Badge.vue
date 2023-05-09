@@ -1,3 +1,23 @@
+<script setup lang="ts">
+const props = defineProps({
+  type: {
+    type: [String],
+    default: '校園'
+  }
+});
+
+const classes = computed(() => {
+  return [
+    'badge',
+    {
+      'bg-primary-light text-primary': props.type === '校園',
+      'bg-success-emphasis text-success': props.type === '公益',
+      'bg-secondary-emphasis text-secondary': props.type === '市集'
+    }
+  ];
+});
+</script>
+
 <template>
-  <div :class="['px-5 py-2', 'rounded-full font-bold', 'text-center']">校園</div>
+  <div :class="classes">{{ props.type }}</div>
 </template>
