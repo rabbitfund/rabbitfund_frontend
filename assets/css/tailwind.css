@@ -55,7 +55,7 @@
 
   .badge {
     @apply cursor-pointer rounded-full px-5
-    py-2 text-center font-bold;
+    py-2 text-center text-h6 font-bold;
   }
 
   .progress {
