@@ -18,6 +18,12 @@ module.exports = {
 			'2xl': ['28px', 1.5],
 			'3xl': ['32px', 1.5],
 			'4xl': ['40px', 1.5],
+			h6: '16px',
+			h5: '20px',
+			h4: '24px',
+			h3: '32px',
+			h2: '28px',
+			h1: '40px',
 		},
 		extend: {
 			padding: {

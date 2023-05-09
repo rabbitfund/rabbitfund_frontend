@@ -39,3 +39,26 @@
     @apply text-grey-600;
   }
 }
+
+@layer components {
+  .btn {
+    @apply rounded border-2 px-8 py-3 text-center font-bold
+    transition-all hover:scale-105 hover:cursor-pointer active:scale-95;
+  }
+  .btn-primary {
+    @apply border-transparent bg-primary text-white hover:border-primary hover:bg-transparent hover:text-primary active:bg-transparent;
+  }
+  .btn-primary-outline {
+    @apply border-primary bg-transparent text-primary hover:bg-primary
+    hover:text-white active:bg-primary;
+  }
+
+  .badge {
+    @apply cursor-pointer rounded-full px-5
+    py-2 text-center font-bold;
+  }
+
+  .progress {
+    @apply h-full rounded-full;
+  }
+}
