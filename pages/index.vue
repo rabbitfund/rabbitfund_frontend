@@ -12,7 +12,7 @@
       <div class="flex flex-col items-center">
         <img src="~/assets/images/rabbit-ears.png" alt="rabbit ears" class="mb-2 w-[54px]" />
         <h2 class="mb-8">精選專案</h2>
-        <ul class="mb-12 flex flex-col gap-x-3 md:flex-row">
+        <ul class="mb-12 flex flex-col gap-x-6 md:flex-row">
           <li class="md:w-1/3">
             <Card
               type="市集"
