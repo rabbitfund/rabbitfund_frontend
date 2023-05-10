@@ -32,9 +32,10 @@ const classes = computed(() => {
 const percent = ref(0);
 
 watchEffect(() => {
-  percent.value = props.minAmount
-    ? 0
-    : ((props.currentAmount - props.minAmount) * 100) / (props.maxAmount - props.minAmount);
+  percent.value =
+    props.currentAmount <= props.minAmount
+      ? 0
+      : ((props.currentAmount - props.minAmount) * 100) / (props.maxAmount - props.minAmount);
 });
 </script>
 
