@@ -22,11 +22,15 @@ const props = defineProps({
     type: [Number]
   }
 });
+
+const formattedAmount = computed(() => {
+  return props.currentAmount?.toLocaleString();
+});
 </script>
 
 <template>
   <div class="flex h-full flex-col overflow-hidden rounded-lg bg-white">
-    <div class="h-[234px] overflow-hidden rounded-t-lg">
+    <div class="overflow-hidden rounded-t-lg">
       <img src="~/assets/images/mock.png" class="object-contain" alt="carrot" />
     </div>
     <div class="flex flex-auto flex-col p-4 pb-6">
@@ -34,7 +38,7 @@ const props = defineProps({
         <Badge :type="props.type"></Badge>
         <span class="text-grey-500">{{ props.timeLeft }}</span>
       </div>
-      <h3 class="mb-2 text-h4 font-bold">
+      <h3 class="mb-2 line-clamp-2 text-h4 font-bold">
         {{ props.title }}
       </h3>
       <span class="mb-6 mt-auto block text-lg">{{ props.proposer }}</span>
@@ -45,7 +49,7 @@ const props = defineProps({
         :maxAmount="props.maxAmount"
         :currentAmount="props.currentAmount"
       />
-      <span class="text-lg font-bold">$ {{ props.currentAmount }}</span>
+      <span class="text-lg font-bold">$ {{ formattedAmount }}</span>
     </div>
   </div>
 </template>
