@@ -1,6 +1,15 @@
-# Nuxt 3 Minimal Starter
+# 倍而兔募資平台
+![](https://hackmd.io/_uploads/B1id-5qN3.png)
+## 建議執行環境
+node.js 16.10 以上 ( 筆者是使用 16.18.1 做開發 )
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## 所用技術
+ - Nuxt3
+ - Pinia
+ - TailwindCSS
+ - VeeValidate
+ - SweetAlert2
+ - Vitest
 
 ## Setup
 
