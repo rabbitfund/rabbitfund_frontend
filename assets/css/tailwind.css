@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&family=Noto+Sans:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -38,11 +38,42 @@
   p {
     @apply text-grey-600;
   }
+  label {
+    @apply mb-2 block text-base font-bold text-grey-500;
+  }
+}
+
+@layer base {
+  [type='text'],
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  textarea,
+  select {
+    @apply w-full rounded border-grey-200 focus:border-primary focus:ring-primary;
+  }
+  [type='checkbox'],
+  [type='radio'] {
+    @apply h-8 w-8 border-2 border-grey-200 hover:cursor-pointer focus:ring-primary;
+  }
+  [type='checkbox']:checked,
+  [type='radio']:checked {
+    @apply text-primary;
+  }
 }
 
 @layer components {
   .btn {
-    @apply rounded border-2 px-8 py-3 text-center font-bold
+    @apply rounded-4xl border-2 px-8 py-3 text-center font-bold
     transition-all hover:scale-105 hover:cursor-pointer active:scale-95;
   }
   .btn-primary {

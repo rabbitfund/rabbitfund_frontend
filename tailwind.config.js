@@ -29,6 +29,10 @@ module.exports = {
 			padding: {
 				'30': '120px',
 			},
+			width: {
+				'3/8': '37.5%',
+				'5/8': '62.5%',
+			},
 			colors: {
 				primary: {
 					light: '#FDEDED',
@@ -57,10 +61,16 @@ module.exports = {
 				}
 			},
 			borderRadius: {
-				DEFAULT: '50px',
-				full: '100px'
+				'4xl': '50px',
+			},
+			fontFamily: {
+				'sansTC': ['Noto Sans TC', 'sans-serif'],
 			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		require('@tailwindcss/forms')({
+			strategy: 'base',
+		}),
+	],
 }
