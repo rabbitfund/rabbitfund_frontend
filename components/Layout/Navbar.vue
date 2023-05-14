@@ -1,9 +1,11 @@
 <script setup>
+import { storeToRefs } from 'pinia';
 import avatar from '@/assets/images/avatar.png';
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
-const isSigned = authStore.token;
+const isSigned = storeToRefs(authStore).token;
+
 const user = ref({
   name: '倍兔兔',
   avatar: '' || avatar
