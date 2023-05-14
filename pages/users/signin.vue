@@ -38,7 +38,7 @@ definePageMeta({
 
 <template>
   <section
-    class="mx-auto w-full max-w-[500px] overflow-hidden rounded-2xl bg-gray-100 drop-shadow-md"
+    class="mx-auto my-8 w-full max-w-[500px] overflow-hidden rounded-2xl bg-gray-100 drop-shadow-md md:my-16"
   >
     <div class="p-12 sm:px-20">
       <div class="mb-7">
@@ -77,7 +77,9 @@ definePageMeta({
           登入
         </button>
         <div class="flex justify-between text-lime-500">
-          <NuxtLink to="/users/signup" class="cursor-pointer hover:text-lime-700">尚未註冊?</NuxtLink>
+          <NuxtLink to="/users/signup" class="cursor-pointer hover:text-lime-700"
+            >尚未註冊?</NuxtLink
+          >
           <NuxtLink to="/users/reset-password" class="cursor-pointer hover:text-lime-700"
             >忘記密碼?</NuxtLink
           >

@@ -1,17 +1,18 @@
 <script setup>
+import { storeToRefs } from 'pinia';
 import avatar from '@/assets/images/avatar.png';
-const isSigned = ref(true);
+import { useAuthStore } from '@/stores/auth';
+
+const authStore = useAuthStore();
+const isSigned = storeToRefs(authStore).token;
+
 const user = ref({
   name: '倍兔兔',
   avatar: '' || avatar
 });
-
-const handleSignOut = () => {
-  isSigned.value = false;
-};
-const handleSignIn = () => {
-  isSigned.value = true;
-};
+function signIn() {
+  navigateTo('/users/signin');
+}
 </script>
 <template>
   <section class="relative bg-light">
@@ -31,13 +32,7 @@ const handleSignIn = () => {
               搜尋
             </NuxtLink>
           </div>
-          <button
-            v-if="!isSigned"
-            class="rounded-full bg-primary px-8 py-3 text-[18px] font-bold text-white"
-            @click="handleSignIn"
-          >
-            登入
-          </button>
+          <button v-if="!isSigned" class="btn btn-primary" @click="signIn">登入</button>
           <button v-else class="group relative flex cursor-pointer items-center">
             <img class="mr-2 h-12" :src="user.avatar" alt="avatar" />
             <span class="font-bold text-primary">{{ user.name }}</span>
@@ -87,10 +82,7 @@ const handleSignIn = () => {
                   </li>
                 </ul>
 
-                <button
-                  class="rounded-full bg-primary px-8 py-3 text-[18px] font-bold text-white"
-                  @click="handleSignOut"
-                >
+                <button class="btn btn-primary-outline" @click="authStore.handleSignOut()">
                   登出
                 </button>
               </div>
