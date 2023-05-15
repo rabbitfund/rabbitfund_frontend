@@ -38,9 +38,6 @@
   p {
     @apply text-grey-600;
   }
-  label {
-    @apply mb-2 block text-base font-bold text-grey-500;
-  }
 }
 
 @layer base {
@@ -65,13 +62,25 @@
   [type='radio'] {
     @apply h-8 w-8 border-2 border-grey-200 hover:cursor-pointer focus:ring-primary;
   }
-  [type='checkbox']:checked,
   [type='radio']:checked {
-    @apply text-primary;
+    @apply border-primary text-white;
+    background-image: url('data:image/svg+xml,<svg viewBox="0 0 16 16" fill="rgb(243 107 107)" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="3"/></svg>');
+  }
+  [type='radio']:focus {
+    @apply ring-opacity-0;
+  }
+  [type='radio']:checked:focus {
+    @apply border-primary;
+  }
+  [type='radio']:checked:hover {
+    @apply border-primary text-white;
   }
 }
 
 @layer components {
+  .label {
+    @apply mb-2 block text-base font-bold text-grey-500;
+  }
   .btn {
     @apply rounded-4xl border-2 px-8 py-3 text-center font-bold
     transition-all hover:scale-105 hover:cursor-pointer active:scale-95;

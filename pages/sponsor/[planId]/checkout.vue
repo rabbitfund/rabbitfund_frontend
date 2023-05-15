@@ -84,7 +84,7 @@
             <h2>購買（贊助）人</h2>
           </div>
           <div class="mb-6">
-            <label for="name">真實姓名</label>
+            <label for="name" class="label">真實姓名</label>
             <input type="text" name="name" id="name" />
           </div>
           <div class="mb-6">
@@ -125,38 +125,71 @@
             <h2>稅捐收據</h2>
           </div>
           <ul class="mb-6 flex flex-col gap-4">
-            <li class="flex items-center gap-6 rounded bg-white px-5 py-4 ring-1 ring-grey-200">
-              <input class="peer" type="radio" name="tax-receipt" id="no-receipt" />
-              <div>
-                <label for="no-receipt" class="mb-1.5">不需要收據</label>
+            <li class="relative flex items-center">
+              <input class="peer absolute left-5" type="radio" name="tax-receipt" id="no-receipt" />
+              <label
+                for="no-receipt"
+                class="flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 ring-1 ring-grey-200 peer-checked:ring-primary"
+              >
+                <span class="mb-1.5 font-bold">不需要收據</span>
                 <p class="text-grey-500">無抵稅需求，不需要寄送收據</p>
-              </div>
+              </label>
             </li>
-            <li class="flex items-center gap-6 rounded bg-white px-5 py-4 ring-1 ring-grey-200">
-              <input class="peer" type="radio" name="tax-receipt" id="receipt-no-send" />
-              <div>
-                <label for="receipt-no-send" class="mb-1.5">需要收據，但不需要寄送</label>
+            <li class="relative flex items-center">
+              <input
+                class="peer absolute left-5"
+                type="radio"
+                name="tax-receipt"
+                id="receipt-no-send"
+              />
+              <label
+                for="receipt-no-send"
+                class="flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 ring-1 ring-grey-200 peer-checked:ring-primary"
+              >
+                <span class="mb-1.5 font-bold">需要收據，但不需要寄送</span>
                 <p class="text-grey-500">
                   由團隊協助在隔年五月上傳稅捐資料至國稅局，僅提供個人捐款服務
                 </p>
-              </div>
+              </label>
             </li>
-            <li class="flex items-center gap-6 rounded bg-white px-5 py-4 ring-1 ring-grey-200">
-              <input class="peer" type="radio" name="tax-receipt" id="paper-receipt" />
-              <div>
-                <label for="paper-receipt" class="mb-1.5">單次寄送紙本收據</label>
+            <li class="relative flex items-center">
+              <input
+                class="peer absolute left-5"
+                type="radio"
+                name="tax-receipt"
+                id="paper-receipt"
+              />
+              <label
+                for="paper-receipt"
+                class="flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 ring-1 ring-grey-200 peer-checked:ring-primary"
+              >
+                <span class="mb-1.5 font-bold">單次寄送紙本收據</span>
                 <p class="text-grey-500">每次捐款都寄送一次收據</p>
-              </div>
+              </label>
             </li>
-            <li class="flex items-center gap-6 rounded bg-white px-5 py-4 ring-1 ring-grey-200">
-              <input class="peer" type="radio" name="tax-receipt" id="paper-annual" />
-              <div>
-                <label for="paper-annual" class="mb-1.5">年度寄送紙本收據</label>
+            <li class="relative flex items-center">
+              <input
+                class="peer absolute left-5"
+                type="radio"
+                name="tax-receipt"
+                id="paper-annual"
+              />
+              <label
+                for="paper-annual"
+                class="flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 ring-1 ring-grey-200 peer-checked:ring-primary"
+              >
+                <span class="mb-1.5 font-bold">年度寄送紙本收據</span>
                 <p class="text-grey-500">統整年度稅捐記錄，於隔年五月前統一寄送紙本收據</p>
-              </div>
+              </label>
             </li>
-            <li class="flex items-center gap-6 rounded bg-white px-5 py-4 ring-1 ring-grey-200">
-              <p>與購買（贊助）人相同</p>
+            <li class="relative flex items-center">
+              <input class="peer hidden" type="radio" name="tax-receipt" id="as-sponsor" />
+              <label
+                for="as-sponsor"
+                class="flex w-full cursor-pointer flex-col rounded bg-white px-5 py-4 ring-1 ring-grey-200 peer-checked:ring-primary"
+              >
+                <p class="text-grey-500">與購買（贊助）人相同</p>
+              </label>
             </li>
           </ul>
 
