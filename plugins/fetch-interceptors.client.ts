@@ -20,7 +20,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
         alert(response._data.msg);
         return;
       }
-      alert(response._data.msg);
+      // alert(response._data.msg);
       return response._data;
     },
     onResponseError(context) {
