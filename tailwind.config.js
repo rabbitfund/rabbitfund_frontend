@@ -63,9 +63,6 @@ module.exports = {
 			borderRadius: {
 				'4xl': '50px',
 			},
-			fontFamily: {
-				'sansTC': ['Noto Sans TC', 'sans-serif'],
-			},
 		},
 	},
 	plugins: [

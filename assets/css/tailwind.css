@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&family=Noto+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Sans:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,8 @@
 
 @layer base {
   html {
-    font-family: 'Noto Sans', system-ui, sans-serif;
+    font-family: 'Noto Sans', 'Noto Sans TC', system-ui, sans-serif;
+    @apply text-grey-600;
   }
   h1 {
     @apply text-4xl;
@@ -32,11 +33,11 @@
   h4,
   h5,
   h6 {
-    @apply font-bold text-grey-600;
+    @apply font-bold;
     line-height: 1.2;
   }
-  p {
-    @apply text-grey-600;
+  label {
+    @apply mb-2 block text-base font-bold text-grey-500;
   }
 }
 
@@ -78,9 +79,6 @@
 }
 
 @layer components {
-  .label {
-    @apply mb-2 block text-base font-bold text-grey-500;
-  }
   .btn {
     @apply rounded-4xl border-2 px-8 py-3 text-center font-bold
     transition-all hover:scale-105 hover:cursor-pointer active:scale-95;
