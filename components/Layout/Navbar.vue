@@ -50,8 +50,16 @@ function signIn() {
               class="absolute right-0 top-full z-10 hidden cursor-default group-hover:block group-focus:block"
             >
               <div class="rounded-md bg-white px-10 py-8 shadow-md">
-                <p class="mb-8 text-start font-bold text-primary">會員中心</p>
                 <ul class="mb-8 flex min-w-[124px] flex-col gap-7">
+                  <li class="inline-block">
+                    <NuxtLink
+                      to="/member"
+                      class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
+                    >
+                      <img class="w-5" src="@/assets/images/icons/user.svg" alt="會員中心" />
+                      <span>會員中心</span></NuxtLink
+                    >
+                  </li>
                   <li class="inline-block">
                     <NuxtLink
                       to="/member/proposals"
@@ -85,7 +93,7 @@ function signIn() {
                       to="/member/manage"
                       class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
                     >
-                      <img class="w-5" src="@/assets/images/icons/user.svg" alt="管理個人資料" />
+                      <img class="w-5" src="@/assets/images/icons/setting.svg" alt="管理個人資料" />
                       <span>管理個人資料</span></NuxtLink
                     >
                   </li>
@@ -153,6 +161,15 @@ function signIn() {
                       to="/member/proposals"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
+                      <img class="w-5" src="@/assets/images/icons/user-fill.svg" alt="會員中心" />
+                      <span class="text-lg">會員中心</span></NuxtLink
+                    >
+                  </li>
+                  <li>
+                    <NuxtLink
+                      to="/member/proposals"
+                      class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
+                    >
                       <img class="w-5" src="@/assets/images/icons/time-fill.svg" alt="提案紀錄" />
                       <span class="text-lg">提案紀錄</span></NuxtLink
                     >
@@ -182,7 +199,7 @@ function signIn() {
                     >
                       <img
                         class="w-5"
-                        src="@/assets/images/icons/user-fill.svg"
+                        src="@/assets/images/icons/setting-fill.svg"
                         alt="管理個人資料"
                       />
                       <span class="text-lg">管理個人資料</span></NuxtLink
