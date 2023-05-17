@@ -10,10 +10,13 @@ export default function useApi() {
     });
   const putUserDetail = (data) =>
     useFetch('/me/user', { method: 'PUT', body: JSON.stringify(data) });
+  const getProject = (projectId: string) =>
+    useFetch(`/projects/${projectId}`, {method: 'GET'});
   return {
     signin,
     signup,
     getUserDetail,
-    putUserDetail
+    putUserDetail,
+    getProject
   };
 }
