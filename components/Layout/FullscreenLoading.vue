@@ -14,31 +14,33 @@ watch(
 );
 </script>
 <template>
-  <div
-    v-show="globalState.isShowFullscreenLoading"
-    class="loading fixed z-50 h-screen w-screen overflow-hidden"
-  >
+  <transition name="fade">
     <div
       v-show="globalState.isShowFullscreenLoading"
-      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
+      class="loading fixed z-50 h-screen w-screen overflow-hidden"
     >
-      <div class="rabbit">
-        <div class="tail"></div>
-        <div class="ears"></div>
-      </div>
-      <div class="clouds"></div>
       <div
-        class="absolute -bottom-4 left-1/2 -translate-x-1/2 transform whitespace-nowrap text-white"
+        v-show="globalState.isShowFullscreenLoading"
+        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
       >
-        Loading animation by
-        <a
-          class="underline underline-offset-2 hover:text-blue-500"
-          href="https://codepen.io/katydecorah/pen/nKGxJd"
-          >Katy DeCorah</a
+        <div class="rabbit">
+          <div class="tail"></div>
+          <div class="ears"></div>
+        </div>
+        <div class="clouds"></div>
+        <div
+          class="absolute -bottom-4 left-1/2 -translate-x-1/2 transform whitespace-nowrap text-white"
         >
+          Loading animation by
+          <a
+            class="underline underline-offset-2 hover:text-blue-500"
+            href="https://codepen.io/katydecorah/pen/nKGxJd"
+            >Katy DeCorah</a
+          >
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <style scoped>
