@@ -1,5 +1,6 @@
 <template>
-  <div class="flex min-h-screen flex-col">
+  <div class="relative flex min-h-screen flex-col">
+    <LayoutFullscreenLoading />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
