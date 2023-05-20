@@ -29,13 +29,13 @@ const formattedAmount = computed(() => {
 </script>
 
 <template>
-  <div class="flex h-full flex-col overflow-hidden rounded-lg bg-white">
+  <div class="flex flex-col overflow-hidden rounded-lg bg-white">
     <div class="overflow-hidden rounded-t-lg">
-      <img src="~/assets/images/mock.png" class="object-contain" alt="carrot" />
+      <img src="~/assets/images/mock.png" class="object-cover" alt="carrot" />
     </div>
     <div class="flex flex-auto flex-col p-4 pb-6">
       <div class="mb-4 flex items-center justify-between">
-        <Badge :type="props.type"></Badge>
+        <Badge :type="props.type" :name="props.type"></Badge>
         <span class="text-grey-500">{{ props.timeLeft }}</span>
       </div>
       <h3 class="mb-2 line-clamp-2 text-h4 font-bold">

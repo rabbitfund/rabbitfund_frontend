@@ -22,9 +22,21 @@ const classes = computed(() => {
   return [
     'progress',
     {
-      'bg-primary': props.type === '校園',
-      'bg-success': props.type === '公益',
+      'bg-info': props.type === '校園',
+      'bg-warning': props.type === '公益',
       'bg-secondary': props.type === '市集'
+    }
+  ];
+});
+
+const percentStyle = computed(() => {
+  return [
+    'font-bold',
+    'whitespace-nowrap',
+    {
+      'text-info': props.type === '校園',
+      'text-warning': props.type === '公益',
+      'text-secondary': props.type === '市集'
     }
   ];
 });
@@ -37,10 +49,17 @@ watchEffect(() => {
       ? 0
       : ((props.currentAmount - props.minAmount) * 100) / (props.maxAmount - props.minAmount);
 });
+
+const formattedPercent = computed(() => {
+  return Math.floor(percent.value)?.toLocaleString();
+});
 </script>
 
 <template>
-  <div class="h-3 w-full rounded-full bg-grey-200">
-    <div :class="classes" :style="{ width: percent + '%' }"></div>
+  <div class="flex items-center gap-4">
+    <div class="h-3 w-full overflow-hidden rounded-full bg-grey-200">
+      <div :class="classes" :style="{ width: percent + '%' }"></div>
+    </div>
+    <span :class="percentStyle">{{ formattedPercent }} %</span>
   </div>
 </template>
