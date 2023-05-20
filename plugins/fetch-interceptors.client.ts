@@ -5,6 +5,8 @@ export default defineNuxtPlugin((_nuxtApp) => {
   const { API_BASE } = runtimeConfig.public;
   const authStore = useAuthStore();
 
+  const { showErrorMessage } = useSwalShowMessage();
+
   globalThis.$fetch = $fetch.create({
     baseURL: API_BASE,
     onRequest({ options }) {
@@ -13,19 +15,17 @@ export default defineNuxtPlugin((_nuxtApp) => {
       }
     },
     onRequestError({ error }) {
-      alert(error);
+      showErrorMessage(error);
     },
     onResponse({ response }) {
       if (!response.ok) {
-        alert(response._data.msg);
+        showErrorMessage(response._data.msg);
         return;
       }
-      // alert(response._data.msg);
       return response._data;
     },
     onResponseError(context) {
-      console.dir(context);
-      // alert(context.error);
+      showErrorMessage(context);
     }
   });
 });
