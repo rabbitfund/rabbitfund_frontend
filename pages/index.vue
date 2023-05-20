@@ -1,9 +1,9 @@
 <template>
   <section class="py-8">
     <div class="flex justify-center gap-3">
-      <Badge type="校園" />
-      <Badge type="公益" />
-      <Badge type="市集" />
+      <Badge type="校園" name="校園" />
+      <Badge type="公益" name="公益" />
+      <Badge type="市集" name="市集" />
     </div>
   </section>
 
@@ -15,6 +15,7 @@
         <ul class="mb-12 flex flex-col gap-x-6 md:flex-row">
           <li class="md:w-1/3">
             <Card
+              class="h-full"
               type="市集"
               timeLeft="剩餘時間：2 天 3 小時 5分"
               title="小蝸牛夏日市集"
@@ -26,6 +27,7 @@
           </li>
           <li class="md:w-1/3">
             <Card
+              class="h-full"
               type="公益"
               timeLeft="剩餘時間：2 天 3 小時 5分"
               title="《看見動物的真實處境》深度報導 x 為牠發聲"
@@ -37,6 +39,7 @@
           </li>
           <li class="md:w-1/3">
             <Card
+              class="h-full"
               type="校園"
               timeLeft="剩餘時間：2 天 3 小時 5分"
               title="初生小雞 教會孩子的生命功課｜沉浸式校園巡迴公益募資計畫"

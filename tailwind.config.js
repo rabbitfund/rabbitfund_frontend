@@ -13,17 +13,36 @@ module.exports = {
 		},
 		fontSize: {
 			base: ['16px', 1.5],
+			md: ['18px', 1.4],
 			lg: ['20px', 1.5],
 			xl: ['24px', 1.5],
 			'2xl': ['28px', 1.5],
 			'3xl': ['32px', 1.5],
 			'4xl': ['40px', 1.5],
-			h6: ['16px', 1.2],
-			h5: ['20px', 1.2],
-			h4: ['24px', 1.2],
-			h3: ['32px', 1.2],
-			h2: ['28px', 1.2],
-			h1: ['40px', 1.2]
+			h6: ['16px', {
+				lineHeight: '1.2',
+				fontWeight: '700'
+			}],
+			h5: ['20px', {
+				lineHeight: '1.2',
+				fontWeight: '700'
+			}],
+			h4: ['24px', {
+				lineHeight: '1.2',
+				fontWeight: '700'
+			}],
+			h3: ['28px', {
+				lineHeight: '1.2',
+				fontWeight: '700'
+			}],
+			h2: ['32px', {
+				lineHeight: '1.2',
+				fontWeight: '700'
+			}],
+			h1: ['40px', {
+				lineHeight: '1.2',
+				fontWeight: '700'
+			}]
 		},
 		extend: {
 			padding: {
@@ -42,6 +61,14 @@ module.exports = {
 				secondary: {
 					DEFAULT: '#9D1EAD',
 					emphasis: '#F3E3F5',
+				},
+				warning: {
+					DEFAULT: '#b4543e',
+					emphasis: '#f8eeec',
+				},
+				info: {
+					DEFAULT: '#2D6DA9',
+					emphasis: '#E2EBF5',
 				},
 				success: {
 					DEFAULT: '#1F958B',

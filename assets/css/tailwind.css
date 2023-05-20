@@ -10,31 +10,22 @@
     @apply text-grey-600;
   }
   h1 {
-    @apply text-4xl;
+    @apply text-h1;
   }
   h2 {
-    @apply text-3xl;
+    @apply text-h2;
   }
   h3 {
-    @apply text-2xl;
+    @apply text-h3;
   }
   h4 {
-    @apply text-xl;
+    @apply text-h4;
   }
   h5 {
-    @apply text-lg;
+    @apply text-h5;
   }
   h6 {
-    @apply text-base;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-bold;
-    line-height: 1.2;
+    @apply text-h6;
   }
   label {
     @apply mb-2 block text-base font-bold text-grey-500;
@@ -80,20 +71,20 @@
 
 @layer components {
   .btn {
-    @apply rounded-4xl border-2 px-8 py-3 text-center font-bold
-    transition-all hover:scale-105 hover:cursor-pointer active:scale-95;
+    @apply rounded-4xl px-8 py-3 text-center text-md font-bold
+    ring-2 transition-all hover:scale-105 hover:cursor-pointer active:scale-95;
   }
   .btn-primary {
-    @apply border-transparent bg-primary text-white hover:border-primary hover:bg-transparent hover:text-primary active:bg-transparent;
+    @apply bg-primary text-white ring-transparent hover:bg-transparent hover:text-primary hover:ring-primary active:bg-transparent;
   }
   .btn-primary-outline {
-    @apply border-primary bg-transparent text-primary hover:bg-primary
+    @apply bg-transparent text-primary ring-primary hover:bg-primary
     hover:text-white active:bg-primary;
   }
 
   .badge {
-    @apply cursor-pointer rounded-full px-5
-    py-2 text-center text-h6 font-bold;
+    @apply block cursor-pointer rounded-full
+    px-5 py-2 text-center text-h6 font-bold;
   }
 
   .progress {

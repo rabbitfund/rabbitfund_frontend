@@ -2,7 +2,11 @@
 const props = defineProps({
   type: {
     type: [String],
-    default: '校園'
+    default: ''
+  },
+  name: {
+    type: [String],
+    default: ''
   }
 });
 
@@ -10,8 +14,8 @@ const classes = computed(() => {
   return [
     'badge',
     {
-      'bg-primary-light text-primary': props.type === '校園',
-      'bg-success-emphasis text-success': props.type === '公益',
+      'bg-info-emphasis text-info': props.type === '校園',
+      'bg-warning-emphasis text-warning': props.type === '公益',
       'bg-secondary-emphasis text-secondary': props.type === '市集'
     }
   ];
@@ -19,5 +23,5 @@ const classes = computed(() => {
 </script>
 
 <template>
-  <div :class="classes">{{ props.type }}</div>
+  <span :class="classes">{{ props.name }}</span>
 </template>
