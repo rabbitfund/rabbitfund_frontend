@@ -12,6 +12,9 @@ const props = defineProps({
   },
   unifiedNumber: {
     type: [String]
+  },
+  email: {
+    type: [String]
   }
 });
 </script>
@@ -37,6 +40,6 @@ const props = defineProps({
         <span>{{ props.unifiedNumber }}</span>
       </div>
     </div>
-    <a class="btn btn-primary-outline" href="mailto:doublerabbitfund@gmail.com">聯絡團隊</a>
+    <a class="btn btn-primary-outline" :href="`mailto:${email}`">聯絡團隊</a>
   </div>
 </template>
