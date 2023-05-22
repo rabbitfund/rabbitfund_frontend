@@ -71,7 +71,7 @@ function signIn() {
                   </li>
                   <li>
                     <NuxtLink
-                      to="/member/sponsorships"
+                      to="/member/orders"
                       class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
                     >
                       <img class="w-5" src="@/assets/images/icons/heart.svg" alt="贊助紀錄" />
@@ -176,7 +176,7 @@ function signIn() {
                   </li>
                   <li>
                     <NuxtLink
-                      to="/member/sponsorships"
+                      to="/member/orders"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
                       <img class="w-5" src="@/assets/images/icons/heart-fill.svg" alt="贊助紀錄" />
