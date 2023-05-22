@@ -1,15 +1,67 @@
 <script setup>
+const { getProject } = useApi();
 const route = useRoute();
 const { projectId } = route.params;
+const category = ref("公益");
+const content = ref("專案內容");
+const startDate = ref("");
+const endDate = ref("");
+const target = ref(500000);
+const title = ref("愛奇兒家庭社區共融中心集資計畫");
+const options = ref([]);
+const proposer = ref("");
+const taxId = ref("");
+const email = ref("");
+const timeLeft = ref("");
+
+
+onMounted(async () => {
+  await nextTick();
+  getProject(projectId)
+    .then((res) => {
+      const project = res.data.value.data;
+      console.log(project)
+
+      // title.value = project.project_title;
+      // summary.value = project.project_summary;
+      // info.value = project;
+      title.value = project.project_title;
+      category.value = project.project_category;
+      content.value = project.project_content;
+      target.value = project.project_target; // 逗號分隔之後再處理
+      startDate.value = project.project_start_date.substring(0, 10); // 要不要用 moment.js?
+      endDate.value = project.project_end_date.substring(0, 10);
+      options.value = project.option;
+      proposer.value = project.ownerInfo.proposer_name;
+      taxId.value = project.ownerInfo.proposer_tax_id;
+      email.value = project.ownerInfo.proposer_email;
+      timeLeft.value = getDaysLeft(project.project_end_date);
+      console.log(options.value)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+})
+
+const getDaysLeft = (projectEndDate) => {
+  const today = new Date();
+  const endDate = new Date(projectEndDate);
+  const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
+  return `${days} 天`;
+}
+
+const copy = () => {
+  navigator.clipboard.writeText(window.location.href);
+}
 </script>
 
 <template>
   <main>
     <section class="bg-light-emphasis">
       <div class="container flex flex-col items-center px-[55.55px] py-8 md:py-16">
-        <span class="mb-4 font-bold text-warning xl:mb-8 xl:text-lg">集資專案 ｜ 公益</span>
-        <h2 class="mb-4 text-h4 xl:text-h1">愛奇兒家庭社區共融中心集資計畫</h2>
-        <p class="text-grey-500 xl:text-lg">提案者 倍兒兔基金會</p>
+        <span class="mb-4 font-bold text-warning xl:mb-8 xl:text-lg">集資專案 ｜ {{ category }}</span>
+        <h2 class="mb-4 text-h4 xl:text-h1">{{ title }}</h2>
+        <p class="text-grey-500 xl:text-lg">提案者 {{ proposer }}</p>
       </div>
     </section>
 
@@ -23,16 +75,16 @@ const { projectId } = route.params;
               alt="假圖"
             />
           </div>
-          <p>專案時間 2023/03/01 12:00 ~ 2023/06/30 23:59</p>
+          <p>專案時間 {{ startDate }} 12:00 ~ {{ endDate }} 23:59</p>
         </div>
         <div class="lg:w-5/12">
-          <span class="mb-3 block text-h2 font-bold lg:mb-1.5">$554,816</span>
+          <span class="mb-3 block text-h2 font-bold lg:mb-1.5">$ 615,846</span>
           <div class="gap-3 sm:mb-9 sm:flex">
             <ProgressBar
               class="mb-3 flex-auto sm:mb-0"
-              type="公益"
+              :type="category"
               :minAmount="0"
-              :maxAmount="554816"
+              :maxAmount="target"
               :currentAmount="615846"
             />
             <Badge type="公益" name="已達標" class="mb-6 w-fit sm:mb-0"></Badge>
@@ -41,15 +93,15 @@ const { projectId } = route.params;
             <ul class="-mx-2 flex flex-wrap">
               <li class="mb-4 flex w-1/2 flex-col px-2">
                 <span class="mb-1 text-grey-400">目標金額</span
-                ><span class="text-lg font-bold">$ 500,000</span>
+                ><span class="text-lg font-bold">$ {{ target }}</span>
               </li>
               <li class="mb-4 flex w-1/2 flex-col px-2">
                 <span class="mb-1 text-grey-400">預計募集總金額</span
-                ><span class="text-lg font-bold">$ 554,816 </span>
+                ><span class="text-lg font-bold">$ 615,846 </span>
               </li>
               <li class="flex w-1/2 flex-col px-2">
                 <span class="mb-1 text-grey-400">剩餘時間</span
-                ><span class="text-lg font-bold">6 天 09:09:26</span>
+                ><span class="text-lg font-bold">{{ timeLeft }}</span>
               </li>
               <li class="flex w-1/2 flex-col px-2">
                 <span class="mb-1 text-grey-400">贊助人次</span
@@ -70,7 +122,7 @@ const { projectId } = route.params;
               </NuxtLink>
               <button class="btn btn-primary-outline w-1/2 xl:text-md">追蹤專案</button>
             </div>
-            <button class="flex gap-1 text-grey-400">
+            <button class="flex gap-1 text-grey-400" @click="copy">
               <img src="~/assets/images/icons/copy.svg" alt="copy" />
               分享連結
             </button>
@@ -132,13 +184,19 @@ const { projectId } = route.params;
         class="container -order-1 flex flex-col gap-4 py-16 lg:mr-[calc((theme('width.screen')-theme('screens.lg'))/2)] lg:w-[calc(theme('screens.lg')*1/3)] lg:py-0 xl:mr-[calc((theme('width.screen')-theme('screens.xl'))/2)] xl:w-[calc(theme('screens.xl')*1/3)]"
       >
         <CardTeam
-          brand="倍而兔基金會"
+          :brand="proposer"
           :number="1"
-          proposer="倍而兔基金會"
-          unifiedNumber="12345678"
+          :proposer="proposer"
+          :unifiedNumber="taxId"
+          :email="email"
         />
-        <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
-        <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" />
+        <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
+        <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
+        <CardPlan v-for="option in options" 
+          :plan="option.option_name"
+          :price="option.option_price"
+          :times="46"
+          :content="option.option_content" />
       </div>
     </section>
   </main>
