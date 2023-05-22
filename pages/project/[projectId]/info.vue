@@ -14,8 +14,8 @@ const { projectId } = route.params;
     </section>
 
     <section class="container mb-16 pt-4 lg:pt-16">
-      <div class="lg:flex lg:gap-10">
-        <div class="mb-6 lg:mb-0 lg:flex-1">
+      <div class="lg:-mx-3 lg:flex lg:gap-4">
+        <div class="mb-6 lg:mb-0 lg:flex-1 lg:px-3">
           <div class="mb-4 overflow-hidden rounded-lg">
             <img
               src="~/assets/images/mock.png"
@@ -25,7 +25,7 @@ const { projectId } = route.params;
           </div>
           <p>專案時間 2023/03/01 12:00 ~ 2023/06/30 23:59</p>
         </div>
-        <div class="lg:w-5/12">
+        <div class="lg:w-5/12 lg:px-3">
           <span class="mb-3 block text-h2 font-bold lg:mb-1.5">$554,816</span>
           <div class="gap-3 sm:mb-9 sm:flex">
             <ProgressBar
@@ -39,20 +39,20 @@ const { projectId } = route.params;
           </div>
           <div class="mb-6 rounded-lg bg-light-emphasis px-8 py-6 lg:mb-9">
             <ul class="-mx-2 flex flex-wrap">
-              <li class="mb-4 flex w-1/2 flex-col px-2">
-                <span class="mb-1 text-grey-400">目標金額</span
+              <li class="mb-4 flex w-1/2 flex-col gap-1 px-2">
+                <span class="text-grey-400">目標金額</span
                 ><span class="text-lg font-bold">$ 500,000</span>
               </li>
-              <li class="mb-4 flex w-1/2 flex-col px-2">
-                <span class="mb-1 text-grey-400">預計募集總金額</span
+              <li class="mb-4 flex w-1/2 flex-col gap-1 px-2">
+                <span class="text-grey-400">預計募集總金額</span
                 ><span class="text-lg font-bold">$ 554,816 </span>
               </li>
-              <li class="flex w-1/2 flex-col px-2">
-                <span class="mb-1 text-grey-400">剩餘時間</span
+              <li class="flex w-1/2 flex-col gap-1 px-2">
+                <span class="text-grey-400">剩餘時間</span
                 ><span class="text-lg font-bold">6 天 09:09:26</span>
               </li>
-              <li class="flex w-1/2 flex-col px-2">
-                <span class="mb-1 text-grey-400">贊助人次</span
+              <li class="flex w-1/2 flex-col gap-1 px-2">
+                <span class="text-grey-400">贊助人次</span
                 ><span class="text-lg font-bold">180人</span>
               </li>
             </ul>
@@ -124,12 +124,14 @@ const { projectId } = route.params;
         </nav>
       </div>
       <div
-        class="bg-white pb-14 pt-7 lg:ml-[calc((theme('width.screen')-theme('screens.lg'))/2)] lg:flex-1 lg:bg-light-emphasis lg:py-0 xl:ml-[calc((theme('width.screen')-theme('screens.xl'))/2)]"
+        class="bg-white pb-14 pt-7 lg:ml-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.lg'))/2)] lg:flex-1 lg:bg-light-emphasis lg:py-0 xl:ml-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.xl'))/2)]"
       >
-        <NuxtPage class="container" />
+        <div class="container">
+          <NuxtPage />
+        </div>
       </div>
       <div
-        class="container -order-1 flex flex-col gap-4 py-16 lg:mr-[calc((theme('width.screen')-theme('screens.lg'))/2)] lg:w-[calc(theme('screens.lg')*1/3)] lg:py-0 xl:mr-[calc((theme('width.screen')-theme('screens.xl'))/2)] xl:w-[calc(theme('screens.xl')*1/3)]"
+        class="container -order-1 flex flex-col gap-4 py-16 lg:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.lg'))/2)] lg:w-[calc(theme('screens.lg')*1/3)] lg:py-0 xl:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.xl'))/2)] xl:w-[calc(theme('screens.xl')*1/3)]"
       >
         <CardTeam
           brand="倍而兔基金會"
