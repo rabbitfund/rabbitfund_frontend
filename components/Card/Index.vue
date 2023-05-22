@@ -34,7 +34,7 @@ const formattedAmount = computed(() => {
 <template>
   <div
     class="flex cursor-pointer flex-col overflow-hidden rounded-lg bg-white"
-    @click="navigateTo(`/project/info/${props.id}`)"
+    @click="navigateTo(`/project/${props.id}/info`)"
   >
     <div class="overflow-hidden rounded-t-lg">
       <img src="~/assets/images/mock.png" class="object-cover" alt="carrot" />
