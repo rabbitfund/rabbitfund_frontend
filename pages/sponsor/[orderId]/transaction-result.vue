@@ -1,25 +1,7 @@
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
-      <div class="flex justify-center">
-        <ul class="flex w-full gap-7 lg:w-2/3 lg:gap-8">
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">01</span
-            ><span class="mb-1 block font-bold lg:text-lg">確認品項</span>
-            <div class="h-1 bg-primary-light"></div>
-          </li>
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">02</span
-            ><span class="mb-1 block font-bold lg:text-lg">填寫訂單資料</span>
-            <div class="h-1 bg-primary-light"></div>
-          </li>
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">03</span
-            ><span class="mb-1 block font-bold lg:text-lg">交易結果</span>
-            <div class="h-1 bg-primary"></div>
-          </li>
-        </ul>
-      </div>
+      <CheckoutProcess step="交易結果" />
     </div>
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">

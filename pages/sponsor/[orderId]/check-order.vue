@@ -6,7 +6,7 @@ const { orderId } = route.params;
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
-      <CheckoutProcess step="填寫訂單資料" />
+      <CheckoutProcess step="確認訂單資料" />
     </div>
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
@@ -20,136 +20,45 @@ const { orderId } = route.params;
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/2">
               <label for="name">真實姓名</label>
-              <input type="text" name="name" id="name" />
+              <input type="text" name="name" id="name" disabled />
             </div>
             <div class="mb-6 md:w-1/2">
               <label for="cellphone">手機</label>
-              <input type="tel" name="cellphone" id="cellphone" />
+              <input type="tel" name="cellphone" id="cellphone" disabled />
             </div>
           </div>
           <div class="mb-6">
             <label for="email">電子信箱</label>
-            <input type="email" name="email" id="email" />
+            <input type="email" name="email" id="email" disabled />
           </div>
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/3">
               <label for="country">國家 / 地區</label>
-              <input type="text" name="country" id="country" />
+              <input type="text" name="country" id="country" disabled />
             </div>
             <div class="mb-6 md:w-1/3">
               <label for="city">城市 / 州 / 區</label>
-              <input type="text" name="city" id="city" />
+              <input type="text" name="city" id="city" disabled />
             </div>
             <div class="mb-6 md:w-1/3">
               <label for="district">鄉 / 鎮 / 市 / 區</label>
-              <input type="text" name="district" id="district" />
+              <input type="text" name="district" id="district" disabled />
             </div>
           </div>
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/5">
               <label for="postcode">郵遞區號</label>
-              <input type="number" name="postcode" id="postcode" />
+              <input type="number" name="postcode" id="postcode" disabled />
             </div>
             <div class="mb-6 md:w-4/5">
               <label for="address">地址</label>
-              <input type="text" name="address" id="address" />
+              <input type="text" name="address" id="address" disabled />
             </div>
           </div>
           <p class="text-grey-500">
             當您確認參與本專案贊助方案時，您已確實暸解此專案資訊揭露與承諾之內容。若您發現有與實際情況不符之處，請透過【檢舉與回報】功能通報平台，我們會盡速確認。
           </p>
         </div>
-        <!-- <div class="mb-12 border-t border-grey-200 pt-12">
-          <div class="mb-6 flex items-center gap-2">
-            <span><img src="~/assets/images/icons/book.svg" alt="書" /></span>
-            <h2>稅捐收據</h2>
-          </div>
-          <ul class="mb-6 flex flex-col gap-4">
-            <li class="relative flex items-center">
-              <input class="peer absolute left-5" type="radio" name="tax-receipt" id="no-receipt" />
-              <label
-                for="no-receipt"
-                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
-              >
-                <span class="mb-1.5 font-bold">不需要收據</span>
-                <p class="text-grey-500">無抵稅需求，不需要寄送收據</p>
-              </label>
-            </li>
-            <li class="relative flex items-center">
-              <input
-                class="peer absolute left-5"
-                type="radio"
-                name="tax-receipt"
-                id="receipt-no-send"
-              />
-              <label
-                for="receipt-no-send"
-                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
-              >
-                <span class="mb-1.5 font-bold">需要收據，但不需要寄送</span>
-                <p class="text-grey-500">
-                  由團隊協助在隔年五月上傳稅捐資料至國稅局，僅提供個人捐款服務
-                </p>
-              </label>
-            </li>
-            <li class="relative flex items-center">
-              <input
-                class="peer absolute left-5"
-                type="radio"
-                name="tax-receipt"
-                id="paper-receipt"
-              />
-              <label
-                for="paper-receipt"
-                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
-              >
-                <span class="mb-1.5 font-bold">單次寄送紙本收據</span>
-                <p class="text-grey-500">每次捐款都寄送一次收據</p>
-              </label>
-            </li>
-            <li class="relative flex items-center">
-              <input
-                class="peer absolute left-5"
-                type="radio"
-                name="tax-receipt"
-                id="paper-annual"
-              />
-              <label
-                for="paper-annual"
-                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
-              >
-                <span class="mb-1.5 font-bold">年度寄送紙本收據</span>
-                <p class="text-grey-500">統整年度稅捐記錄，於隔年五月前統一寄送紙本收據</p>
-              </label>
-            </li>
-            <li class="relative flex items-center">
-              <input class="peer hidden" type="radio" name="tax-receipt" id="as-sponsor" />
-              <label
-                for="as-sponsor"
-                class="flex w-full cursor-pointer flex-col rounded bg-white px-5 py-4 ring-1 ring-grey-200 peer-checked:ring-primary"
-              >
-                <p class="text-grey-500">與購買（贊助）人相同</p>
-              </label>
-            </li>
-          </ul>
-
-          <div class="mb-6">
-            <label for="tax-receipt-header">稅捐收據抬頭</label>
-            <input type="text" name="tax-receipt-header" id="tax-receipt-header" />
-          </div>
-          <div class="mb-6">
-            <label for="tax-filing-receipt">報稅憑證</label>
-            <input type="tel" name="tax-filing-receipt" id="tax-filing-receipt" />
-          </div>
-          <ol class="list-decimal ps-5 text-grey-500">
-            <li class="mb-2">
-              訂單成立後，您會收到由倍而兔平台所寄出的 Email 交易通知信，此信並非電子收據。
-            </li>
-            <li>
-              收據將由專案團隊負責處理，該收據可折抵所得稅，以利您報稅使用，若有任何疑問，請聯繫專案團隊聯絡信箱。
-            </li>
-          </ol>
-        </div> -->
         <div class="border-t border-grey-200 pt-12">
           <div class="mb-6 flex items-center gap-2">
             <span><img src="~/assets/images/icons/credit-card.svg" alt="信用卡" /></span>
@@ -162,6 +71,7 @@ const { orderId } = route.params;
                 type="radio"
                 name="payment-method"
                 id="credit-card"
+                disabled
               />
               <label
                 for="credit-card"
@@ -172,7 +82,13 @@ const { orderId } = route.params;
               </label>
             </li>
             <li class="relative flex items-center">
-              <input class="peer absolute left-5" type="radio" name="payment-method" id="atm" />
+              <input
+                class="peer absolute left-5"
+                type="radio"
+                name="payment-method"
+                id="atm"
+                disabled
+              />
               <label
                 for="atm"
                 class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
@@ -214,11 +130,26 @@ const { orderId } = route.params;
               <span class="text-lg font-bold">總計</span
               ><span class="text-lg font-bold">$ 600</span>
             </div>
-            <NuxtLink :to="`/sponsor/${orderId}/check-order`" class="btn btn-primary block w-full"
-              >確認訂單</NuxtLink
+            <NuxtLink
+              :to="`/sponsor/${orderId}/transaction-result`"
+              class="btn btn-primary block w-full"
+              >立即付款</NuxtLink
             >
           </div>
         </div>
+        <p class="font-sansTC font-medium leading-relaxed tracking-wider text-grey-500">
+          點擊「立即付款」即表示您已閱讀並同意<NuxtLink
+            to="/terms"
+            class="cursor-pointer text-blue-600 visited:text-purple-600"
+            target="_blank"
+            >使用者條款</NuxtLink
+          >與<NuxtLink
+            to="/privacy"
+            class="cursor-pointer text-blue-600 visited:text-purple-600"
+            target="blank"
+            >隱私權政策</NuxtLink
+          >。
+        </p>
       </div>
     </div>
   </section>
