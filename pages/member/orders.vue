@@ -29,7 +29,7 @@ handleGetMyOrders();
 </script>
 <template>
   <div v-if="orderData.length !== 0" class="flex flex-col gap-4">
-    <MemberProjectCard :can-modify="false" v-for="i in orderData" :key="i" />
+    <CardMemberProject :can-modify="false" v-for="i in orderData" :key="i" />
     <LayoutPagination
       :totalPage="2"
       :currentPage="page"
