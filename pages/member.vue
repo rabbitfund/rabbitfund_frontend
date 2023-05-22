@@ -20,9 +20,9 @@ const route = useRoute();
         >提案紀錄</NuxtLink
       >
       <NuxtLink
-        to="/member/sponsorships"
+        to="/member/orders"
         class="aside-default"
-        :class="{ 'active-aside': route.path === '/member/sponsorships' }"
+        :class="{ 'active-aside': route.path === '/member/orders' }"
         >贊助紀錄</NuxtLink
       >
       <NuxtLink

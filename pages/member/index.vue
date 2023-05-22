@@ -49,7 +49,7 @@ const currentTab = ref(0);
       </ul>
     </div>
     <div class="flex flex-col gap-4">
-      <MemberProjectCard v-for="i in 3" :key="i" />
+      <CardMemberProject v-for="i in 3" :key="i" />
     </div>
   </section>
 </template>
