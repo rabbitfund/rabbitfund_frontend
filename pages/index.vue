@@ -4,23 +4,23 @@ const projects = ref([]);
 
 onMounted(async () => {
   await nextTick();
-  getProjects(1, "recent")
+  getProjects(1, 'recent')
     .then((res) => {
       const projectList = res.data.value.data;
       projects.value = projectList; // 用 .splice(3) 會有問題
       console.log(projects.value);
     })
     .catch((err) => {
-      console.log(err)
-    })
-})
+      console.log(err);
+    });
+});
 
 const getDaysLeft = (projectEndDate) => {
   const today = new Date();
   const endDate = new Date(projectEndDate);
   const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
   return `${days} 天`;
-}
+};
 </script>
 
 <template>
@@ -39,18 +39,20 @@ const getDaysLeft = (projectEndDate) => {
         <h2 class="mb-8">精選專案</h2>
         <ul class="mb-12 flex flex-col gap-x-6 md:flex-row">
           <li class="md:w-1/3" v-for="project in projects">
-            <NuxtLink :to="`/project/${project._id}/info`">
-              <Card
-                class="h-full"
-                :type="project.project_category"
-                :timeLeft="getDaysLeft(project.project_end_date)"
-                :title="project.project_title"
-                :proposer="project.ownerInfo ? project.ownerInfo.proposer_name : 'not found'"
-                :minAmount="0"
-                :maxAmount="project.project_target"
-                :currentAmount="5000"
-              ></Card>
-            </NuxtLink>
+            <!-- <NuxtLink :to="`/project/${project._id}/info`"> -->
+            <Card
+              class="h-full"
+              :type="project.project_category"
+              :timeLeft="getDaysLeft(project.project_end_date)"
+              :title="project.project_title"
+              :proposer="project.ownerInfo ? project.ownerInfo.proposer_name : 'not found'"
+              :minAmount="0"
+              :maxAmount="project.project_target"
+              :currentAmount="5000"
+              :cover="project?.cover"
+              :id="project._id"
+            ></Card>
+            <!-- </NuxtLink> -->
           </li>
           <!-- <li class="md:w-1/3">
             <Card
