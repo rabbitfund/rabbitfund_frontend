@@ -13,6 +13,7 @@ const proposer = ref("");
 const taxId = ref("");
 const email = ref("");
 const timeLeft = ref("");
+const cover = ref("")
 
 
 onMounted(async () => {
@@ -36,6 +37,7 @@ onMounted(async () => {
       taxId.value = project.ownerInfo.proposer_tax_id;
       email.value = project.ownerInfo.proposer_email;
       timeLeft.value = getDaysLeft(project.project_end_date);
+      cover.value = project.project_cover;
       console.log(options.value)
     })
     .catch((err) => {
@@ -70,9 +72,9 @@ const copy = () => {
         <div class="mb-6 lg:mb-0 lg:flex-1 lg:px-3">
           <div class="mb-4 overflow-hidden rounded-lg">
             <img
-              src="~/assets/images/mock.png"
+              :src="cover"
               class="w-full object-cover xl:h-[370px]"
-              alt="假圖"
+              alt="project image"
             />
           </div>
           <p>專案時間 {{ startDate }} 12:00 ~ {{ endDate }} 23:59</p>
