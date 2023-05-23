@@ -56,7 +56,7 @@ const getDaysLeft = (projectEndDate) => {
         :minAmount="0"
         :maxAmount="project.project_target"
         :currentAmount="5000"
-        :cover="project?.cover"
+        :cover="project?.project_cover"
         :id="project._id"
       />
     </div>
