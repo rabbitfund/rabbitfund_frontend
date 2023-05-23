@@ -1,4 +1,6 @@
 <script setup>
+import mockImg from '~/assets/images/mock.png';
+
 const { getProject } = useApi();
 const route = useRoute();
 const { projectId } = route.params;
@@ -30,15 +32,15 @@ onMounted(async () => {
       category.value = project.project_category;
       content.value = project.project_content;
       target.value = project.project_target; // 逗號分隔之後再處理
-      startDate.value = project.project_start_date.substring(0, 10); // 要不要用 moment.js?
-      endDate.value = project.project_end_date.substring(0, 10);
+      startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
+      endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
       options.value = project.option;
       proposer.value = project.ownerInfo.proposer_name;
       taxId.value = project.ownerInfo.proposer_tax_id;
       email.value = project.ownerInfo.proposer_email;
       timeLeft.value = getDaysLeft(project.project_end_date);
-      cover.value = project.project_cover;
-      console.log(options.value)
+      cover.value = project.project_cover && project.project_cover !== 'cover URL' ? project.project_cover : mockImg;
+      console.log(options.value);
     })
     .catch((err) => {
       console.log(err)
