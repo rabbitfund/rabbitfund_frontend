@@ -15,99 +15,60 @@ const { orderId } = route.params;
         <div class="mb-12">
           <div class="mb-6 flex items-center gap-2">
             <span><img src="~/assets/images/icons/user-fill.svg" alt="使用者" /></span>
-            <h2>購買（贊助）人</h2>
+            <h2>確認訂單資料</h2>
+          </div>
+          <div class="mb-6">
+            <label for="name">訂單編號</label>
+            <input id="name" type="text" name="MerchantOrderNo" disabled />
+            <!-- :value="order.order_id" -->
           </div>
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/2">
               <label for="name">真實姓名</label>
-              <input type="text" name="name" id="name" disabled />
+              <input id="name" type="text" name="name" disabled />
+              <!--  :value="order.user_name" -->
             </div>
             <div class="mb-6 md:w-1/2">
-              <label for="cellphone">手機</label>
-              <input type="tel" name="cellphone" id="cellphone" disabled />
+              <label for="email">電子信箱</label>
+              <input id="email" type="email" name="Email" disabled />
+              <!-- :value="order.user_email" -->
+            </div>
+          </div>
+          <div class="md:flex md:gap-6">
+            <div class="mb-6 md:w-4/5">
+              <label for="itemDesc">訂單商品</label>
+              <input id="itemDesc" type="text" name="itemDesc" disabled />
+              <!-- :value="order.itemDesc"  -->
+            </div>
+            <div class="mb-6 md:w-1/5">
+              <label for="amt">訂單金額</label>
+              <input id="amt" type="text" name="Amt" disabled />
+              <!-- :value="order.amt"  -->
             </div>
           </div>
           <div class="mb-6">
-            <label for="email">電子信箱</label>
-            <input type="email" name="email" id="email" disabled />
+            <input type="hidden" name="MerchantID" disabled />
+            <!-- value="MS148719690" -->
           </div>
-          <div class="md:flex md:gap-6">
-            <div class="mb-6 md:w-1/3">
-              <label for="country">國家 / 地區</label>
-              <input type="text" name="country" id="country" disabled />
-            </div>
-            <div class="mb-6 md:w-1/3">
-              <label for="city">城市 / 州 / 區</label>
-              <input type="text" name="city" id="city" disabled />
-            </div>
-            <div class="mb-6 md:w-1/3">
-              <label for="district">鄉 / 鎮 / 市 / 區</label>
-              <input type="text" name="district" id="district" disabled />
-            </div>
+          <div class="mb-6">
+            <input type="hidden" name="Version" disabled />
+            <!-- value="1.5" -->
           </div>
-          <div class="md:flex md:gap-6">
-            <div class="mb-6 md:w-1/5">
-              <label for="postcode">郵遞區號</label>
-              <input type="number" name="postcode" id="postcode" disabled />
-            </div>
-            <div class="mb-6 md:w-4/5">
-              <label for="address">地址</label>
-              <input type="text" name="address" id="address" disabled />
-            </div>
+          <div class="mb-6">
+            <input type="hidden" name="TimeStamp" disabled />
+            <!-- :value="order.timeStamp"-->
+          </div>
+          <div class="mb-6">
+            <input type="hidden" name="TradeInfo" disabled />
+            <!-- :value="order.newebpay_aes_encrypt"-->
+          </div>
+          <div class="mb-6">
+            <input type="hidden" name="TradeSha" disabled />
+            <!-- :value="order.newebpay_sha_encrypt"-->
           </div>
           <p class="text-grey-500">
             當您確認參與本專案贊助方案時，您已確實暸解此專案資訊揭露與承諾之內容。若您發現有與實際情況不符之處，請透過【檢舉與回報】功能通報平台，我們會盡速確認。
           </p>
-        </div>
-        <div class="border-t border-grey-200 pt-12">
-          <div class="mb-6 flex items-center gap-2">
-            <span><img src="~/assets/images/icons/credit-card.svg" alt="信用卡" /></span>
-            <h2>付款方式</h2>
-          </div>
-          <ul class="mb-6 flex flex-col gap-4">
-            <li class="relative flex items-center">
-              <input
-                class="peer absolute left-5"
-                type="radio"
-                name="payment-method"
-                id="credit-card"
-                disabled
-              />
-              <label
-                for="credit-card"
-                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
-              >
-                <span class="mb-1.5 font-bold">信用卡付款</span>
-                <p class="text-grey-500">接受國外卡單次交易，不提供銀聯卡交易</p>
-              </label>
-            </li>
-            <li class="relative flex items-center">
-              <input
-                class="peer absolute left-5"
-                type="radio"
-                name="payment-method"
-                id="atm"
-                disabled
-              />
-              <label
-                for="atm"
-                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
-              >
-                <span class="mb-1.5 font-bold">線上 ATM 轉帳（最高限制 5 萬元）</span>
-                <p class="text-grey-500">需於指定時間內完成付款，超過時限則會取消交易</p>
-              </label>
-            </li>
-          </ul>
-          <ol class="list-decimal ps-5 text-grey-500">
-            <li class="mb-2">本募資平台目前開放的支付方式為信用卡付款及線上 ATM。</li>
-            <li class="mb-2">
-              您將會直接導入藍新金流支付平台，請勿返回其他頁面，以免造成交易失敗。
-            </li>
-            <li class="mb-2">支付需於指定時間內完成付款，超過時限則會取消交易。</li>
-            <li class="mb-2">
-              信用卡授權成功後，本系統不會存留該刷卡人信用卡相關資料，只會保留刷卡成功之授權碼。
-            </li>
-          </ol>
         </div>
       </div>
       <div class="mb-16 border-grey-200 lg:w-1/3 lg:pt-12">
