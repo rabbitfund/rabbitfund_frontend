@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const props = defineProps({
+  planId: {
+    type: [String]
+  },
   plan: {
     type: [String]
   },
@@ -13,6 +16,9 @@ const props = defineProps({
   },
   content: {
     type: [String]
+  },
+  endDate: {
+    type: [String]
   }
 });
 
@@ -20,9 +26,15 @@ const formattedPrice = computed(() => {
   return props.price?.toLocaleString();
 });
 
+const shipDate = computed(() => {
+  const date = new Date(props.endDate);
+  const newDate = new Date(date.setMonth(date.getMonth() + 2));
+  return `${newDate.getFullYear()} 年 ${newDate.getMonth() + 1} 月`;
+});
+
 const route = useRoute();
 const { projectId } = route.params;
-const planId = ref('123');
+// const planId = ref('123');
 </script>
 
 <template>
@@ -48,7 +60,7 @@ const planId = ref('123');
     </NuxtLink>
     <ul class="flex flex-col gap-2 text-grey-500">
       <li>
-        <p>預計 2023 年 06 月出貨。</p>
+        <p>預計 {{ shipDate }}出貨。</p>
       </li>
       <li>
         <p>自訂金額可於「額外贊助」欄位中輸入。電腦版於頁面右方，手機版於頁面下方。</p>
