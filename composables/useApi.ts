@@ -12,7 +12,7 @@ export default function useApi() {
     useFetch('/me/user', { method: 'PUT', body: JSON.stringify(data) });
 
   const getProjects = (page: number, tag: string) => 
-    useFetch(`/projects?page=${page}&tag=${tag}`, { method: 'GET', server: false });
+    useFetch(`/projects?page=${page}&tag=${tag}`, { method: 'GET', transform: (_projects) => _projects.data });
   const getProject = (projectId: string) => 
     useFetch(`/projects/${projectId}`, { method: 'GET', server: false });
   const getProjectOptions = (projectId: string) => 
