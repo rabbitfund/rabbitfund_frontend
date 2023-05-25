@@ -30,15 +30,15 @@
             <img src="~/assets/images/mock.png" alt="假圖" />
           </div>
           <div class="lg:w-5/8">
-            <h2 class="mb-4 text-h4">愛奇兒家庭社區共融中心集資計畫</h2>
-            <span class="mb-3 block lg:text-lg">單次捐款｜理念支持</span>
-            <span class="mb-6 block text-h4 font-bold lg:text-h3">$ 300</span>
+            <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
+            <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
+            <span class="mb-6 block text-h4 font-bold lg:text-h3">$ {{ price }}</span>
             <ul class="mb-6">
               <li>
                 <p class="text-grey-500">已被贊助 100 次</p>
               </li>
               <li>
-                <p class="text-grey-500">預計 2023 年 12 月出貨</p>
+                <p class="text-grey-500">預計 {{ shipDate }}出貨</p>
               </li>
             </ul>
             <div class="flex items-center gap-2">
@@ -52,8 +52,13 @@
             <span><img src="~/assets/images/icons/gift.svg" alt="禮物" /></span>
             <h2>理念支持回饋品</h2>
           </div>
-          <h3 class="mb-4 text-lg">◆ 列名感謝</h3>
+          <h3 class="mb-4 text-lg">◆ {{ optionName }}</h3>
           <ul class="mb-6">
+            <li class="mb-2">
+              <p>
+                {{ content }}
+              </p>
+            </li>
             <li class="mb-2">
               <p>
                 ❖ 操作指引：自訂金額可於「額外贊助」欄位中輸入。電腦版於頁面右方，手機版於頁面下方。
@@ -140,10 +145,41 @@
 <script setup>
 const route = useRoute();
 const router = useRouter();
-const { planId } = route.params;
+const { getProjectOption } = useApi();
+const { projectId, planId } = route.params;
 
 const navigateToCheckout = () => {
   const url = `/sponsor/${planId}/checkout`;
   router.push(url);
+};
+
+const optionName = ref('');
+const content = ref('');
+const price = ref('');
+const projectTitle = ref('');
+const shipDate = ref('');
+
+onMounted(async () => {
+  await nextTick();
+  getProjectOption(projectId, planId)
+    .then((res) => {
+      const option = res.data.value.data;
+      optionName.value = option.option_name;
+      content.value = option.option_content;
+      price.value = option.option_price;
+      shipDate.value = getShipDate(option.option_parent.project_end_date);
+      projectTitle.value = option.option_parent.project_title;
+
+      console.log(option);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+const getShipDate = (endDate) => {
+  const date = new Date(endDate);
+  const newDate = new Date(date.setMonth(date.getMonth() + 2));
+  return `${newDate.getFullYear()} 年 ${newDate.getMonth() + 1} 月`;
 };
 </script>
