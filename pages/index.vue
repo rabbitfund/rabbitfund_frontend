@@ -1,26 +1,13 @@
 <script setup>
 const { getProjects } = useApi();
-const projects = ref([]);
-
-onMounted(async () => {
-  await nextTick();
-  getProjects(1, "recent")
-    .then((res) => {
-      const projectList = res.data.value.data;
-      projects.value = projectList; // 用 .splice(3) 會有問題
-      console.log(projects.value);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-})
+const { data: projects } = await getProjects(1, 'recent');
 
 const getDaysLeft = (projectEndDate) => {
   const today = new Date();
   const endDate = new Date(projectEndDate);
   const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
   return `${days} 天`;
-}
+};
 </script>
 
 <template>
@@ -52,30 +39,6 @@ const getDaysLeft = (projectEndDate) => {
               ></Card>
             </NuxtLink>
           </li>
-          <!-- <li class="md:w-1/3">
-            <Card
-              class="h-full"
-              type="公益"
-              timeLeft="剩餘時間：2 天 3 小時 5分"
-              title="《看見動物的真實處境》深度報導 x 為牠發聲"
-              proposer="窩窩wouwou"
-              :minAmount="0"
-              :maxAmount="1171000"
-              :currentAmount="971000"
-            ></Card>
-          </li>
-          <li class="md:w-1/3">
-            <Card
-              class="h-full"
-              type="校園"
-              timeLeft="剩餘時間：2 天 3 小時 5分"
-              title="初生小雞 教會孩子的生命功課｜沉浸式校園巡迴公益募資計畫"
-              proposer="渴慕文創"
-              :minAmount="0"
-              :maxAmount="1600000"
-              :currentAmount="1284500"
-            ></Card>
-          </li> -->
         </ul>
         <button class="btn btn-primary-outline">查看更多</button>
       </div>
