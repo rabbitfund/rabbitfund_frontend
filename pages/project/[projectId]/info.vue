@@ -15,7 +15,7 @@ const proposer = ref("");
 const taxId = ref("");
 const email = ref("");
 const timeLeft = ref("");
-const cover = ref("")
+const cover = ref("");
 
 
 onMounted(async () => {
@@ -52,11 +52,11 @@ const getDaysLeft = (projectEndDate) => {
   const endDate = new Date(projectEndDate);
   const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
   return `${days} 天`;
-}
+};
 
 const copy = () => {
   navigator.clipboard.writeText(window.location.href);
-}
+};
 </script>
 
 <template>
@@ -198,11 +198,13 @@ const copy = () => {
         />
         <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
         <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
-        <CardPlan v-for="option in options" 
+        <CardPlan v-for="option in options"
+          :planId="option._id"
           :plan="option.option_name"
           :price="option.option_price"
           :times="46"
-          :content="option.option_content" />
+          :content="option.option_content"
+          :endDate="endDate" />
       </div>
     </section>
   </main>
