@@ -1,8 +1,28 @@
 <script setup>
+import mockImg from '~/assets/images/mock.png';
+
 const props = defineProps({
   canModify: {
     type: [Boolean],
     default: true
+  },
+  id: {
+    type: [String]
+  },
+  type: {
+    type: [String]
+  },
+  timeLeft: {
+    type: [String]
+  },
+  title: {
+    type: [String]
+  },
+  proposer: {
+    type: [String]
+  },
+  cover: {
+    type: [String]
   }
 });
 </script>
@@ -12,12 +32,12 @@ const props = defineProps({
   >
     <div class="grid grid-cols-12 gap-6">
       <div class="col-span-12 overflow-hidden rounded-t-lg xl:col-span-5">
-        <img src="~/assets/images/mock.png" class="object-contain" alt="carrot" />
+        <img :src="props?.cover || mockImg" class="object-contain" alt="carrot" />
       </div>
       <div class="col-span-12 xl:col-span-7">
-        <span class="block w-[72px]"><Badge :type="'公益'"></Badge></span>
+        <span class="block w-[72px]"><Badge :type="props.type"></Badge></span>
 
-        <h4 class="mt-2 font-bold text-grey-600">關愛偏鄉孩子集資計畫</h4>
+        <h4 class="mt-2 font-bold text-grey-600">{{props.title}}</h4>
         <div class="mt-6 flex justify-between gap-6 bg-light-emphasis px-5 py-3">
           <div>
             <p>贊助人次</p>

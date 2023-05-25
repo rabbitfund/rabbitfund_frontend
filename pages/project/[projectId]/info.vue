@@ -1,4 +1,6 @@
 <script setup>
+import mockImg from '~/assets/images/mock.png';
+
 const { getProject } = useApi();
 const route = useRoute();
 const { projectId } = route.params;
@@ -13,6 +15,7 @@ const proposer = ref("");
 const taxId = ref("");
 const email = ref("");
 const timeLeft = ref("");
+const cover = ref("");
 
 
 onMounted(async () => {
@@ -29,14 +32,15 @@ onMounted(async () => {
       category.value = project.project_category;
       content.value = project.project_content;
       target.value = project.project_target; // 逗號分隔之後再處理
-      startDate.value = project.project_start_date.substring(0, 10); // 要不要用 moment.js?
-      endDate.value = project.project_end_date.substring(0, 10);
+      startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
+      endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
       options.value = project.option;
       proposer.value = project.ownerInfo.proposer_name;
       taxId.value = project.ownerInfo.proposer_tax_id;
       email.value = project.ownerInfo.proposer_email;
       timeLeft.value = getDaysLeft(project.project_end_date);
-      console.log(options.value)
+      cover.value = project.project_cover && project.project_cover !== 'cover URL' ? project.project_cover : mockImg;
+      console.log(options.value);
     })
     .catch((err) => {
       console.log(err)
@@ -48,11 +52,11 @@ const getDaysLeft = (projectEndDate) => {
   const endDate = new Date(projectEndDate);
   const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
   return `${days} 天`;
-}
+};
 
 const copy = () => {
   navigator.clipboard.writeText(window.location.href);
-}
+};
 </script>
 
 <template>
@@ -70,9 +74,9 @@ const copy = () => {
         <div class="mb-6 lg:mb-0 lg:flex-1 lg:px-3">
           <div class="mb-4 overflow-hidden rounded-lg">
             <img
-              src="~/assets/images/mock.png"
+              :src="cover"
               class="w-full object-cover xl:h-[370px]"
-              alt="假圖"
+              alt="project image"
             />
           </div>
           <p>專案時間 {{ startDate }} 12:00 ~ {{ endDate }} 23:59</p>
@@ -194,11 +198,13 @@ const copy = () => {
         />
         <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
         <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
-        <CardPlan v-for="option in options" 
+        <CardPlan v-for="option in options"
+          :planId="option._id"
           :plan="option.option_name"
           :price="option.option_price"
           :times="46"
-          :content="option.option_content" />
+          :content="option.option_content"
+          :endDate="endDate" />
       </div>
     </section>
   </main>

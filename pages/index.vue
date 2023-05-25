@@ -26,18 +26,20 @@ const getDaysLeft = (projectEndDate) => {
         <h2 class="mb-8">精選專案</h2>
         <ul class="mb-12 flex flex-col gap-x-6 md:flex-row">
           <li class="md:w-1/3" v-for="project in projects">
-            <NuxtLink :to="`/project/${project._id}/info`">
-              <Card
-                class="h-full"
-                :type="project.project_category"
-                :timeLeft="getDaysLeft(project.project_end_date)"
-                :title="project.project_title"
-                :proposer="project.ownerInfo ? project.ownerInfo.proposer_name : 'not found'"
-                :minAmount="0"
-                :maxAmount="project.project_target"
-                :currentAmount="5000"
-              ></Card>
-            </NuxtLink>
+            <!-- <NuxtLink :to="`/project/${project._id}/info`"> -->
+            <Card
+              class="h-full"
+              :type="project.project_category"
+              :timeLeft="getDaysLeft(project.project_end_date)"
+              :title="project.project_title"
+              :proposer="project.ownerInfo ? project.ownerInfo.proposer_name : 'not found'"
+              :minAmount="0"
+              :maxAmount="project.project_target"
+              :currentAmount="5000"
+              :cover="project?.project_cover"
+              :id="project._id"
+            ></Card>
+            <!-- </NuxtLink> -->
           </li>
         </ul>
         <button class="btn btn-primary-outline">查看更多</button>

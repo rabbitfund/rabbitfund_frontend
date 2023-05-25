@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import mockImg from '~/assets/images/mock.png';
+
 const props = defineProps({
   id: {
     type: [String]
@@ -23,6 +25,9 @@ const props = defineProps({
   },
   currentAmount: {
     type: [Number]
+  },
+  cover: {
+    type: [String]
   }
 });
 
@@ -37,7 +42,7 @@ const formattedAmount = computed(() => {
     @click="navigateTo(`/project/${props.id}/info`)"
   >
     <div class="overflow-hidden rounded-t-lg">
-      <img src="~/assets/images/mock.png" class="object-cover" alt="carrot" />
+      <img :src="(props.cover && props.cover !== 'cover URL') ? props.cover : mockImg" class="object-cover" alt="carrot" />
     </div>
     <div class="flex flex-auto flex-col p-4 pb-6">
       <div class="mb-4 flex items-center justify-between">
