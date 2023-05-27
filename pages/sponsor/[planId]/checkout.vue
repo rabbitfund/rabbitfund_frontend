@@ -1,25 +1,12 @@
+<script setup>
+const route = useRoute();
+const { orderId } = route.params;
+</script>
+
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
-      <div class="flex justify-center">
-        <ul class="flex w-full gap-7 lg:w-2/3 lg:gap-8">
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">01</span
-            ><span class="mb-1 block font-bold lg:text-lg">確認品項</span>
-            <div class="h-1 bg-primary-light"></div>
-          </li>
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">02</span
-            ><span class="mb-1 block font-bold lg:text-lg">填寫訂單資料</span>
-            <div class="h-1 bg-primary"></div>
-          </li>
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">03</span
-            ><span class="mb-1 block font-bold lg:text-lg">交易結果</span>
-            <div class="h-1 bg-primary-light"></div>
-          </li>
-        </ul>
-      </div>
+      <CheckoutProcess step="填寫訂單資料" />
     </div>
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
@@ -227,33 +214,12 @@
               <span class="text-lg font-bold">總計</span
               ><span class="text-lg font-bold">$ 600</span>
             </div>
-            <button @click="navigateToResult()" class="btn btn-primary w-full">立即付款</button>
+            <NuxtLink :to="`/sponsor/${orderId}/check-order`" class="btn btn-primary block w-full"
+              >確認訂單</NuxtLink
+            >
           </div>
         </div>
-        <p class="font-sansTC font-medium leading-relaxed tracking-wider text-grey-500">
-          點擊「直接結帳」即表示您已閱讀並同意<NuxtLink
-            to="/terms"
-            class="cursor-pointer text-blue-600 visited:text-purple-600"
-            target="_blank"
-            >使用者條款</NuxtLink
-          >與<NuxtLink
-            to="/privacy"
-            class="cursor-pointer text-blue-600 visited:text-purple-600"
-            target="blank"
-            >隱私權政策</NuxtLink
-          >。
-        </p>
       </div>
     </div>
   </section>
 </template>
-
-<script setup>
-const router = useRouter();
-const orderId = ref('order-123');
-
-const navigateToResult = () => {
-  const url = `/transaction-result/${orderId.value}`;
-  router.push(url);
-};
-</script>

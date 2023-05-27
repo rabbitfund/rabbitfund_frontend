@@ -1,25 +1,12 @@
+<script setup>
+const route = useRoute();
+const { planId } = route.params;
+</script>
+
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
-      <div class="flex justify-center">
-        <ul class="flex w-full gap-7 lg:w-2/3 lg:gap-8">
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">01</span
-            ><span class="mb-1 block font-bold lg:text-lg">確認品項</span>
-            <div class="h-1 bg-primary"></div>
-          </li>
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">02</span
-            ><span class="mb-1 block font-bold lg:text-lg">填寫訂單資料</span>
-            <div class="h-1 bg-primary-light"></div>
-          </li>
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">03</span
-            ><span class="mb-1 block font-bold lg:text-lg">交易結果</span>
-            <div class="h-1 bg-primary-light"></div>
-          </li>
-        </ul>
-      </div>
+      <CheckoutProcess step="確認品項" />
     </div>
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
@@ -121,7 +108,9 @@
             <div class="mb-8 flex justify-end">
               <span class="text-lg font-bold">NT$ 300</span>
             </div>
-            <button @click="navigateToCheckout()" class="btn btn-primary w-full">直接結帳</button>
+            <NuxtLink class="btn btn-primary block w-full" :to="`/sponsor/${planId}/checkout`"
+              >直接結帳</NuxtLink
+            >
           </div>
         </div>
         <p class="font-sansTC font-medium leading-relaxed tracking-wider text-grey-500">
