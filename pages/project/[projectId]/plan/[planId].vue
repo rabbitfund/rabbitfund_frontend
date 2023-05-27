@@ -1,8 +1,3 @@
-<script setup>
-const route = useRoute();
-const { planId } = route.params;
-</script>
-
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
