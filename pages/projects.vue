@@ -1,43 +1,46 @@
 <script setup>
 const page = ref(1);
-const tag = ref('long');
-const projects = ref([]);
+const tag = ref('');
+const k = ref('');
 
-const handleGetProjects = async () => {
-  // 監聽變數重新發送請求
-  const { data } = await useAsyncData(
-    'projectList',
-    () =>
-      $fetch(`/projects`, {
-        params: {
-          page: page.value,
-          tag: tag.value
-        }
-      }),
-    {
-      watch: [page, tag]
-    }
-  );
+const route = useRoute();
 
-  if (data.value?.ok) {
-    projects.value = data.value.data;
-    console.log(projects);
-  }
-};
-onMounted(async () => {
-  await nextTick();
-  handleGetProjects();
+watchEffect(() => {
+  tag.value = route.query.tag ? route.query.tag : '';
+  k.value = route.query.k ? route.query.k : '';
+
+  // 當 tag 或 k 變化時，將 page 設置為 1
+  page.value = 1;
 });
 
-const getDaysLeft = (projectEndDate) => {
-  const today = new Date();
-  const endDate = new Date(projectEndDate);
-  const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
-  return `${days} 天`;
-};
+const { data: projects } = await useAsyncData(
+  'projectList' + page.value + '_' + tag.value,
+  () =>
+    $fetch(`/projects`, {
+      params: {
+        page: page.value,
+        tag: tag.value,
+        k: k.value
+      }
+    }),
+  {
+    watch: [page, tag, k],
+    transform: (_projects) => _projects.data,
+    server: false
+  }
+);
 </script>
 <template>
-  <h2 class="mb-4">專案列表</h2>
+  <div class="container mx-auto my-6 flex justify-between lg:my-12">
+    <h2 class="">專案列表</h2>
+    <select v-model="tag" class="w-[120px]" value="">
+      <option value="">全部</option>
+      <option value="recent">近期</option>
+      <option value="hot">熱門</option>
+      <option value="long">長期募資</option>
+    </select>
+  </div>
+
   <section
     v-if="projects?.length && projects.length > 0"
     class="container grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
@@ -48,17 +51,7 @@ const getDaysLeft = (projectEndDate) => {
       class="cursor-pointer hover:bg-light"
       @click="navigateTo(`/project/${project._id}/info`)"
     >
-      <Card
-        :type="project.project_category"
-        :timeLeft="getDaysLeft(project.project_end_date)"
-        :title="project.project_title"
-        :proposer="project.ownerInfo ? project.ownerInfo.proposer_name : 'not found'"
-        :minAmount="0"
-        :maxAmount="project.project_target"
-        :currentAmount="5000"
-        :cover="project?.project_cover"
-        :id="project._id"
-      />
+      <Card :project="project" />
     </div>
   </section>
   <LayoutPagination
