@@ -28,13 +28,6 @@ onMounted(async () => {
   await nextTick();
   handleGetProjects();
 });
-
-const getDaysLeft = (projectEndDate) => {
-  const today = new Date();
-  const endDate = new Date(projectEndDate);
-  const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
-  return `${days} 天`;
-};
 </script>
 <template>
   <h2 class="mb-4">專案列表</h2>
@@ -48,17 +41,7 @@ const getDaysLeft = (projectEndDate) => {
       class="cursor-pointer hover:bg-light"
       @click="navigateTo(`/project/${project._id}/info`)"
     >
-      <Card
-        :type="project.project_category"
-        :timeLeft="getDaysLeft(project.project_end_date)"
-        :title="project.project_title"
-        :proposer="project.ownerInfo ? project.ownerInfo.proposer_name : 'not found'"
-        :minAmount="0"
-        :maxAmount="project.project_target"
-        :currentAmount="5000"
-        :cover="project?.project_cover"
-        :id="project._id"
-      />
+      <Card :project="project" />
     </div>
   </section>
   <LayoutPagination

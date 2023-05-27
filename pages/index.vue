@@ -25,8 +25,7 @@ const getDaysLeft = (projectEndDate) => {
         <img src="~/assets/images/rabbit-ears.png" alt="rabbit ears" class="mb-2 w-[54px]" />
         <h2 class="mb-8">精選專案</h2>
         <ul class="mb-12 flex flex-col gap-x-6 md:flex-row">
-          <li class="md:w-1/3" v-for="project in projects">
-            <!-- <NuxtLink :to="`/project/${project._id}/info`"> -->
+          <li v-for="project in projects" :key="project._id" class="md:w-1/3">
             <Card
               class="h-full"
               :type="project.project_category"
@@ -38,8 +37,8 @@ const getDaysLeft = (projectEndDate) => {
               :currentAmount="5000"
               :cover="project?.project_cover"
               :id="project._id"
+              :project="project"
             ></Card>
-            <!-- </NuxtLink> -->
           </li>
         </ul>
         <button class="btn btn-primary-outline">查看更多</button>
