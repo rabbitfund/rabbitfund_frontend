@@ -1,12 +1,14 @@
 <script setup>
 const route = useRoute();
+const router = useRouter();
+
 const { orderId } = route.params;
-console.log(orderId);
+// console.log(orderId);
 
 const order = ref('');
 
 order.value = {
-  MerchantOrderNo: route.query.MerchantOrderNo,
+  // MerchantOrderNo: route.query.MerchantOrderNo,
   ItemDesc: route.query.ItemDesc,
   Amt: route.query.Amt,
   PaymentType: route.query.PaymentType,
@@ -15,8 +17,8 @@ order.value = {
 
 // console.log(order.value);
 
-// const targetURL = `/sponsor/${orderId}/transaction-result`;
-// this.$router.replace(targetURL); // 移除 query string，將網址調整為沒有參數的版本
+const targetURL = `/sponsor/${orderId}/transaction-result`;
+router.replace(targetURL); // 移除 query string，將網址調整為沒有參數的版本
 </script>
 
 <template>
@@ -38,7 +40,7 @@ order.value = {
         </p>
         <p class="mb-3 lg:text-lg">訂單金額：NT$ {{ order.Amt }}</p>
         <p class="mb-3 lg:text-lg">交易狀態：<span class="text-success">付款成功</span></p>
-        <p class="mb-3 lg:text-lg">訂單編號：{{ order.MerchantOrderNo.split(0, 5)[0] }} ***</p>
+        <p class="mb-3 lg:text-lg">訂單編號：{{ orderId }}</p>
         <p class="mb-3 lg:text-lg">付款方式：{{ order.PaymentType }}</p>
         <p class="mb-3 lg:text-lg">付款時間：{{ order.PayTime }}</p>
       </div>
