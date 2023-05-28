@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import projectSuccessImg from '~/assets/images/project-success.svg';
+import projectFailImg from '~/assets/images/project-fail.svg';
+
 const props = defineProps({
   planId: {
     type: [String]
@@ -39,12 +42,22 @@ const { projectId } = route.params;
 
 <template>
   <div class="flex flex-col rounded-lg bg-white px-6 py-8 ring-1 ring-grey-200 md:px-8 md:py-10">
-    <div class="mb-6 bg-primary-light md:mb-8">
+    <div class="relative mb-6 bg-primary-light md:mb-8">
       <img
         src="~/assets/images/mock-plan.png"
         class="h-[112px] w-full object-contain md:h-[110px]"
         alt="plan"
       />
+      <div
+        v-if="true"
+        class="absolute inset-0 flex items-center justify-center bg-grey-500/40 p-4"
+      >
+        <img
+          :src="true ? projectSuccessImg : projectFailImg"
+          class="h-full"
+          alt="project status"
+        />
+      </div>
     </div>
     <h3 class="mb-2 text-base font-normal md:mb-3 md:text-lg">{{ props.plan }}</h3>
     <span class="mb-4 text-h2">$ {{ formattedPrice }}</span>
