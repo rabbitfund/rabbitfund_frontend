@@ -1,4 +1,5 @@
 <script setup>
+import { useProjectStore } from '~/stores/project';
 import mockImg from '~/assets/images/mock.png';
 
 const { getProject } = useApi();
@@ -17,6 +18,8 @@ const email = ref("");
 const timeLeft = ref("");
 const cover = ref("");
 
+const projectStore = useProjectStore();
+const { setProject } = projectStore;
 
 onMounted(async () => {
   await nextTick();
@@ -41,11 +44,13 @@ onMounted(async () => {
       timeLeft.value = getDaysLeft(project.project_end_date);
       cover.value = project.project_cover && project.project_cover !== 'cover URL' ? project.project_cover : mockImg;
       console.log(options.value);
+
+      setProject(project);
     })
     .catch((err) => {
-      console.log(err)
-    })
-})
+      console.log(err);
+    });
+});
 
 const getDaysLeft = (projectEndDate) => {
   const today = new Date();
