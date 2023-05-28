@@ -25,6 +25,8 @@ export default function useApi() {
 
   // 訂單
   const postOrder = (data) => useFetch('/orders', { method: 'POST', body: JSON.stringify(data) });
+  const getOrder = (orderId: string) =>
+    useFetch(`/order/${orderId}`, { method: 'GET', server: false });
 
   return {
     signin,
@@ -35,6 +37,7 @@ export default function useApi() {
     getProject,
     getProjectOption,
     getProjectOptions,
-    postOrder
+    postOrder,
+    getOrder
   };
 }
