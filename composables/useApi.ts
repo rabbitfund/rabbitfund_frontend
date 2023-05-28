@@ -23,6 +23,9 @@ export default function useApi() {
   const getProjectOptions = (projectId: string) =>
     useFetch(`/projects/${projectId}/options`, { method: 'GET', server: false });
 
+  // 訂單
+  const postOrder = (data) => useFetch('/orders', { method: 'POST', body: JSON.stringify(data) });
+
   return {
     signin,
     signup,
@@ -31,6 +34,7 @@ export default function useApi() {
     getProjects,
     getProject,
     getProjectOption,
-    getProjectOptions
+    getProjectOptions,
+    postOrder
   };
 }
