@@ -3,6 +3,9 @@ import { storeToRefs } from 'pinia';
 import avatar from '@/assets/images/avatar.png';
 import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
+const route = useRoute();
+const k = ref('');
+k.value = route.query.k ? route.query.k : '';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
@@ -67,6 +70,7 @@ function signIn() {
             <input
               v-if="isSearchInputVisible"
               ref="searchInput"
+              v-model="k"
               type="text"
               class="absolute right-0 top-0 p-2"
               placeholder="搜尋"
@@ -164,6 +168,7 @@ function signIn() {
                   <div class="w-100 relative">
                     <input
                       ref="searchInputMobile"
+                      v-model="k"
                       type="text"
                       class="w-full px-4 py-2 transition-all duration-1000 ease-out"
                       :class="{ hidden: !isSearchInputVisible, 'w-0': !isSearchInputVisible }"
