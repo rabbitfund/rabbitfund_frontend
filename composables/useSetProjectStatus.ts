@@ -16,7 +16,16 @@ export default function useCalcLeftTime(project: any) {
     if (remainingSeconds > 0) {
       return { status: FoundStatus.Ongoing, seconds: remainingSeconds };
     }
-    return { status: FoundStatus.Finished };
+    return {
+      status: FoundStatus.Finished,
+      finishedStatus: computed(() => {
+        if (project?.project_target !== undefined && project?.project_progress !== undefined) {
+          return project.project_progress >= project.project_target;
+        }
+
+        return false;
+      })
+    };
   };
 
   const projectStatus = getRemainingSeconds(project?.project_end_date);
@@ -51,15 +60,6 @@ export default function useCalcLeftTime(project: any) {
     }
   };
 
-  const finishedStatus = computed(() => {
-    if (projectStatus.status === FoundStatus.Finished) {
-      if (project?.project_target !== undefined && project?.project_progress !== undefined) {
-        return project.project_progress >= project.project_target;
-      }
-    }
-    return false;
-  });
-
   const formatTimeLeft = computed(() => {
     if (projectStatus.status !== FoundStatus.Finished && timeLeft.value !== undefined) {
       return formatTime(timeLeft.value);
@@ -69,7 +69,6 @@ export default function useCalcLeftTime(project: any) {
 
   return {
     projectStatus,
-    finishedStatus,
     formatTimeLeft
   };
 }

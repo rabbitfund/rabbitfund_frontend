@@ -13,7 +13,7 @@ enum FoundStatus {
   Finished = '已結束'
 }
 
-const { projectStatus, finishedStatus, formatTimeLeft } = useSetProjectStatus(props.project);
+const { projectStatus, formatTimeLeft } = useSetProjectStatus(props.project);
 
 const formattedAmount = computed(() => {
   return props.project?.project_progress?.toLocaleString();
@@ -40,7 +40,7 @@ const formattedAmount = computed(() => {
         class="absolute inset-0 flex items-center justify-center bg-grey-500/40 p-5 lg:p-[25px]"
       >
         <img
-          :src="finishedStatus ? projectSuccessImg : projectFailImg"
+          :src="projectStatus?.finishedStatus ? projectSuccessImg : projectFailImg"
           class="h-full"
           alt="project status"
         />
