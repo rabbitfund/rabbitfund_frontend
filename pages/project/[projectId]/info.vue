@@ -21,13 +21,17 @@ const cover = ref("");
 const projectStore = useProjectStore();
 const { setProject } = projectStore;
 
+let projectStatus = ref({});
+
+
 onMounted(async () => {
   await nextTick();
   getProject(projectId)
     .then((res) => {
       const project = res.data.value.data;
-      console.log(project)
-
+      console.log(project);
+      // 專案狀態
+      projectStatus.value = useSetProjectStatus(project);
       // title.value = project.project_title;
       // summary.value = project.project_summary;
       // info.value = project;
@@ -77,12 +81,23 @@ const copy = () => {
     <section class="container mb-16 pt-4 lg:pt-16">
       <div class="lg:-mx-3 lg:flex lg:gap-4">
         <div class="mb-6 lg:mb-0 lg:flex-1 lg:px-3">
-          <div class="mb-4 overflow-hidden rounded-lg">
+          <div class="mb-4 overflow-hidden rounded-lg relative">
             <img
               :src="cover"
               class="w-full object-cover xl:h-[370px]"
               alt="project image"
             />
+
+            <div
+              v-if="projectStatus?.status === '已結束'"
+              class="absolute inset-0 flex items-center justify-center bg-grey-500/40 p-5 lg:p-[25px]"
+            >
+              <img
+                :src="projectStatus?.finishedStatus ? projectSuccessImg : projectFailImg"
+                class="h-full"
+                alt="project status"
+              />
+            </div>
           </div>
           <p>專案時間 {{ startDate }} 12:00 ~ {{ endDate }} 23:59</p>
         </div>
