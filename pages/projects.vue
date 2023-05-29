@@ -48,7 +48,7 @@ const { data: projects } = await useAsyncData(
     <div
       v-for="project in projects"
       :key="project._id"
-      class="cursor-pointer hover:bg-light"
+      class="cursor-pointer"
       @click="navigateTo(`/project/${project._id}/info`)"
     >
       <Card :project="project" />
