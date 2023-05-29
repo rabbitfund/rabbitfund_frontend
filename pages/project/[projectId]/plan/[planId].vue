@@ -227,6 +227,7 @@ const navigateToCheckout = () => {
   const orderData = {
     user_id: '645f2f381357264aa70629b3', // TODO: 抓 userInfo._id 目前嘗試都是 undefined
     project_id: projectId,
+    project_price: price.value,
     option_id: planId,
     order_option_quantity: quantity.value,
     order_extra: extra.value,

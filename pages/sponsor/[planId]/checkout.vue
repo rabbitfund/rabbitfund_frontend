@@ -200,14 +200,18 @@
             <span class="mb-3 block lg:text-lg">單次捐款｜理念支持</span>
           </div>
           <ul class="border-b pb-6 pt-8">
-            <li class="mb-4 flex justify-between"><span>小計</span><span>$ 300</span></li>
-            <li class="mb-4 flex justify-between"><span>額外贊助</span><span>$ 300</span></li>
+            <li class="mb-4 flex justify-between">
+              <span>小計</span><span>$ {{ projectPrice }}</span>
+            </li>
+            <li class="mb-4 flex justify-between">
+              <span>額外贊助</span><span>$ {{ orderExtra }}</span>
+            </li>
             <li class="flex justify-between"><span>運費</span><span>$ 0</span></li>
           </ul>
           <div class="pt-6">
             <div class="mb-8 flex justify-between">
               <span class="text-lg font-bold">總計</span
-              ><span class="text-lg font-bold">$ 600</span>
+              ><span class="text-lg font-bold">$ {{ orderTotal }}</span>
             </div>
             <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckOrder()"
               >確認訂單</NuxtLink
@@ -228,6 +232,16 @@ const router = useRouter();
 // const route = useRoute();
 // const { planId } = route.params;
 
+const userId = orderStore.user_id;
+const projectId = orderStore.project_id;
+const projectPrice = orderStore.project_price;
+const optionId = orderStore.option_id;
+const orderOptionQuantity = orderStore.order_option_quantity;
+const orderExtra = orderStore.order_extra;
+const orderTotal = orderStore.order_total;
+const orderNote = orderStore.order_note;
+
+console.log(projectPrice);
 const navigateToCheckOrder = async () => {
   try {
     const orderOtherData = {
@@ -237,19 +251,12 @@ const navigateToCheckOrder = async () => {
     };
     console.log('orderOtherData', orderOtherData);
 
-    const userId = orderStore.user_id;
-    const projectId = orderStore.project_id;
-    const optionId = orderStore.option_id;
-    const orderOptionQuantity = orderStore.order_option_quantity;
-    const orderExtra = orderStore.order_extra;
-    const orderTotal = orderStore.order_total;
-    const orderNote = orderStore.order_note;
-
     // console.log('orderData', orderData);
 
     const orderPayload = {
       user_id: userId,
       project_id: projectId,
+      project_price: projectPrice,
       option_id: optionId,
       order_option_quantity: orderOptionQuantity,
       order_extra: orderExtra,
