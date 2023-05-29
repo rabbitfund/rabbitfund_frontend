@@ -1,5 +1,38 @@
 <script setup>
 const currentTab = ref(0);
+const currentUser = ref('proposer');
+
+const content = reactive({
+  proposer: [
+    {
+      title: '募資中',
+      data: [1,3,4]
+    },
+    {
+      title: '已達標',
+      data: [1]
+    },
+    {
+      title: '未成案',
+      data: [1,4]
+    }
+  ],
+
+  supporter: [
+    {
+      title: '收藏',
+      data: [1,3,4,1,3,4]
+    },
+    {
+      title: '已達標',
+      data: [1]
+    },
+    {
+      title: '未成案',
+      data: [1,1,1,2]
+    }
+  ]
+});
 </script>
 <template>
   <section>
@@ -11,7 +44,9 @@ const currentTab = ref(0);
         srcset=""
       />
       <div class="col-span-12 mx-auto font-bold lg:col-span-9">
-        <h4 class="mb-6">兔兔股份有限公司</h4>
+        <h4 class="mb-6">兔兔股份有限公司
+          <span class='text-[12px] cursor-pointer bg-primary/20' @click='currentUser === "proposer" ? currentUser = "supporter" : currentUser = "proposer"'>切換角色</span>
+        </h4>
         <h6 class="text-grey-500">
           兔兔公司是是貝殼放大股份有限公司（Backer-Founder）於 2021 年正式啟用的回饋型群眾集資 /
           群眾募資平台，任何人都有機會在此提案號召群眾支持，累積實踐夢想所需的關鍵資金、社群認同與品牌影響力。任何人也都有可能在此贊助心中認同的集資計畫，從一己之力到集結眾力使想像成真，深刻體會到群眾集資的核心價值根於「信任」與「責任」。
@@ -21,35 +56,41 @@ const currentTab = ref(0);
     <div class="flex justify-center gap-x-4 border-b pb-12 lg:gap-x-20 lg:border-0 lg:pb-[64px]">
       <section class="follow-status">
         <img src="@/assets/images/icons/follow-project.svg" alt="" srcset="" />
-        <p>收藏</p>
-        <span>19</span>
+        <p>{{ content[currentUser][0].title }}</p>
+        <span>{{ content[currentUser][0].data.length }}</span>
       </section>
       <section class="follow-status">
         <img src="@/assets/images/icons/success-project.svg" alt="" srcset="" />
-        <p>已達標</p>
-        <span>19</span>
+        <p>{{ content[currentUser][1]?.title }}</p>
+        <span>{{ content[currentUser][1]?.data.length }}</span>
       </section>
       <section class="follow-status">
         <img src="@/assets/images/icons/fail-project.svg" alt="" srcset="" />
-        <p>未成案</p>
-        <span>19</span>
+        <p>{{ content[currentUser][2].title }}</p>
+        <span>{{ content[currentUser][2].data.length }}</span>
       </section>
     </div>
     <div>
       <ul class="flex justify-between py-8 md:justify-center md:gap-10">
-        <li :class="currentTab === 0 ? 'active-tab' : 'default-tab'" @click="currentTab = 0">
-          募資中
-        </li>
-        <li :class="currentTab === 1 ? 'active-tab' : 'default-tab'" @click="currentTab = 1">
-          已達標
-        </li>
-        <li :class="currentTab === 2 ? 'active-tab' : 'default-tab'" @click="currentTab = 2">
-          未成案
+        <li
+          v-for="(item, index) in content[currentUser]"
+          :key="item.title"
+          :class="currentTab === index ? 'active-tab' : 'default-tab'"
+          @click="currentTab = index"
+        >
+          {{ item.title }}
         </li>
       </ul>
     </div>
-    <div class="flex flex-col gap-4">
-      <CardMemberProject v-for="i in 3" :key="i" />
+    <div class="flex flex-col gap-4" >
+      <CardMemberProject 
+        v-for="(item, index) in content[currentUser][currentTab].data"
+          :key="index"
+           />
+
+      <p v-if='content[currentUser][currentTab].data == 0' class='text-center m-5'>
+        Oops! 這裡什麼都沒有!
+      </p>
     </div>
   </section>
 </template>
