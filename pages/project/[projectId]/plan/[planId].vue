@@ -25,7 +25,7 @@
             </ul>
             <div class="flex items-center gap-2">
               <label for="productNumber" class="mb-0">輸入數量</label>
-              <input type="number" class="w-1/4" />
+              <input v-model="quantity" type="number" class="w-1/4" />
             </div>
           </div>
         </div>
@@ -37,9 +37,7 @@
           <h3 class="mb-4 text-lg">◆ {{ optionName }}</h3>
           <ul class="mb-6">
             <li class="mb-2">
-              <p>
-                {{ content }}
-              </p>
+              <p v-html="content"></p>
             </li>
             <li class="mb-2">
               <p>
@@ -55,14 +53,14 @@
           </ul>
           <div class="mb-6">
             <label for="thanks-to-name">列名感謝顯示名稱</label>
-            <input type="text" name="thanks-to-name" id="thanks-to-name" class="mb-2 w-1/2" />
+            <input id="thanks-to-name" type="text" name="thanks-to-name" class="mb-2 w-1/2" />
             <p class="text-grey-400">
               非必填。請於此欄填寫您希望露出的名稱，若無填寫則會以收據抬頭列名感謝。
             </p>
           </div>
           <div>
             <label for="remark">備註</label>
-            <textarea name="remark" id="remark" rows="4"></textarea>
+            <textarea id="remark" v-model="note" name="remark" rows="4"></textarea>
           </div>
         </div>
       </div>
@@ -73,37 +71,40 @@
               <label for="extra-donation" class="mb-0 font-normal text-grey-400">額外贊助</label>
               <div class="flex w-1/2 items-center gap-4">
                 <span class="text-grey-400">$</span>
-                <input type="number" name="extra-donation" id="extra-donation" />
+                <input id="extra-donation" v-model="extra" type="number" name="extra-donation" />
               </div>
             </div>
             <ul class="flex flex-wrap gap-4">
-              <li
+              <!-- <li
                 class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
               >
                 <span>最低額度</span>
+              </li> -->
+              <li
+                class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+              >
+                <!-- <span>+100</span> -->
+                <button @click="addExtra(100)">+100</button>
               </li>
               <li
                 class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
               >
-                <span>+100</span>
+                <!-- <span>+1000</span> -->
+                <button @click="addExtra(1000)">+1000</button>
               </li>
               <li
                 class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
               >
-                <span>+1000</span>
-              </li>
-              <li
-                class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
-              >
-                <span>補整數</span>
+                <!-- <span>補整數</span> -->
+                <button @click="roundExtra()">補整數</button>
               </li>
             </ul>
           </div>
           <div class="pt-6">
             <div class="mb-8 flex justify-end">
-              <span class="text-lg font-bold">NT$ 300</span>
+              <span class="text-lg font-bold">NT$ {{ total }}</span>
             </div>
-            <NuxtLink class="btn btn-primary block w-full" :to="`/sponsor/${planId}/checkout`"
+            <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckout()"
               >直接結帳</NuxtLink
             >
           </div>
@@ -127,19 +128,31 @@
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '@/stores/auth';
+import { useUserStore } from '@/stores/user';
+import { useOrderStore } from '@/stores/order';
+
+const authStore = useAuthStore();
+const userStore = useUserStore();
+const isSigned = storeToRefs(authStore).token;
+const { userInfo } = storeToRefs(userStore);
+const orderStore = useOrderStore();
+
 const route = useRoute();
 const router = useRouter();
 const { getProjectOption } = useApi();
 const { projectId, planId } = route.params;
 
-const navigateToCheckout = () => {
-  const url = `/sponsor/${planId}/checkout`;
-  router.push(url);
-};
+watch(isSigned, () => {
+  if (isSigned) {
+    userStore.handleGetUserData();
+  }
+});
 
 const optionName = ref('');
 const content = ref('');
-const price = ref('');
+const price = ref(0);
 const projectTitle = ref('');
 const shipDate = ref('');
 
@@ -165,5 +178,69 @@ const getShipDate = (endDate) => {
   const date = new Date(endDate);
   const newDate = new Date(date.setMonth(date.getMonth() + 2));
   return `${newDate.getFullYear()} 年 ${newDate.getMonth() + 1} 月`;
+};
+
+const quantity = ref(1);
+const extra = ref(0);
+// const total = ref(0);
+const note = ref('');
+// const orderData = ref('');
+
+// 監聽 price、quantity 和 extra 的變化，重新計算總金額
+watch([price, quantity, extra], () => {
+  calculateTotal();
+});
+
+// 計算總金額的計算屬性
+const total = computed(() => {
+  return price.value * quantity.value + extra.value;
+});
+
+// 額外贊助指定金額
+const addExtra = (amount) => {
+  extra.value += amount;
+};
+
+// 額外贊助補總金額至整數
+const roundExtra = () => {
+  // 取得最前面那位數的指數，並將其轉換為倍數
+  const nearestMultiplier = Math.pow(10, Math.floor(Math.log10(total.value)));
+  // 得到補整數後的總金額
+  const roundedExtra = Math.ceil(total.value / nearestMultiplier) * nearestMultiplier;
+  // 計算原始的總金額與補整數後的總金額的差額
+  const difference = roundedExtra - total.value;
+
+  // 將差額加入贊助
+  addExtra(difference);
+};
+
+// 重新計算總金額
+const calculateTotal = () => {
+  total.value = price.value * quantity.value + extra.value;
+
+  // console.log('calculateTotal', total.value.data);
+};
+
+const navigateToCheckout = () => {
+  console.log('userInfo', userInfo);
+
+  const orderData = {
+    user_id: '645f2f381357264aa70629b3', // TODO: 抓 userInfo._id 目前嘗試都是 undefined
+    project_id: projectId,
+    project_price: price.value,
+    option_id: planId,
+    order_option_quantity: quantity.value,
+    order_extra: extra.value,
+    order_total: total.value,
+    order_note: note.value
+    // payment_method: 'WEBATM',
+    // invoice_type: '電子載具',
+    // invoice_carrier: ''
+  };
+  console.log('orderData', orderData);
+  orderStore.setOrder(orderData);
+
+  const url = `/sponsor/${planId}/checkout`;
+  router.push(url);
 };
 </script>

@@ -5,18 +5,18 @@ import mockImg from '~/assets/images/mock.png';
 const { getProject } = useApi();
 const route = useRoute();
 const { projectId } = route.params;
-const category = ref("公益");
-const content = ref("專案內容");
-const startDate = ref("");
-const endDate = ref("");
+const category = ref('');
+const content = ref('');
+const startDate = ref('');
+const endDate = ref('');
 const target = ref(500000);
-const title = ref("愛奇兒家庭社區共融中心集資計畫");
+const title = ref('');
 const options = ref([]);
-const proposer = ref("");
-const taxId = ref("");
-const email = ref("");
-const timeLeft = ref("");
-const cover = ref("");
+const proposer = ref('');
+const taxId = ref('');
+const email = ref('');
+const timeLeft = ref('');
+const cover = ref('');
 
 const projectStore = useProjectStore();
 const { setProject } = projectStore;
@@ -46,7 +46,10 @@ onMounted(async () => {
       taxId.value = project.ownerInfo.proposer_tax_id;
       email.value = project.ownerInfo.proposer_email;
       timeLeft.value = getDaysLeft(project.project_end_date);
-      cover.value = project.project_cover && project.project_cover !== 'cover URL' ? project.project_cover : mockImg;
+      cover.value =
+        project.project_cover && project.project_cover !== 'cover URL'
+          ? project.project_cover
+          : mockImg;
       console.log(options.value);
 
       setProject(project);
@@ -72,7 +75,9 @@ const copy = () => {
   <main>
     <section class="bg-light-emphasis">
       <div class="container flex flex-col items-center px-[55.55px] py-8 md:py-16">
-        <span class="mb-4 font-bold text-warning xl:mb-8 xl:text-lg">集資專案 ｜ {{ category }}</span>
+        <span class="mb-4 font-bold text-warning xl:mb-8 xl:text-lg"
+          >集資專案 ｜ {{ category }}</span
+        >
         <h2 class="mb-4 text-h4 xl:text-h1">{{ title }}</h2>
         <p class="text-grey-500 xl:text-lg">提案者 {{ proposer }}</p>
       </div>
@@ -107,9 +112,9 @@ const copy = () => {
             <ProgressBar
               class="mb-3 flex-auto sm:mb-0"
               :type="category"
-              :minAmount="0"
-              :maxAmount="target"
-              :currentAmount="615846"
+              :min-amount="0"
+              :max-amount="target"
+              :current-amount="615846"
             />
             <Badge type="公益" name="已達標" class="mb-6 w-fit sm:mb-0"></Badge>
           </div>
@@ -213,13 +218,14 @@ const copy = () => {
           :brand="proposer"
           :number="1"
           :proposer="proposer"
-          :unifiedNumber="taxId"
+          :unified-number="taxId"
           :email="email"
         />
         <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
         <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
-        <CardPlan v-for="option in options"
-          :planId="option._id"
+        <CardPlan
+          v-for="option in options"
+          :plan-id="option._id"
           :plan="option.option_name"
           :price="option.option_price"
           :times="46"
