@@ -22,6 +22,9 @@ const props = defineProps({
   },
   endDate: {
     type: [String]
+  },
+  projectFinishedStatus: {
+    type: [null, Boolean]
   }
 });
 
@@ -49,11 +52,11 @@ const { projectId } = route.params;
         alt="plan"
       />
       <div
-        v-if="true"
+        v-if="typeof projectFinishedStatus == 'boolean'"
         class="absolute inset-0 flex items-center justify-center bg-grey-500/40 p-4"
       >
         <img
-          :src="true ? projectSuccessImg : projectFailImg"
+          :src="projectFinishedStatus ? projectSuccessImg : projectFailImg"
           class="h-full"
           alt="project status"
         />
