@@ -224,7 +224,9 @@ const copy = () => {
           :price="option.option_price"
           :times="46"
           :content="option.option_content"
-          :endDate="endDate" />
+          :endDate="endDate"
+          :projectFinishedStatus="projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null"
+          />
       </div>
     </section>
   </main>
