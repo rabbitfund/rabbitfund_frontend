@@ -17,8 +17,8 @@ order.value = {
 
 // console.log(order.value);
 
-const targetURL = `/sponsor/${orderId}/transaction-result`;
-router.replace(targetURL); // 移除 query string，將網址調整為沒有參數的版本
+// const targetURL = `/sponsor/${orderId}/transaction-result`;
+// router.replace(targetURL); // 移除 query string，將網址調整為沒有參數的版本
 </script>
 
 <template>
