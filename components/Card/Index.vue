@@ -56,10 +56,10 @@ const formattedAmount = computed(() => {
           >剩餘時間: {{ formatTimeLeft }}</span
         >
       </div>
-      <h3 class="mb-2 line-clamp-2 text-h4 font-bold">
+      <h3 class="mb-2 line-clamp-2 text-h5 lg:text-h4">
         {{ props.project?.project_title }}
       </h3>
-      <span class="mb-6 mt-auto block text-lg">{{
+      <span class="mb-4 mt-auto block lg:text-lg lg:mb-6">{{
         props.project?.ownerInfo && props.project.ownerInfo?.proposer_name
           ? props.project.ownerInfo.proposer_name
           : 'not found'

@@ -1,0 +1,27 @@
+:root{
+  --swiper-theme-color: theme(colors.primary.DEFAULT) !important;
+}
+
+.swiper-wrapper {
+  @apply mb-6 lg:mb-8;
+}
+
+.swiper-slide {
+  @apply h-auto !important;
+}
+
+.swiper-pagination {
+  @apply static leading-[0px] !important;
+}
+
+.swiper-pagination-bullet {
+  --swiper-pagination-bullet-inactive-color: theme(colors.secondary.emphasis);
+  --swiper-pagination-bullet-inactive-opacity: 1;
+  --swiper-pagination-bullet-width: 12px;
+  --swiper-pagination-bullet-height: 12px;
+  --swiper-pagination-bullet-horizontal-gap: 6px;
+  @media screen and (min-width: theme(screens.lg)) {
+    --swiper-pagination-bullet-width: 16px;
+    --swiper-pagination-bullet-height: 16px;
+  }
+}
