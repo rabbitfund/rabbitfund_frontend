@@ -15,16 +15,16 @@
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/2">
               <label for="name">真實姓名</label>
-              <input id="name" type="text" name="name" />
+              <input id="name" type="text" name="name" :value="userInfo.user_name" disabled />
             </div>
             <div class="mb-6 md:w-1/2">
               <label for="cellphone">手機</label>
-              <input id="cellphone" type="tel" name="cellphone" />
+              <input id="cellphone" type="tel" name="cellphone" :value="userInfo.user_phone" />
             </div>
           </div>
           <div class="mb-6">
             <label for="email">電子信箱</label>
-            <input id="email" type="email" name="email" />
+            <input id="email" type="email" name="email" :value="userInfo.user_email" />
           </div>
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/3">
@@ -224,12 +224,16 @@
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia';
 import { useOrderStore } from '@/stores/order';
+import { useUserStore } from '@/stores/user';
 
 definePageMeta({
   middleware: ['auth']
 });
 
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
 const orderStore = useOrderStore();
 const { postOrder } = useApi();
 const router = useRouter();
