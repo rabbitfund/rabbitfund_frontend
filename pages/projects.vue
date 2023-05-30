@@ -1,35 +1,46 @@
 <script setup>
 const page = ref(1);
-const tag = ref('long');
-const projects = ref([]);
+const type = ref('');
+const k = ref('');
 
-const handleGetProjects = async () => {
-  // 監聽變數重新發送請求
-  const { data } = await useAsyncData(
-    'projectList',
-    () =>
-      $fetch(`/projects`, {
-        params: {
-          page: page.value,
-          tag: tag.value
-        }
-      }),
-    {
-      watch: [page, tag]
-    }
-  );
+const route = useRoute();
 
-  if (data.value?.ok) {
-    projects.value = data.value.data;
-    console.log(projects);
-  }
-};
-onMounted(() => {
-  handleGetProjects();
+watchEffect(() => {
+  type.value = route.query.type ? route.query.type : '';
+  k.value = route.query.k ? route.query.k : '';
+
+  // 當 type 或 k 變化時，將 page 設置為 1
+  page.value = 1;
 });
+
+const { data: projects } = await useAsyncData(
+  'projectList' + page.value + '_' + type.value,
+  () =>
+    $fetch(`/projects`, {
+      params: {
+        page: page.value,
+        type: type.value,
+        k: k.value
+      }
+    }),
+  {
+    watch: [page, type, k],
+    transform: (_projects) => _projects.data,
+    server: false
+  }
+);
 </script>
 <template>
-  <h2>專案列表</h2>
+  <div class="container mx-auto my-6 flex justify-between lg:my-12">
+    <h2 class="">專案列表</h2>
+    <select v-model="type" class="w-[120px]" value="">
+      <option value="">全部</option>
+      <option value="校園">校園</option>
+      <option value="公益">公益</option>
+      <option value="市集">市集</option>
+    </select>
+  </div>
+
   <section
     v-if="projects?.length && projects.length > 0"
     class="container grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
@@ -37,19 +48,19 @@ onMounted(() => {
     <div
       v-for="project in projects"
       :key="project._id"
-      class="cursor-pointer hover:bg-light"
+      class="cursor-pointer"
       @click="navigateTo(`/project/${project._id}/info`)"
     >
-      <Card :project="project" :id="project._id" />
+      <Card :project="project" />
     </div>
-    <LayoutPagination
-      :totalPage="2"
-      :currentPage="page"
-      :handle-page-change="
-        (i) => {
-          page = i;
-        }
-      "
-    />
   </section>
+  <LayoutPagination
+    :totalPage="2"
+    :currentPage="page"
+    :handle-page-change="
+      (i) => {
+        page = i;
+      }
+    "
+  />
 </template>

@@ -3,11 +3,34 @@ import { storeToRefs } from 'pinia';
 import avatar from '@/assets/images/avatar.png';
 import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
+const route = useRoute();
+const k = ref('');
+k.value = route.query.k ? route.query.k : '';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
 const isSigned = storeToRefs(authStore).token;
 const { userInfo } = storeToRefs(userStore);
+
+const isSearchInputVisible = ref(false);
+const searchInput = ref(null);
+const searchInputMobile = ref(null);
+function toggleSearchInput() {
+  const nextValue = !isSearchInputVisible.value;
+  isSearchInputVisible.value = nextValue;
+
+  if (nextValue) {
+    // 使用 $nextTick 確保在顯示輸入框後才將焦點設置在上面
+    nextTick(() => {
+      searchInput.value.focus();
+      searchInputMobile.value.focus();
+    });
+  }
+}
+
+function handleSearch(value) {
+  navigateTo(`/projects?k=${value}`);
+}
 
 watch(isSigned, () => {
   if (isSigned) {
@@ -33,13 +56,27 @@ function signIn() {
       <ClientOnly>
         <!-- 平板以上 -->
         <div class="hidden items-center gap-10 md:flex">
-          <div class="flex h-full items-center gap-4 font-bold text-primary">
+          <div class="relative flex h-full items-center gap-4 font-bold text-primary">
             <NuxtLink to="/projects" class="p-2 hover:text-primary-dark"> 探索 </NuxtLink>
             <NuxtLink to="/proposal" class="p-2 hover:text-primary-dark"> 提案 </NuxtLink>
-            <NuxtLink to="/projects" class="flex items-center gap-1 p-2 hover:text-primary-dark">
+
+            <button
+              class="flex items-center gap-1 p-2 hover:text-primary-dark"
+              @click="toggleSearchInput"
+            >
               <img class="w-6" src="@/assets/images/icons/search.svg" alt="search icon" />
               搜尋
-            </NuxtLink>
+            </button>
+            <input
+              v-if="isSearchInputVisible"
+              ref="searchInput"
+              v-model="k"
+              type="text"
+              class="absolute right-0 top-0 p-2"
+              placeholder="搜尋"
+              @blur="toggleSearchInput"
+              @keyup.enter="handleSearch($event.target.value)"
+            />
           </div>
           <button v-if="!isSigned" class="btn btn-primary" @click="signIn">登入</button>
           <button v-else class="group relative flex cursor-pointer items-center">
@@ -128,14 +165,30 @@ function signIn() {
                   >
                 </li>
                 <li class="mb-3">
-                  <NuxtLink to="/projects" class="block rounded-lg py-3 hover:bg-light-emphasis">
-                    <img
-                      class="mr-1 inline-block h-8"
-                      src="@/assets/images/icons/search.svg"
-                      alt="search icon"
+                  <div class="w-100 relative">
+                    <input
+                      ref="searchInputMobile"
+                      v-model="k"
+                      type="text"
+                      class="w-full px-4 py-2 transition-all duration-1000 ease-out"
+                      :class="{ hidden: !isSearchInputVisible, 'w-0': !isSearchInputVisible }"
+                      placeholder="搜尋"
+                      @blur="toggleSearchInput"
+                      @keyup.enter="handleSearch($event.target.value)"
                     />
-                    <span>搜尋</span>
-                  </NuxtLink>
+                    <button
+                      :class="{ hidden: isSearchInputVisible }"
+                      class="block w-full rounded-lg py-3 hover:bg-light-emphasis"
+                      @click="toggleSearchInput"
+                    >
+                      <img
+                        class="mr-1 inline-block h-8"
+                        src="@/assets/images/icons/search.svg"
+                        alt="search icon"
+                      />
+                      <span>搜尋</span>
+                    </button>
+                  </div>
                 </li>
                 <li v-if="!isSigned">
                   <button

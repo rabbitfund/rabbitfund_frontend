@@ -14,10 +14,18 @@ export default function useApi() {
   const getProjects = (page: number, tag: string) => 
     useFetch(`/projects?page=${page}&tag=${tag}`, { method: 'GET', server: false, globalLoading: false });
   const getProject = (projectId: string) => 
+  const getProject = (projectId: string) =>
     useFetch(`/projects/${projectId}`, { method: 'GET', server: false });
-  const getProjectOptions = (projectId: string) => 
+  const getProjectOption = (projectId: string, optionId: string) =>
+    useFetch(`/projects/${projectId}/options/${optionId}`, { method: 'GET', server: false });
+  const getProjectOptions = (projectId: string) =>
     useFetch(`/projects/${projectId}/options`, { method: 'GET', server: false });
-  
+
+  // 訂單
+  const postOrder = (data) => useFetch('/orders', { method: 'POST', body: JSON.stringify(data) });
+  const getOrder = (orderId: string) =>
+    useFetch(`/order/${orderId}`, { method: 'GET', server: false });
+
   return {
     signin,
     signup,
@@ -25,6 +33,9 @@ export default function useApi() {
     putUserDetail,
     getProjects,
     getProject,
-    getProjectOptions
+    getProjectOption,
+    getProjectOptions,
+    postOrder,
+    getOrder
   };
 }

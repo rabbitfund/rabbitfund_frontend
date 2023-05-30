@@ -1,25 +1,7 @@
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
-      <div class="flex justify-center">
-        <ul class="flex w-full gap-7 lg:w-2/3 lg:gap-8">
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">01</span
-            ><span class="mb-1 block font-bold lg:text-lg">確認品項</span>
-            <div class="h-1 bg-primary-light"></div>
-          </li>
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">02</span
-            ><span class="mb-1 block font-bold lg:text-lg">填寫訂單資料</span>
-            <div class="h-1 bg-primary"></div>
-          </li>
-          <li class="w-1/3">
-            <span class="mb-1 text-grey-400">03</span
-            ><span class="mb-1 block font-bold lg:text-lg">交易結果</span>
-            <div class="h-1 bg-primary-light"></div>
-          </li>
-        </ul>
-      </div>
+      <CheckoutProcess step="填寫訂單資料" />
     </div>
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
@@ -33,39 +15,39 @@
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/2">
               <label for="name">真實姓名</label>
-              <input type="text" name="name" id="name" />
+              <input id="name" type="text" name="name" />
             </div>
             <div class="mb-6 md:w-1/2">
               <label for="cellphone">手機</label>
-              <input type="tel" name="cellphone" id="cellphone" />
+              <input id="cellphone" type="tel" name="cellphone" />
             </div>
           </div>
           <div class="mb-6">
             <label for="email">電子信箱</label>
-            <input type="email" name="email" id="email" />
+            <input id="email" type="email" name="email" />
           </div>
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/3">
               <label for="country">國家 / 地區</label>
-              <input type="text" name="country" id="country" />
+              <input id="country" type="text" name="country" />
             </div>
             <div class="mb-6 md:w-1/3">
               <label for="city">城市 / 州 / 區</label>
-              <input type="text" name="city" id="city" />
+              <input id="city" type="text" name="city" />
             </div>
             <div class="mb-6 md:w-1/3">
               <label for="district">鄉 / 鎮 / 市 / 區</label>
-              <input type="text" name="district" id="district" />
+              <input id="district" type="text" name="district" />
             </div>
           </div>
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/5">
               <label for="postcode">郵遞區號</label>
-              <input type="number" name="postcode" id="postcode" />
+              <input id="postcode" type="number" name="postcode" />
             </div>
             <div class="mb-6 md:w-4/5">
               <label for="address">地址</label>
-              <input type="text" name="address" id="address" />
+              <input id="address" type="text" name="address" />
             </div>
           </div>
           <p class="text-grey-500">
@@ -171,10 +153,10 @@
           <ul class="mb-6 flex flex-col gap-4">
             <li class="relative flex items-center">
               <input
+                id="credit-card"
                 class="peer absolute left-5"
                 type="radio"
                 name="payment-method"
-                id="credit-card"
               />
               <label
                 for="credit-card"
@@ -185,7 +167,7 @@
               </label>
             </li>
             <li class="relative flex items-center">
-              <input class="peer absolute left-5" type="radio" name="payment-method" id="atm" />
+              <input id="atm" class="peer absolute left-5" type="radio" name="payment-method" />
               <label
                 for="atm"
                 class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
@@ -218,42 +200,90 @@
             <span class="mb-3 block lg:text-lg">單次捐款｜理念支持</span>
           </div>
           <ul class="border-b pb-6 pt-8">
-            <li class="mb-4 flex justify-between"><span>小計</span><span>$ 300</span></li>
-            <li class="mb-4 flex justify-between"><span>額外贊助</span><span>$ 300</span></li>
+            <li class="mb-4 flex justify-between">
+              <span>小計</span><span>$ {{ projectPrice }}</span>
+            </li>
+            <li class="mb-4 flex justify-between">
+              <span>額外贊助</span><span>$ {{ orderExtra }}</span>
+            </li>
             <li class="flex justify-between"><span>運費</span><span>$ 0</span></li>
           </ul>
           <div class="pt-6">
             <div class="mb-8 flex justify-between">
               <span class="text-lg font-bold">總計</span
-              ><span class="text-lg font-bold">$ 600</span>
+              ><span class="text-lg font-bold">$ {{ orderTotal }}</span>
             </div>
-            <button @click="navigateToResult()" class="btn btn-primary w-full">立即付款</button>
+            <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckOrder()"
+              >確認訂單</NuxtLink
+            >
           </div>
         </div>
-        <p class="font-sansTC font-medium leading-relaxed tracking-wider text-grey-500">
-          點擊「直接結帳」即表示您已閱讀並同意<NuxtLink
-            to="/terms"
-            class="cursor-pointer text-blue-600 visited:text-purple-600"
-            target="_blank"
-            >使用者條款</NuxtLink
-          >與<NuxtLink
-            to="/privacy"
-            class="cursor-pointer text-blue-600 visited:text-purple-600"
-            target="blank"
-            >隱私權政策</NuxtLink
-          >。
-        </p>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-const router = useRouter();
-const orderId = ref('order-123');
+import { useOrderStore } from '@/stores/order';
 
-const navigateToResult = () => {
-  const url = `/transaction-result/${orderId.value}`;
-  router.push(url);
+definePageMeta({
+  middleware: ['auth']
+});
+
+const orderStore = useOrderStore();
+const { postOrder } = useApi();
+const router = useRouter();
+
+// const route = useRoute();
+// const { planId } = route.params;
+
+const userId = orderStore.user_id;
+const projectId = orderStore.project_id;
+const projectPrice = orderStore.project_price;
+const optionId = orderStore.option_id;
+const orderOptionQuantity = orderStore.order_option_quantity;
+const orderExtra = orderStore.order_extra;
+const orderTotal = orderStore.order_total;
+const orderNote = orderStore.order_note;
+
+console.log(projectPrice);
+const navigateToCheckOrder = async () => {
+  try {
+    const orderOtherData = {
+      payment_method: 'WEBATM',
+      invoice_type: '電子載具',
+      invoice_carrier: ''
+    };
+    console.log('orderOtherData', orderOtherData);
+
+    // console.log('orderData', orderData);
+
+    const orderPayload = {
+      user_id: userId,
+      project_id: projectId,
+      project_price: projectPrice,
+      option_id: optionId,
+      order_option_quantity: orderOptionQuantity,
+      order_extra: orderExtra,
+      order_total: orderTotal,
+      order_note: orderNote,
+      ...orderOtherData
+    };
+
+    console.log('orderPayload', orderPayload);
+    orderStore.setOrder(orderPayload);
+
+    // 建立訂單
+    const { data } = await postOrder(orderPayload);
+    console.log(data.value.data);
+    console.log(data.value.data._id);
+
+    const orderId = data.value.data._id;
+    // 前往下一步驟：確認訂單資料
+    const url = `/sponsor/${orderId}/check-order`;
+    router.push(url);
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
