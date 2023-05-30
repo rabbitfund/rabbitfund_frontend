@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/tailwindcss'],
+  modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/tailwindcss', 'nuxt-swiper'],
   runtimeConfig: {
     SERVER_API_BASE: 'http://localhost:3000',
     public: {
@@ -8,7 +8,8 @@ export default defineNuxtConfig({
       API_BASE: ''
     }
   },
+  css: ['~/assets/css/swiper.css'],
   routeRules: {
     '/member/**': { ssr: false }
-  }
+  },
 });

@@ -44,10 +44,10 @@ const formattedAmount = computed(() => {
         <Badge :type="props.type" :name="props.type"></Badge>
         <span class="text-grey-500">{{ props.timeLeft }}</span>
       </div>
-      <h3 class="mb-2 line-clamp-2 text-h4 font-bold">
+      <h3 class="mb-2 line-clamp-2 text-h5 lg:text-h4">
         {{ props.title }}
       </h3>
-      <span class="mb-6 mt-auto block text-lg">{{ props.proposer }}</span>
+      <span class="mb-4 mt-auto block lg:text-lg lg:mb-6">{{ props.proposer }}</span>
       <ProgressBar
         class="mb-2"
         :type="props.type"

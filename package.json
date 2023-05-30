@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "@nuxt/test-utils": "^3.3.2",
-    "sweetalert2": "^11.7.5",
+    "nuxt-swiper": "^1.1.0",
+    "sweetalert2": "^11.4.8",
     "vee-validate": "^4.8.6",
     "vitest": "^0.29.8",
     "yup": "^1.1.1"
