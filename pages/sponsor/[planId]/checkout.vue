@@ -242,7 +242,7 @@
           </div>
           <ul class="border-b pb-6 pt-8">
             <li class="mb-4 flex justify-between">
-              <span>小計</span><span>$ {{ projectPrice }}</span>
+              <span>小計</span><span>$ {{ projectPrice * orderOptionQuantity }}</span>
             </li>
             <li class="mb-4 flex justify-between">
               <span>額外贊助</span><span>$ {{ orderExtra }}</span>
