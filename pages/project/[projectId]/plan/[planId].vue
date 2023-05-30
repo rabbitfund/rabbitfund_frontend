@@ -222,10 +222,10 @@ const calculateTotal = () => {
 };
 
 const navigateToCheckout = () => {
-  console.log('userInfo', userInfo);
+  console.log('userInfo', userInfo.value._id, userInfo.value);
 
   const orderData = {
-    user_id: '64467f5297f90de601ff4f03', // TODO: 抓 userInfo._id 目前嘗試都是 undefined
+    user_id: userInfo.value._id, // TODO: 抓 userInfo._id 目前嘗試都是 undefined
     project_id: projectId,
     project_price: price.value,
     option_id: planId,
