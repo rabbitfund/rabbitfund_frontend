@@ -225,6 +225,11 @@
 
 <script setup>
 import { useOrderStore } from '@/stores/order';
+
+definePageMeta({
+  middleware: ['auth']
+});
+
 const orderStore = useOrderStore();
 const { postOrder } = useApi();
 const router = useRouter();

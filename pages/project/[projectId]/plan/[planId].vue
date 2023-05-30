@@ -133,6 +133,10 @@ import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
 import { useOrderStore } from '@/stores/order';
 
+definePageMeta({
+  middleware: ['auth']
+});
+
 const authStore = useAuthStore();
 const userStore = useUserStore();
 const isSigned = storeToRefs(authStore).token;
