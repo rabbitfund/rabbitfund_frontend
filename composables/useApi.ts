@@ -14,7 +14,6 @@ export default function useApi() {
   const getProjects = (page: number, tag: string) => 
     useFetch(`/projects?page=${page}&tag=${tag}`, { method: 'GET', server: false, globalLoading: false });
   const getProject = (projectId: string) => 
-  const getProject = (projectId: string) =>
     useFetch(`/projects/${projectId}`, { method: 'GET', server: false });
   const getProjectOption = (projectId: string, optionId: string) =>
     useFetch(`/projects/${projectId}/options/${optionId}`, { method: 'GET', server: false });
