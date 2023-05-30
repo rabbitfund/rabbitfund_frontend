@@ -54,6 +54,47 @@
             當您確認參與本專案贊助方案時，您已確實暸解此專案資訊揭露與承諾之內容。若您發現有與實際情況不符之處，請透過【檢舉與回報】功能通報平台，我們會盡速確認。
           </p>
         </div>
+        <div class="mb-12 border-t border-grey-200 pt-12">
+          <div class="mb-6 flex items-center gap-2">
+            <span><img src="~/assets/images/icons/book.svg" alt="書" /></span>
+            <h2>發票類型</h2>
+          </div>
+          <ul class="mb-6 flex flex-col gap-4">
+            <li class="relative flex items-center">
+              <input id="no-receipt" class="peer absolute left-5" type="radio" name="tax-receipt" />
+              <label
+                for="no-receipt"
+                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
+              >
+                <span class="mb-1.5 font-bold">紙本發票</span>
+                <p class="text-grey-500">一般購買證明</p>
+              </label>
+            </li>
+            <li class="relative flex items-center">
+              <input id="no-receipt" class="peer absolute left-5" type="radio" name="tax-receipt" />
+              <label
+                for="no-receipt"
+                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
+              >
+                <span class="mb-1.5 font-bold">電子載具</span>
+                <p class="text-grey-500">
+                  可於財政部申請手機載具條碼，開立的發票會自動歸戶，請於下一欄位填寫
+                </p>
+              </label>
+            </li>
+          </ul>
+
+          <div class="mb-6">
+            <label for="tax-receipt-header">手機載具條碼</label>
+            <input id="tax-receipt-header" type="text" name="tax-receipt-header" />
+          </div>
+          <ol class="list-decimal ps-5 text-grey-500">
+            <li class="mb-2">
+              訂單成立後，您會收到由倍而兔平台所寄出的 Email 交易通知信，此信並非電子收據。
+            </li>
+            <li>本平台不會隨意聯繫您，若有任何疑問，請聯繫專案團隊聯絡信箱。</li>
+          </ol>
+        </div>
         <!-- <div class="mb-12 border-t border-grey-200 pt-12">
           <div class="mb-6 flex items-center gap-2">
             <span><img src="~/assets/images/icons/book.svg" alt="書" /></span>
