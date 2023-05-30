@@ -51,9 +51,10 @@ const { projectId } = route.params;
     <span class="mb-4 text-grey-500">已被贊助 {{ props.times }} 次</span>
     <div class="mb-6 rounded-md bg-light-emphasis px-3 py-4 md:mb-4">
       <h4 class="mb-1 text-base font-normal text-grey-400">方案內容</h4>
-      <ul class="pl-8 text-lg">
+      <p class="text-lg" v-html="props.content"></p>
+      <!-- <ul class="pl-8 text-lg">
         <li class="list-disc">{{ props.content }}</li>
-      </ul>
+      </ul> -->
     </div>
     <NuxtLink :to="`/project/${projectId}/plan/${planId}`" class="btn btn-primary mb-8 md:mb-12">
       贊助
