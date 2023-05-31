@@ -10,7 +10,7 @@ export const useOrderStore = defineStore('order', {
     order_extra: 0,
     order_total: 0,
     order_note: '',
-    payment_method: '',
+    payment_method: '', // ["WEBATM", "CREDIT"]
     invoice_type: '', // ["紙本發票", "電子載具", "三聯式發票"]
     invoice_carrier: ''
   }),
