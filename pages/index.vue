@@ -37,13 +37,6 @@ onMounted(async () => {
       console.log(err);
     });
 });
-
-const getDaysLeft = (projectEndDate) => {
-  const today = new Date();
-  const endDate = new Date(projectEndDate);
-  const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
-  return `${days} 天`;
-};
 </script>
 
 <template>
@@ -86,24 +79,15 @@ const getDaysLeft = (projectEndDate) => {
     </Swiper>
   </section>
 
-  <section class="bg-light-emphasis py-16 lg:py-30">
+  <section class="bg-light-emphasis py-16 xl:py-30">
     <div class="container">
       <div class="flex flex-col items-center">
         <img src="~/assets/images/rabbit-ears.png" alt="rabbit ears" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">精選專案</h2>
-        <ul class="flex flex-col gap-x-6 lg:flex-row">
-          <li class="mb-8 hover:shadow lg:mb-12 lg:w-1/3" v-for="project in hotProjects">
+        <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
+          <li class="hover:shadow lg:w-1/3" v-for="project in hotProjects">
             <NuxtLink :to="`/project/${project._id}/info`">
-              <Card
-                class="h-full"
-                :type="project.project_category"
-                :timeLeft="getDaysLeft(project.project_end_date)"
-                :title="project.project_title"
-                :proposer="project.ownerInfo ? project.ownerInfo.proposer_name : 'not found'"
-                :minAmount="0"
-                :maxAmount="project.project_target"
-                :currentAmount="5000"
-              ></Card>
+              <Card :project="project"></Card>
             </NuxtLink>
           </li>
         </ul>
@@ -112,59 +96,50 @@ const getDaysLeft = (projectEndDate) => {
     </div>
   </section>
 
-  <section class="bg-light py-16 lg:py-40">
+  <section class="bg-light py-16 xl:py-40">
     <div class="container">
-      <h2 class="mb-4 text-center text-h3 lg:text-h2 lg:mb-6">給予贊助者的信任承諾</h2>
-      <p class="mb-10 lg:mb-20 leading-[1.8] text-grey-500 text-center">
+      <h2 class="mb-4 text-center text-h3 lg:mb-6 lg:text-h2">給予贊助者的信任承諾</h2>
+      <p class="mb-10 text-center leading-[1.8] text-grey-500 lg:mb-20">
         所有專案皆經由平台把關，致力給贊助會員們最安心的保障！
       </p>
-      <ul class="flex flex-col md:flex-row justify-around text-h4 text-primary-dark gap-12">
+      <ul class="flex flex-col justify-around gap-12 text-h4 text-primary-dark md:flex-row">
         <li class="text-center">
           <img
             src="~/assets/images/certification.png"
             alt="platform certification"
-            class="mx-auto mb-4 lg:mb-7 w-[120px] xl:w-[200px]"
+            class="mx-auto mb-4 w-[120px] lg:mb-7 xl:w-[200px]"
           />
-          <span class="text-h4 lg:text-h3 text-primary-dark">平台認證</span>
+          <span class="text-h4 text-primary-dark lg:text-h3">平台認證</span>
         </li>
         <li class="text-center">
           <img
             src="~/assets/images/credibility.png"
             alt="credibility assessment"
-            class="mx-auto mb-4 lg:mb-7 w-[120px] xl:w-[200px]"
+            class="mx-auto mb-4 w-[120px] lg:mb-7 xl:w-[200px]"
           />
-          <span class="text-h4 lg:text-h3 text-primary-dark">公信力檢測</span>
+          <span class="text-h4 text-primary-dark lg:text-h3">公信力檢測</span>
         </li>
         <li class="text-center">
           <img
             src="~/assets/images/timeline.png"
             alt="project timeline marking"
-            class="mx-auto mb-4 lg:mb-7 w-[120px] xl:w-[200px]"
+            class="mx-auto mb-4 w-[120px] lg:mb-7 xl:w-[200px]"
           />
-          <span class="text-h4 lg:text-h3 text-primary-dark">專案時程標示</span>
+          <span class="text-h4 text-primary-dark lg:text-h3">專案時程標示</span>
         </li>
       </ul>
     </div>
   </section>
 
-  <section class="bg-light-emphasis py-16 lg:py-30">
+  <section class="bg-light-emphasis py-16 xl:py-30">
     <div class="container">
       <div class="flex flex-col items-center">
         <img src="~/assets/images/sparkle.png" alt="sparkle" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">募資進行中</h2>
-        <ul class="flex flex-col gap-x-6 lg:flex-row">
-          <li class="mb-8 hover:shadow lg:mb-12 lg:w-1/3" v-for="project in recentProjects">
+        <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
+          <li class="hover:shadow lg:w-1/3" v-for="project in recentProjects">
             <NuxtLink :to="`/project/${project._id}/info`">
-              <Card
-                class="h-full"
-                :type="project.project_category"
-                :timeLeft="getDaysLeft(project.project_end_date)"
-                :title="project.project_title"
-                :proposer="project.ownerInfo ? project.ownerInfo.proposer_name : 'not found'"
-                :minAmount="0"
-                :maxAmount="project.project_target"
-                :currentAmount="5000"
-              ></Card>
+              <Card :project="project"></Card>
             </NuxtLink>
           </li>
         </ul>
@@ -173,24 +148,15 @@ const getDaysLeft = (projectEndDate) => {
     </div>
   </section>
 
-  <section class="bg-light py-16 lg:py-30">
+  <section class="bg-light py-16 xl:py-30">
     <div class="container">
       <div class="flex flex-col items-center">
         <img src="~/assets/images/heart1.png" alt="heart" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">長期贊助</h2>
-        <ul class="flex flex-col gap-x-6 lg:flex-row">
-          <li class="mb-8 hover:shadow lg:mb-12 lg:w-1/3" v-for="project in longProjects">
+        <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
+          <li class="hover:shadow lg:w-1/3" v-for="project in longProjects">
             <NuxtLink :to="`/project/${project._id}/info`">
-              <Card
-                class="h-full"
-                :type="project.project_category"
-                :timeLeft="getDaysLeft(project.project_end_date)"
-                :title="project.project_title"
-                :proposer="project.ownerInfo ? project.ownerInfo.proposer_name : 'not found'"
-                :minAmount="0"
-                :maxAmount="project.project_target"
-                :currentAmount="5000"
-              ></Card>
+              <Card :project="project"></Card>
             </NuxtLink>
           </li>
         </ul>
@@ -200,21 +166,35 @@ const getDaysLeft = (projectEndDate) => {
   </section>
 
   <section class="bg-light-emphasis">
-    <div class="lg:px-3 flex flex-col lg:flex-row justify-center pt-[48.79px] pb-[79.21px] gap-8 lg:gap-6 xl:py-[84px]">
-      <div class="flex flex-col lg:flex-row items-center lg:justify-center pt-[70.14px] pb-[58.94px] bg-cover sm:bg-contain bg-[url('/assets/images/proposal-bg.png')] bg-center bg-no-repeat lg:pr-6 lg:pl-6 xl:pt-[200px] xl:pb-[86px] xl:pl-[88px] xl:pr-[72px]">
-        <img src="~/assets/images/rabbit.png" alt="rabbit" class="w-20 h-[128px] md:h-auto mb-6 lg:mr-12 xl:w-[131.7px]" />
+    <div
+      class="flex flex-col justify-center gap-8 pb-[79.21px] pt-[48.79px] lg:flex-row lg:gap-6 lg:px-3 xl:py-[84px]"
+    >
+      <div
+        class="flex flex-col items-center bg-[url('/assets/images/proposal-bg.png')] bg-cover bg-center bg-no-repeat pb-[58.94px] pt-[70.14px] sm:bg-contain lg:flex-row lg:justify-center lg:self-start lg:px-10 lg:pb-20 lg:pt-40 xl:pb-[86px] xl:pl-[88px] xl:pr-[80px] xl:pt-[200px]"
+      >
+        <img
+          src="~/assets/images/rabbit.png"
+          alt="rabbit"
+          class="mb-6 h-[128px] w-20 md:h-auto lg:mb-0 lg:mr-12 xl:w-[131.7px]"
+        />
         <div class="text-center lg:text-left">
-          <p class="text-xl font-bold text-warning mb-6 xl:text-2xl">
+          <p class="mb-6 text-xl font-bold text-warning xl:text-2xl">
             <span class="block">傳達你的願景，</span>
             <span>讓你的好點子不再只是點子！</span>
           </p>
           <button class="btn btn-primary">我要提案</button>
         </div>
       </div>
-      <div class="flex flex-col lg:flex-row items-center lg:justify-center pt-[98px] pb-[71px] bg-cover sm:bg-contain bg-[url('/assets/images/sponsor-bg.png')] bg-center bg-no-repeat xl:pl-[82px] xl:pr-[98px] xl:pt-[253px] xl:pb-[140px] lg:mt-20 lg:pr-6 lg:pl-6 lg:pt-[120px] lg:pb-[90px]">
-        <img src="~/assets/images/carrot.png" alt="carrot" class="w-[140px] mb-3 xl:w-[169.24px] xl:mr-[50.76px] lg:mr-6" />
+      <div
+        class="lg:pb-22 flex flex-col items-center bg-[url('/assets/images/sponsor-bg.png')] bg-cover bg-center bg-no-repeat pb-[71px] pt-[98px] sm:bg-contain lg:mt-20 lg:flex-row lg:justify-center lg:self-end lg:px-10 lg:pb-20 lg:pt-40 xl:pb-[140px] xl:pl-[82px] xl:pr-[98px] xl:pt-[229px]"
+      >
+        <img
+          src="~/assets/images/carrot.png"
+          alt="carrot"
+          class="mb-3 w-[140px] lg:mb-0 lg:mr-6 xl:mr-[50.76px] xl:w-[169.24px]"
+        />
         <div class="text-center lg:text-left">
-          <p class="text-xl font-bold text-primary mb-6 xl:text-2xl">
+          <p class="mb-6 text-xl font-bold text-primary xl:text-2xl">
             <span class="block">每一份贊助，</span>
             <span>都將成就更多的可能！</span>
           </p>

@@ -9,7 +9,7 @@ const category = ref('');
 const content = ref('');
 const startDate = ref('');
 const endDate = ref('');
-const target = ref(500000);
+const target = ref(0);
 const title = ref('');
 const options = ref([]);
 const proposer = ref('');
@@ -29,7 +29,7 @@ onMounted(async () => {
   getProject(projectId)
     .then((res) => {
       const project = res.data.value.data;
-      console.log(project);
+      console.log('project:', project);
       // 專案狀態
       projectStatus.value = useSetProjectStatus(project);
       // title.value = project.project_title;
@@ -42,21 +42,25 @@ onMounted(async () => {
       startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
       endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
       options.value = project.option;
-      proposer.value = project.ownerInfo.proposer_name;
-      taxId.value = project.ownerInfo.proposer_tax_id;
-      email.value = project.ownerInfo.proposer_email;
+      proposer.value = project.ownerInfo?.proposer_name;
+      taxId.value = project.ownerInfo?.proposer_tax_id;
+      email.value = project.ownerInfo?.proposer_email;
       timeLeft.value = getDaysLeft(project.project_end_date);
       cover.value =
         project.project_cover && project.project_cover !== 'cover URL'
           ? project.project_cover
           : mockImg;
-      console.log(options.value);
+      console.log('options.value', options.value);
 
       setProject(project);
     })
     .catch((err) => {
       console.log(err);
     });
+});
+
+const formattedTarget = computed(() => {
+  return target.value.toLocaleString();
 });
 
 const getDaysLeft = (projectEndDate) => {
@@ -122,7 +126,7 @@ const copy = () => {
             <ul class="-mx-2 flex flex-wrap">
               <li class="mb-4 flex w-1/2 flex-col gap-1 px-2">
                 <span class="text-grey-400">目標金額</span
-                ><span class="text-lg font-bold">$ {{ target }}</span>
+                ><span class="text-lg font-bold">$ {{ formattedTarget }}</span>
               </li>
               <li class="mb-4 flex w-1/2 flex-col gap-1 px-2">
                 <span class="text-grey-400">預計募集總金額</span
