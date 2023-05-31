@@ -37,13 +37,6 @@ onMounted(async () => {
       console.log(err);
     });
 });
-
-const getDaysLeft = (projectEndDate) => {
-  const today = new Date();
-  const endDate = new Date(projectEndDate);
-  const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
-  return `${days} 天`;
-};
 </script>
 
 <template>
