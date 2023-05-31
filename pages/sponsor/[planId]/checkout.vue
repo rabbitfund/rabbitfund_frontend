@@ -19,7 +19,13 @@
             </div>
             <div class="mb-6 md:w-1/2">
               <label for="cellphone">手機</label>
-              <input id="cellphone" type="tel" name="cellphone" :value="userInfo.user_phone" disabled />
+              <input
+                id="cellphone"
+                type="tel"
+                name="cellphone"
+                :value="userInfo.user_phone"
+                disabled
+              />
             </div>
           </div>
           <div class="mb-6">
@@ -63,9 +69,16 @@
           </div>
           <ul class="mb-6 flex flex-col gap-4">
             <li class="relative flex items-center">
-              <input id="no-receipt" class="peer absolute left-5" type="radio" name="tax-receipt" />
+              <input
+                id="invoiceType-1"
+                v-model="invoiceType"
+                class="peer absolute left-5"
+                type="radio"
+                name="invoiceType"
+                value="紙本發票"
+              />
               <label
-                for="no-receipt"
+                for="invoiceType-1"
                 class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
               >
                 <span class="mb-1.5 font-bold">紙本發票</span>
@@ -73,9 +86,16 @@
               </label>
             </li>
             <li class="relative flex items-center">
-              <input id="no-receipt" class="peer absolute left-5" type="radio" name="tax-receipt" />
+              <input
+                id="invoiceType-2"
+                v-model="invoiceType"
+                class="peer absolute left-5"
+                type="radio"
+                name="invoiceType"
+                value="電子載具"
+              />
               <label
-                for="no-receipt"
+                for="invoiceType-2"
                 class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
               >
                 <span class="mb-1.5 font-bold">電子載具</span>
@@ -86,9 +106,9 @@
             </li>
           </ul>
 
-          <div class="mb-6">
+          <div v-if="invoiceType === '電子載具'" class="mb-6">
             <label for="tax-receipt-header">手機載具條碼</label>
-            <input id="tax-receipt-header" type="text" name="tax-receipt-header" />
+            <input id="tax-receipt-header" v-model="invoiceCarrier" type="text" />
           </div>
           <ol class="list-decimal ps-5 text-grey-500">
             <li class="mb-2">
@@ -197,9 +217,11 @@
             <li class="relative flex items-center">
               <input
                 id="credit-card"
+                v-model="paymentMethod"
                 class="peer absolute left-5"
                 type="radio"
-                name="payment-method"
+                value="CREDIT"
+                name="paymentMethod"
               />
               <label
                 for="credit-card"
@@ -210,7 +232,14 @@
               </label>
             </li>
             <li class="relative flex items-center">
-              <input id="atm" class="peer absolute left-5" type="radio" name="payment-method" />
+              <input
+                id="atm"
+                v-model="paymentMethod"
+                class="peer absolute left-5"
+                type="radio"
+                value="WEBATM"
+                name="paymentMethod"
+              />
               <label
                 for="atm"
                 class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
@@ -284,6 +313,10 @@ const router = useRouter();
 // const route = useRoute();
 // const { planId } = route.params;
 
+const paymentMethod = ref('');
+const invoiceType = ref('');
+const invoiceCarrier = ref('');
+
 const userId = orderStore.user_id;
 const projectId = orderStore.project_id;
 const projectPrice = orderStore.project_price;
@@ -297,9 +330,9 @@ console.log(projectPrice);
 const navigateToCheckOrder = async () => {
   try {
     const orderOtherData = {
-      payment_method: 'WEBATM',
-      invoice_type: '電子載具',
-      invoice_carrier: ''
+      payment_method: paymentMethod.value,
+      invoice_type: invoiceType.value,
+      invoice_carrier: invoiceCarrier.value
     };
     console.log('orderOtherData', orderOtherData);
 
