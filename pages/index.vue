@@ -79,13 +79,13 @@ onMounted(async () => {
     </Swiper>
   </section>
 
-  <section class="bg-light-emphasis py-16 lg:py-30">
+  <section class="bg-light-emphasis py-16 xl:py-30">
     <div class="container">
       <div class="flex flex-col items-center">
         <img src="~/assets/images/rabbit-ears.png" alt="rabbit ears" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">精選專案</h2>
-        <ul class="flex flex-col gap-x-6 lg:flex-row">
-          <li class="mb-8 hover:shadow lg:mb-12 lg:w-1/3" v-for="project in hotProjects">
+        <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
+          <li class="hover:shadow lg:w-1/3" v-for="project in hotProjects">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
@@ -96,7 +96,7 @@ onMounted(async () => {
     </div>
   </section>
 
-  <section class="bg-light py-16 lg:py-40">
+  <section class="bg-light py-16 xl:py-40">
     <div class="container">
       <h2 class="mb-4 text-center text-h3 lg:mb-6 lg:text-h2">給予贊助者的信任承諾</h2>
       <p class="mb-10 text-center leading-[1.8] text-grey-500 lg:mb-20">
@@ -131,13 +131,13 @@ onMounted(async () => {
     </div>
   </section>
 
-  <section class="bg-light-emphasis py-16 lg:py-30">
+  <section class="bg-light-emphasis py-16 xl:py-30">
     <div class="container">
       <div class="flex flex-col items-center">
         <img src="~/assets/images/sparkle.png" alt="sparkle" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">募資進行中</h2>
-        <ul class="flex flex-col gap-x-6 lg:flex-row">
-          <li class="mb-8 hover:shadow lg:mb-12 lg:w-1/3" v-for="project in recentProjects">
+        <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
+          <li class="hover:shadow lg:w-1/3" v-for="project in recentProjects">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
@@ -148,13 +148,13 @@ onMounted(async () => {
     </div>
   </section>
 
-  <section class="bg-light py-16 lg:py-30">
+  <section class="bg-light py-16 xl:py-30">
     <div class="container">
       <div class="flex flex-col items-center">
         <img src="~/assets/images/heart1.png" alt="heart" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">長期贊助</h2>
-        <ul class="flex flex-col gap-x-6 lg:flex-row">
-          <li class="mb-8 hover:shadow lg:mb-12 lg:w-1/3" v-for="project in longProjects">
+        <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
+          <li class="hover:shadow lg:w-1/3" v-for="project in longProjects">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>

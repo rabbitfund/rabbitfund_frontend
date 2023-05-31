@@ -22,7 +22,7 @@ const formattedAmount = computed(() => {
 
 <template>
   <div
-    class="flex cursor-pointer flex-col overflow-hidden rounded-lg bg-white"
+    class="flex cursor-pointer flex-col overflow-hidden rounded-lg bg-white h-full"
     @click="navigateTo(`/project/${props.project?._id}/info`)"
   >
     <div class="relative overflow-hidden rounded-t-lg">
@@ -33,7 +33,7 @@ const formattedAmount = computed(() => {
             : mockImg
         "
         class="object-cover"
-        alt="carrot"
+        alt="project cover"
       />
       <div
         v-if="projectStatus.status === FoundStatus.Finished"
@@ -53,7 +53,7 @@ const formattedAmount = computed(() => {
           :name="props.project?.project_category"
         ></Badge>
         <span v-if="formatTimeLeft !== ''" class="text-grey-500"
-          >剩餘時間: {{ formatTimeLeft }}</span
+          >剩餘時間：{{ formatTimeLeft }}</span
         >
       </div>
       <h3 class="mb-2 line-clamp-2 text-h5 lg:text-h4">
