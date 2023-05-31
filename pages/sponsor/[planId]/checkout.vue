@@ -19,13 +19,14 @@
             </div>
             <div class="mb-6 md:w-1/2">
               <label for="cellphone">手機</label>
-              <input id="cellphone" type="tel" name="cellphone" :value="userInfo.user_phone" />
+              <input id="cellphone" type="tel" name="cellphone" :value="userInfo.user_phone" disabled />
             </div>
           </div>
           <div class="mb-6">
             <label for="email">電子信箱</label>
-            <input id="email" type="email" name="email" :value="userInfo.user_email" />
+            <input id="email" type="email" name="email" :value="userInfo.user_email" disabled />
           </div>
+          <!-- 
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/3">
               <label for="country">國家 / 地區</label>
@@ -50,6 +51,7 @@
               <input id="address" type="text" name="address" />
             </div>
           </div>
+           -->
           <p class="text-grey-500">
             當您確認參與本專案贊助方案時，您已確實暸解此專案資訊揭露與承諾之內容。若您發現有與實際情況不符之處，請透過【檢舉與回報】功能通報平台，我們會盡速確認。
           </p>
