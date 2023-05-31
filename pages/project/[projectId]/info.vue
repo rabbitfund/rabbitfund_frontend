@@ -73,6 +73,24 @@ const getDaysLeft = (projectEndDate) => {
 const copy = () => {
   navigator.clipboard.writeText(window.location.href);
 };
+
+// 生成 2~3 位數的隨機數
+function generateRandomNumber() {
+  const min = 10; // 最小值（2 位數的最小值）
+  const max = 99; // 最大值（2 位數的最大值）
+
+  // 檢查是否要生成 3 位數的隨機數
+  const shouldGenerateThreeDigit = Math.random() < 0.5;
+
+  // 根據需要生成 2 位數或 3 位數的隨機數
+  if (shouldGenerateThreeDigit) {
+    return Math.floor(Math.random() * (999 - 100 + 1)) + 100; // 生成 3 位數的隨機數
+  } else {
+    return Math.floor(Math.random() * (max - min + 1)) + min; // 生成 2 位數的隨機數
+  }
+}
+// const randomNumber = generateRandomNumber();
+// console.log(randomNumber);
 </script>
 
 <template>
@@ -138,7 +156,7 @@ const copy = () => {
               </li>
               <li class="flex w-1/2 flex-col gap-1 px-2">
                 <span class="text-grey-400">贊助人次</span
-                ><span class="text-lg font-bold">180人</span>
+                ><span class="text-lg font-bold">{{ generateRandomNumber() }}人</span>
               </li>
             </ul>
           </div>
@@ -232,7 +250,7 @@ const copy = () => {
           :plan-id="option._id"
           :plan="option.option_name"
           :price="option.option_price"
-          :times="46"
+          :times="generateRandomNumber()"
           :content="option.option_content"
           :endDate="endDate"
           :projectFinishedStatus="projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null"
