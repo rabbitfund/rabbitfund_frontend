@@ -231,8 +231,10 @@ const navigateToCheckout = () => {
   const orderData = {
     user_id: userInfo.value._id,
     project_id: projectId,
+    project_title: projectTitle.value,
     project_price: price.value,
     option_id: planId,
+    option_name: optionName.value,
     order_option_quantity: quantity.value,
     order_extra: extra.value,
     order_total: total.value,
