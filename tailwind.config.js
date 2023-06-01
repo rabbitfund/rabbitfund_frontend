@@ -12,6 +12,7 @@ module.exports = {
 			xl: '1320px',
 		},
 		fontSize: {
+			sm: ['14px', 1.5],
 			base: ['16px', 1.5],
 			md: ['18px', 1.4],
 			lg: ['20px', 1.5],
@@ -99,5 +100,9 @@ module.exports = {
 		require('@tailwindcss/forms')({
 			strategy: 'base',
 		}),
+		require('flowbite/plugin'),
 	],
+	content: [
+    "./node_modules/flowbite.{js,ts}"
+  ],
 }
