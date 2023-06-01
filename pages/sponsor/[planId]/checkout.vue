@@ -268,8 +268,8 @@
               <span><img src="~/assets/images/icons/bars.svg" alt="信用卡" class="w-8" /></span>
               <h2 class="text-h5">訂單明細</h2>
             </div>
-            <h2 class="mb-4 text-h4">愛奇兒家庭社區共融中心集資計畫</h2>
-            <span class="mb-3 block lg:text-lg">單次捐款｜理念支持</span>
+            <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
+            <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
           </div>
           <ul class="border-b pb-6 pt-8">
             <li class="mb-4 flex justify-between">
@@ -319,8 +319,10 @@ const invoiceCarrier = ref('');
 
 const userId = orderStore.user_id;
 const projectId = orderStore.project_id;
+const projectTitle = orderStore.project_title;
 const projectPrice = orderStore.project_price;
 const optionId = orderStore.option_id;
+const optionName = orderStore.option_name;
 const orderOptionQuantity = orderStore.order_option_quantity;
 const orderExtra = orderStore.order_extra;
 const orderTotal = orderStore.order_total;
@@ -341,8 +343,10 @@ const navigateToCheckOrder = async () => {
     const orderPayload = {
       user_id: userId,
       project_id: projectId,
+      project_title: projectTitle,
       project_price: projectPrice,
       option_id: optionId,
+      option_namee: optionName,
       order_option_quantity: orderOptionQuantity,
       order_extra: orderExtra,
       order_total: orderTotal,

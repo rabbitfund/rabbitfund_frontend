@@ -1,13 +1,22 @@
 <script setup>
+import { useOrderStore } from '@/stores/order';
+
 definePageMeta({
   middleware: ['auth']
 });
-
+const orderStore = useOrderStore();
 const route = useRoute();
 const { orderId } = route.params;
 const { getOrder } = useApi();
 
 const order = ref('');
+const projectTitle = orderStore.project_title;
+const optionName = orderStore.option_name;
+const projectPrice = orderStore.project_price;
+const orderExtra = orderStore.order_extra;
+const orderTotal = orderStore.order_total;
+
+console.log(orderStore);
 
 onMounted(async () => {
   await nextTick();
@@ -53,15 +62,21 @@ onMounted(async () => {
             <input type="hidden" name="Version" value="1.5" disabled />
             <!-- TODO: env Version -->
           </div>
-          <div class="mb-6">
-            <label for="MerchantOrderNo">訂單編號</label>
-            <input
-              id="MerchantOrderNo"
-              type="text"
-              name="MerchantOrderNo"
-              :value="order.order_id"
-              disabled
-            />
+          <div class="md:flex md:gap-6">
+            <div class="mb-6 md:w-4/5">
+              <label for="MerchantOrderNo">訂單編號</label>
+              <input
+                id="MerchantOrderNo"
+                type="text"
+                name="MerchantOrderNo"
+                :value="order.order_id"
+                disabled
+              />
+            </div>
+            <div class="mb-6 md:w-1/5">
+              <label for="Amt">訂單金額</label>
+              <input id="Amt" type="text" name="Amt" :value="order.amt" disabled />
+            </div>
           </div>
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/2">
@@ -71,16 +86,6 @@ onMounted(async () => {
             <div class="mb-6 md:w-1/2">
               <label for="Email">電子信箱</label>
               <input id="Email" type="email" name="Email" :value="order.user_email" disabled />
-            </div>
-          </div>
-          <div class="md:flex md:gap-6">
-            <div class="mb-6 md:w-4/5">
-              <label for="itemDesc">訂單商品</label>
-              <input id="itemDesc" type="text" name="itemDesc" :value="order.itemDesc" disabled />
-            </div>
-            <div class="mb-6 md:w-1/5">
-              <label for="Amt">訂單金額</label>
-              <input id="Amt" type="text" name="Amt" :value="order.amt" disabled />
             </div>
           </div>
           <div class="mb-6">
@@ -104,18 +109,23 @@ onMounted(async () => {
               <span><img src="~/assets/images/icons/bars.svg" alt="信用卡" class="w-8" /></span>
               <h2 class="text-h5">訂單明細</h2>
             </div>
-            <h2 class="mb-4 text-h4">愛奇兒家庭社區共融中心集資計畫</h2>
-            <span class="mb-3 block lg:text-lg">單次捐款｜理念支持</span>
+            <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
+            <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
+            <!-- NOTE: optionName 不知為何 undefined -->
           </div>
           <ul class="border-b pb-6 pt-8">
-            <li class="mb-4 flex justify-between"><span>小計</span><span>$ 300</span></li>
-            <li class="mb-4 flex justify-between"><span>額外贊助</span><span>$ 300</span></li>
+            <li class="mb-4 flex justify-between">
+              <span>小計</span><span>$ {{ projectPrice }}</span>
+            </li>
+            <li class="mb-4 flex justify-between">
+              <span>額外贊助</span><span>$ {{ orderExtra }}</span>
+            </li>
             <li class="flex justify-between"><span>運費</span><span>$ 0</span></li>
           </ul>
           <div class="pt-6">
             <div class="mb-8 flex justify-between">
               <span class="text-lg font-bold">總計</span
-              ><span class="text-lg font-bold">$ 600</span>
+              ><span class="text-lg font-bold">$ {{ orderTotal }}</span>
             </div>
             <form action="https://ccore.newebpay.com/MPG/mpg_gateway" method="post">
               <input type="hidden" name="MerchantID" value="MS148719690" />
