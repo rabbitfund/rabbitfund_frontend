@@ -72,19 +72,18 @@
 @layer components {
   .btn {
     @apply rounded-4xl px-8 py-3 text-center text-md font-bold
-    ring-2 transition-all hover:scale-105 hover:cursor-pointer active:scale-95;
+    ring-2 transition-all hover:cursor-pointer hover:disabled:cursor-not-allowed;
   }
   .btn-primary {
-    @apply bg-primary text-white ring-transparent hover:bg-transparent hover:text-primary hover:ring-primary active:bg-transparent;
+    @apply bg-primary text-white ring-primary hover:bg-primary-dark hover:ring-primary-dark  disabled:bg-grey-200 disabled:ring-transparent;
   }
   .btn-primary-outline {
-    @apply bg-transparent text-primary ring-primary hover:bg-primary
-    hover:text-white active:bg-primary;
+    @apply bg-transparent text-primary ring-primary hover:text-primary-dark hover:ring-primary-dark disabled:text-grey-200 disabled:ring-grey-200;
   }
 
   .badge {
-    @apply block cursor-pointer rounded-full
-    px-5 py-2 text-center text-h6 whitespace-nowrap mr-2;
+    @apply mr-2 block cursor-pointer
+    whitespace-nowrap rounded-full px-5 py-2 text-center text-h6;
   }
 
   .progress {
