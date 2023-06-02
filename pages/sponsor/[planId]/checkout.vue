@@ -1,7 +1,7 @@
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
-      <CheckoutProcess step="填寫訂單資料" />
+      <CheckoutProcess step="2" />
     </div>
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
