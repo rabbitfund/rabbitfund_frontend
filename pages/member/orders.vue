@@ -18,9 +18,13 @@ const handleGetMyOrders = async () => {
       watch: [page]
     }
   );
-  if (data.ok) {
-    orderData.value = data.data;
-  }
+  console.log('handleGetMyOrders', data);
+  orderData.value = data.value.data;
+  // console.log(data.value.data);
+  // console.log(data.ok);
+  // if (data.ok) {
+  //   orderData.value = data.value.data;
+  // }
 };
 
 const page = ref(1);
