@@ -61,6 +61,6 @@ const props = defineProps({
   @apply bg-primary text-white;
 }
 .li--disabled {
-  @apply opacity-40;
+  @apply cursor-not-allowed opacity-40;
 }
 </style>
