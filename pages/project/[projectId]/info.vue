@@ -9,6 +9,7 @@ const category = ref('');
 const content = ref('');
 const startDate = ref('');
 const endDate = ref('');
+const progress = ref(0);
 const target = ref(0);
 const title = ref('');
 const options = ref([]);
@@ -21,8 +22,7 @@ const cover = ref('');
 const projectStore = useProjectStore();
 const { setProject } = projectStore;
 
-let projectStatus = ref({});
-
+const projectStatus = ref({});
 
 onMounted(async () => {
   await nextTick();
@@ -41,6 +41,7 @@ onMounted(async () => {
       target.value = project.project_target; // 逗號分隔之後再處理
       startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
       endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
+      progress.value = project.project_progress;
       options.value = project.option;
       proposer.value = project.ownerInfo?.proposer_name;
       taxId.value = project.ownerInfo?.proposer_tax_id;
@@ -61,6 +62,10 @@ onMounted(async () => {
 
 const formattedTarget = computed(() => {
   return target.value.toLocaleString();
+});
+
+const formattedProgress = computed(() => {
+  return progress.value.toLocaleString();
 });
 
 const getDaysLeft = (projectEndDate) => {
@@ -129,7 +134,7 @@ function generateRandomNumber() {
           <p>專案時間 {{ startDate }} 12:00 ~ {{ endDate }} 23:59</p>
         </div>
         <div class="lg:w-5/12 lg:px-3">
-          <span class="mb-3 block text-h2 font-bold lg:mb-1.5">$554,816</span>
+          <span class="mb-3 block text-h2 font-bold lg:mb-1.5">$ {{ formattedProgress }} </span>
           <div class="gap-3 sm:mb-9 sm:flex">
             <ProgressBar
               class="mb-3 flex-auto sm:mb-0"
@@ -148,7 +153,7 @@ function generateRandomNumber() {
               </li>
               <li class="mb-4 flex w-1/2 flex-col gap-1 px-2">
                 <span class="text-grey-400">預計募集總金額</span
-                ><span class="text-lg font-bold">$ 554,816 </span>
+                ><span class="text-lg font-bold">$ {{ formattedProgress }} </span>
               </li>
               <li class="flex w-1/2 flex-col gap-1 px-2">
                 <span class="text-grey-400">剩餘時間</span
