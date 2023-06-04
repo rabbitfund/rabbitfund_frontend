@@ -10,6 +10,7 @@ export default function useApi() {
     });
   const putUserDetail = (data) =>
     useFetch('/me/user', { method: 'PUT', body: JSON.stringify(data) });
+  const getMyOrder = (page: number) => useFetch(`/me/orders?page=${page}`, { method: 'GET' });
 
   const getProjects = (page: number, tag: string) => 
     useFetch(`/projects?page=${page}&tag=${tag}`, { method: 'GET', server: false, globalLoading: false });
@@ -31,6 +32,7 @@ export default function useApi() {
     signup,
     getUserDetail,
     putUserDetail,
+    getMyOrder,
     getProjects,
     getProject,
     getProjectOption,
