@@ -1,4 +1,5 @@
 <script setup>
+import moment from 'moment';
 import { useProjectStore } from '~/stores/project';
 import mockImg from '~/assets/images/mock.png';
 
@@ -18,6 +19,7 @@ const taxId = ref('');
 const email = ref('');
 const timeLeft = ref('');
 const cover = ref('');
+const totalOrder = ref(0);
 
 const projectStore = useProjectStore();
 const { setProject } = projectStore;
@@ -52,6 +54,11 @@ onMounted(async () => {
           ? project.project_cover
           : mockImg;
       console.log('options.value', options.value);
+
+      for (const item of project.option) {
+        const id = item._id;
+        totalOrder.value += generateRandomNumberById(id);
+      }
 
       setProject(project);
     })
@@ -93,6 +100,16 @@ function generateRandomNumber() {
   } else {
     return Math.floor(Math.random() * (max - min + 1)) + min; // 生成 2 位數的隨機數
   }
+}
+
+function generateRandomNumberById(objectId) {
+  const seed = objectId.substring(20); // last four
+  let total = 1;
+  for (const el of seed) {
+    total *= el.charCodeAt(0);
+  }
+  const date = moment().format('MMDD');
+  return Math.round(total / parseInt(date)) % 1000;
 }
 // const randomNumber = generateRandomNumber();
 // console.log(randomNumber);
@@ -161,7 +178,7 @@ function generateRandomNumber() {
               </li>
               <li class="flex w-1/2 flex-col gap-1 px-2">
                 <span class="text-grey-400">贊助人次</span
-                ><span class="text-lg font-bold">{{ generateRandomNumber() }}人</span>
+                ><span class="text-lg font-bold">{{ totalOrder }}人</span>
               </li>
             </ul>
           </div>
@@ -243,7 +260,7 @@ function generateRandomNumber() {
       >
         <CardTeam
           :brand="proposer"
-          :number="1"
+          :number="3"
           :proposer="proposer"
           :unified-number="taxId"
           :email="email"
@@ -255,7 +272,7 @@ function generateRandomNumber() {
           :plan-id="option._id"
           :plan="option.option_name"
           :price="option.option_price"
-          :times="generateRandomNumber()"
+          :times="generateRandomNumberById(option._id)"
           :content="option.option_content"
           :endDate="endDate"
           :projectFinishedStatus="projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null"
