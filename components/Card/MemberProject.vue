@@ -21,6 +21,10 @@ const formattedAmount = (price) => {
   // console.trace(price);
   return price.toLocaleString();
 };
+
+const copy = (projectId) => {
+  navigator.clipboard.writeText(`${window.location.origin}/project/${projectId}/info`);
+};
 </script>
 <template>
   <section
@@ -76,9 +80,9 @@ const formattedAmount = (price) => {
       </div>
       <div class="flex gap-4 lg:block">
         <button v-if="props.canModify" class="btn btn-primary-outline lg:mb-7">修改提案</button>
-        <div class="flex justify-center text-grey-400">
+        <button class="flex justify-center text-grey-400" @click="copy(props.project._id)">
           <img class="mr-1 inline-block w-6" src="~/assets/images/icons/copy.svg" />分享連結
-        </div>
+        </button>
       </div>
     </div>
   </section>
