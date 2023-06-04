@@ -11,27 +11,24 @@ onMounted(async () => {
   await nextTick();
   getProjects(1, 'hot')
     .then((res) => {
-      const projectList = res.data.value.data;
+      const projectList = res.data.value.data.projects;
       hotProjects.value = projectList.splice(0, 3);
-      hotProjects.value;
     })
     .catch((err) => {
       console.log(err);
     });
   getProjects(1, 'recent')
     .then((res) => {
-      const projectList = res.data.value.data;
+      const projectList = res.data.value.data.projects;
       recentProjects.value = projectList.splice(0, 3);
-      recentProjects.value;
     })
     .catch((err) => {
       console.log(err);
     });
   getProjects(1, 'long')
     .then((res) => {
-      const projectList = res.data.value.data;
+      const projectList = res.data.value.data.projects;
       longProjects.value = projectList.splice(0, 3);
-      longProjects.value;
     })
     .catch((err) => {
       console.log(err);
