@@ -10,7 +10,7 @@ const props = defineProps({
     type: [Object]
   }
 });
-
+console.log('CardMemberProject', props);
 const { formatTimeLeft } = useSetProjectStatus(props.project);
 
 const formattedAmount = computed(() => {
