@@ -24,7 +24,7 @@ console.log(project);
     <CardMemberProject
       v-for="i in project"
       :key="i._id + i"
-      :can-modify="false"
+      :can-modify="true"
       :title="i.project_title"
       :cover="i.project_cover"
       :project="i"

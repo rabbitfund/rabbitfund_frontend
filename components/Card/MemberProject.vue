@@ -11,11 +11,16 @@ const props = defineProps({
   }
 });
 console.log('CardMemberProject', props);
+// console.log(props.project);
+// console.log(props.project.project_cover);
 const { formatTimeLeft } = useSetProjectStatus(props.project);
 
-const formattedAmount = computed(() => {
-  return props.project?.project_progress?.toLocaleString();
-});
+const formattedAmount = (price) => {
+  console.count('formattedAmount');
+  console.log('formattedAmount', price);
+  // console.trace(price);
+  return price.toLocaleString();
+};
 </script>
 <template>
   <section
@@ -41,7 +46,7 @@ const formattedAmount = computed(() => {
           ></Badge
         ></span>
 
-        <h4 class="mt-2 font-bold text-grey-600">{{ props.project?.project_title }}</h4>
+        <h4 class="mt-2 font-bold text-grey-600">{{ props.project.project_title }}</h4>
         <div class="mt-6 flex justify-between gap-6 bg-light-emphasis px-5 py-3">
           <div>
             <p>贊助人次</p>
@@ -53,7 +58,9 @@ const formattedAmount = computed(() => {
           </div>
           <div>
             <p>目標金額</p>
-            <p class="text-[20px] font-bold xl:text-2xl">{{ formattedAmount }}</p>
+            <p class="text-[20px] font-bold xl:text-2xl">
+              {{ formattedAmount(props.project.project_target) }}
+            </p>
           </div>
         </div>
       </div>
@@ -65,7 +72,7 @@ const formattedAmount = computed(() => {
     <div class="flex flex-col items-center justify-center lg:min-w-[140px]">
       <div class="mb-11 flex gap-1 lg:block">
         <p class="leading-10 lg:leading-normal">目前募資金額</p>
-        <p class="text-2xl font-bold">{{ formattedAmount }}</p>
+        <p class="text-2xl font-bold">{{ formattedAmount(props.project.project_progress) }}</p>
       </div>
       <div class="flex gap-4 lg:block">
         <button v-if="props.canModify" class="btn btn-primary-outline lg:mb-7">修改提案</button>
