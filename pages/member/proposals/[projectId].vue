@@ -1,3 +1,31 @@
+<script setup>
+import arrowTop from '@/assets/images/icons/arrow-top.svg'
+import arrowBottom from '@/assets/images/icons/arrow-bottom.svg'
+
+// const route = useRoute();
+// const { projectId } = route.params;
+
+function toggleSeeMore(index) {
+  mockData.options[index].showDetails = !mockData.options[index].showDetails;
+}
+const mockData = reactive({
+  project_title: '關愛偏鄉孩子集資計畫',
+  project_category: '校園',
+  project_summary: '簡單一句話介紹這個專案',
+  project_content: `我們都知道，教育是改變命運的關鍵，但是在偏鄉地區，孩子們卻往往缺乏教育資源。透過您的捐款，我們將幫助這些孩子獲得更好的學習機會，讓他們擁有更美好的未來。
+請您一起加入我們的行列，支持這個值得關注的公益專案，您的每一筆捐款都將為偏鄉孩子帶來新的希望與改變。`,
+  project_target: 500000,
+  project_progress: 20000,
+  options: [{ showDetail: false }, { showDetail: false }]
+});
+
+function seeMoreModal() {
+  // $swal.fire({
+  //   icon: 'error'
+  // });
+  alert('詳細modal等克拉拉');
+}
+</script>
 <template>
   <p class="mb-8"><span class="text-grey-400">提案紀錄 > </span>{{ mockData.project_title }}</p>
   <div class="mb-8 grid grid-cols-12 gap-6">
@@ -54,14 +82,14 @@
       </div>
     </div>
   </div>
-  <div class="mb-8 lg:mb-16">
+  <div class="mb-8 md:mb-16">
     <h4 class="mb-5 flex items-center">
       <img class="mr-3 inline" src="@/assets/images/icons/money.svg" alt="icon" />
       募資進度
     </h4>
 
-    <section>
-      <div class="hidden gap-10 bg-light-emphasis px-2 py-[14px] text-grey-500 xl:flex">
+    <section class="overflow-x-auto">
+      <div class="hidden gap-10 bg-light-emphasis px-2 py-[14px] text-grey-500 md:flex md:min-w-[960px]">
         <div class="w-[220px]">
           <p>方案名稱</p>
         </div>
@@ -81,23 +109,23 @@
 
       <div
         v-for="option in mockData.options"
-        class="mb-5 flex flex-col items-center rounded-lg border border-grey-200 px-6 py-8 sm:text-lg xl:flex-row xl:gap-10 xl:px-2 xl:py-[14px] xl:text-base"
+        class=" md:min-w-[960px] mb-5 flex md:mb-0 flex-col items-center rounded-lg md:border-0 border border-grey-200 px-6 py-8 sm:text-lg md:flex-row md:gap-10 md:px-2 md:py-[14px] md:text-base"
       >
-        <div class="order-2 mb-2 xl:order-1 xl:mb-0 xl:w-[220px]">
+        <div class="order-2 mb-2 md:order-1 md:mb-0 md:w-[220px]">
           <p>單次捐款｜理念支持</p>
         </div>
-        <div class="order-1 mb-6 w-full flex-1 xl:order-2 xl:mb-0">
+        <div class="order-1 mb-6 w-full flex-1 md:order-2 md:mb-0">
           <img
-            class="w-full object-contain xl:max-h-[38px] xl:w-auto"
+            class="w-full object-contain md:max-h-[38px] md:w-auto"
             src="@/assets/images/mock-plan.png"
             alt="options"
           />
         </div>
-        <div class="order-4 mb-6 xl:order-3 xl:mb-0 xl:w-[120px]">
+        <div class="order-4 mb-6 md:order-3 md:mb-0 md:w-[120px]">
           <button v-if="true" class="btn-primary rounded-full px-5 py-2">未額滿</button>
           <button v-else class="btn-primary rounded-full px-5 py-2">已額滿</button>
         </div>
-        <div class="order-5 flex w-2/3 flex-col justify-center xl:order-4 xl:w-[220px]">
+        <div class="order-5 flex w-2/3 flex-col justify-center md:order-4 md:w-[220px]">
           <p class="mb-1">${{ mockData.project_progress }}(${{ mockData.project_target }})</p>
           <ProgressBar
             class="mb-2 w-full"
@@ -108,22 +136,29 @@
             :showPercent="false"
           />
         </div>
-        <div class="order-3 mb-4 xl:order-5 xl:mb-0 xl:w-[60px]">
-          <p><span class="xl:hidden">贊助人次: </span>3000</p>
+        <div class="order-3 mb-4 md:order-5 md:mb-0 md:w-[60px]">
+          <p><span class="md:hidden">贊助人次: </span>3000</p>
         </div>
       </div>
+
+      <LayoutPagination
+        class="mt-5 md:hidden"
+        :totalPage="2"
+        :currentPage="1"
+        :handle-page-change="() => {}"
+      />
     </section>
   </div>
 
-  <div class="mb-8 lg:mb-16">
+  <div class="mb-8 md:mb-16">
     <h4 class="mb-5 flex items-center">
       <img class="mr-3 inline h-8" src="@/assets/images/icons/user-fill.svg" alt="icon" />
       贊助名單
     </h4>
 
     <!-- 贊助名單大螢幕 -->
-    <section class="hidden xl:block">
-      <div class="flex gap-10 bg-light-emphasis px-2 py-[14px] text-grey-500">
+    <section class="hidden md:block max-w-[900px] overflow-x-auto">
+      <div class="flex gap-10 bg-light-emphasis px-2 py-[14px] text-grey-500 md:min-w-[960px]">
         <div class="w-[140px]">
           <p>贊助人</p>
         </div>
@@ -143,7 +178,7 @@
           <p>客服處理</p>
         </div>
       </div>
-      <div class="flex items-center gap-10 px-2 py-[14px] text-grey-500">
+      <div  v-for="(item, index) in mockData.options" class="flex items-center gap-10 px-2 py-[14px] text-grey-500 md:min-w-[960px]">
         <div class="w-[140px]">
           <p>備兔兔</p>
         </div>
@@ -159,19 +194,30 @@
           <button v-else class="btn-primary rounded-full px-5 py-2">已額滿</button>
         </div>
         <div class="w-[108px]">
-          <p class="cursor-pointer text-primary underline">詳細</p>
+          <p class="cursor-pointer text-primary underline">
+            詳細
+          </p>
         </div>
         <div class="w-[68px]">
-          <p class="cursor-pointer text-primary underline">備註</p>
+          <p class="cursor-pointer text-primary underline">
+            備註
+          </p>
         </div>
       </div>
+
+      <LayoutPagination
+        class="mt-5 md:hidden"
+        :totalPage="2"
+        :currentPage="1"
+        :handle-page-change="() => {}"
+      />
     </section>
 
     <!-- 贊助名單小螢幕 -->
-    <section class="block xl:hidden">
+    <section class="block md:hidden">
       <div
         v-for="(item, index) in mockData.options"
-        class="mb-5 flex flex-col items-center rounded-lg border border-grey-200 sm:text-lg xl:text-base"
+        class="mb-5 flex flex-col items-center rounded-lg border border-grey-200 sm:text-lg md:text-base"
       >
         <header class="flex w-full flex-col justify-center gap-2 bg-light-emphasis p-2">
           <p class="text-center font-bold text-grey-500">定期捐款｜理念支持</p>
@@ -191,8 +237,9 @@
           </div>
         </div>
 
-        <p class="mb-1 p-2" @click="toggleSeeMore(index)">
+        <p class="mb-1 p-2 text-grey-600 flex justify-center items-center" @click="toggleSeeMore(index)">
           {{ !item.showDetails ? '詳細' : '收起' }}
+          <img class="ml-2" :src="item.showDetails ? arrowTop : arrowBottom" alt="see more" />
         </p>
 
         <div
@@ -208,30 +255,3 @@
     </section>
   </div>
 </template>
-
-<script setup>
-// const route = useRoute();
-// const { projectId } = route.params;
-
-function toggleSeeMore(index) {
-  mockData.options[index].showDetails = !mockData.options[index].showDetails;
-}
-const mockData = reactive({
-  project_title: '關愛偏鄉孩子集資計畫',
-  project_category: '校園',
-  project_summary: '簡單一句話介紹這個專案',
-  project_content: `我們都知道，教育是改變命運的關鍵，但是在偏鄉地區，孩子們卻往往缺乏教育資源。透過您的捐款，我們將幫助這些孩子獲得更好的學習機會，讓他們擁有更美好的未來。
-請您一起加入我們的行列，支持這個值得關注的公益專案，您的每一筆捐款都將為偏鄉孩子帶來新的希望與改變。`,
-  project_target: 500000,
-  project_progress: 20000,
-  options: [{ showDetail: false }, { showDetail: false }]
-});
-
-const { $swal } = useNuxtApp();
-
-function seeMoreModal() {
-  $swal.fire({
-    icon: 'error'
-  });
-}
-</script>
