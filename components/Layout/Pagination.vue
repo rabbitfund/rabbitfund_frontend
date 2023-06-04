@@ -13,22 +13,24 @@ const props = defineProps({
 </script>
 <template>
   <nav aria-label="Page navigation example" class="mx-auto my-4">
-    <ul class="inline-flex -space-x-px">
+    <ul class="inline-flex space-x-4">
       <li>
         <button
-          class="ml-0 rounded-l-lg border border-gray-300 bg-white px-3 py-2 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          @click="handlePageChange(props.currentPage - 1)"
+          class="li"
+          :class="{ 'li--disabled': props.currentPage === 1 }"
+          :disable="props.currentPage === 1"
         >
-          Previous
+          <img src="@/assets/images/icons/arrow-left.svg" alt="" />
         </button>
       </li>
       <li v-for="i in props.totalPage" :key="i">
         <button
           @click="handlePageChange(i)"
-          class="border border-gray-300 px-3 py-2 leading-tight"
+          class="li"
           :class="{
-            'border border-gray-300 bg-blue-50 text-blue-600 hover:bg-blue-100':
-              props.currentPage === i,
-            'bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-700': props.currentPage !== i
+            'li--active': props.currentPage === i,
+            'li--default': props.currentPage !== i
           }"
         >
           {{ i }}
@@ -36,11 +38,29 @@ const props = defineProps({
       </li>
       <li>
         <button
-          class="rounded-r-lg border border-gray-300 bg-white px-3 py-2 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          class="li"
+          :class="{ 'li--disabled': props.currentPage === props.totalPage }"
+          :disable="props.currentPage === props.totalPage"
         >
-          Next
+          <img src="@/assets/images/icons/arrow-right.svg" alt="" />
         </button>
       </li>
     </ul>
   </nav>
 </template>
+
+<style scope>
+.li {
+  @apply h-8 w-8 rounded-full;
+  @apply flex items-center justify-center;
+}
+.li--default {
+  @apply hover:bg-gray-100 hover:text-gray-700;
+}
+.li--active {
+  @apply bg-primary text-white;
+}
+.li--disabled {
+  @apply cursor-not-allowed opacity-40;
+}
+</style>
