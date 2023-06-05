@@ -4,20 +4,24 @@ import arrowBottom from '@/assets/images/icons/arrow-bottom.svg'
 
 // const route = useRoute();
 // const { projectId } = route.params;
+const projectId = '647ca9bcbf78241a75492bae';
+const { getOwnerProjectDetail } = useApi();
+const { data: detail } = await getOwnerProjectDetail(projectId);
+
 
 function toggleSeeMore(index) {
-  mockData.options[index].showDetails = !mockData.options[index].showDetails;
+  detail.options[index].showDetails = !detail.options[index].showDetails;
 }
-const mockData = reactive({
-  project_title: '關愛偏鄉孩子集資計畫',
-  project_category: '校園',
-  project_summary: '簡單一句話介紹這個專案',
-  project_content: `我們都知道，教育是改變命運的關鍵，但是在偏鄉地區，孩子們卻往往缺乏教育資源。透過您的捐款，我們將幫助這些孩子獲得更好的學習機會，讓他們擁有更美好的未來。
-請您一起加入我們的行列，支持這個值得關注的公益專案，您的每一筆捐款都將為偏鄉孩子帶來新的希望與改變。`,
-  project_target: 500000,
-  project_progress: 20000,
-  options: [{ showDetail: false }, { showDetail: false }]
-});
+// const detail = reactive({
+//   project_title: '關愛偏鄉孩子集資計畫',
+//   project_category: '校園',
+//   project_summary: '簡單一句話介紹這個專案',
+//   project_content: `我們都知道，教育是改變命運的關鍵，但是在偏鄉地區，孩子們卻往往缺乏教育資源。透過您的捐款，我們將幫助這些孩子獲得更好的學習機會，讓他們擁有更美好的未來。
+// 請您一起加入我們的行列，支持這個值得關注的公益專案，您的每一筆捐款都將為偏鄉孩子帶來新的希望與改變。`,
+//   project_target: 500000,
+//   project_progress: 20000,
+//   options: [{ showDetail: false }, { showDetail: false }]
+// });
 
 function seeMoreModal() {
   // $swal.fire({
@@ -27,21 +31,21 @@ function seeMoreModal() {
 }
 </script>
 <template>
-  <p class="mb-8"><span class="text-grey-400">提案紀錄 > </span>{{ mockData.project_title }}</p>
+  <p class="mb-8"><span class="text-grey-400">提案紀錄 > </span>{{ detail.project_title }}</p>
   <div class="mb-8 grid grid-cols-12 gap-6">
     <img
       class="col-span-12 object-contain md:-mr-6 lg:col-span-3"
       src="@/assets/images/mock.png"
-      :alt="mockData.project_title"
+      :alt="detail.project_title"
     />
     <div class="col-span-12 lg:col-span-9">
       <Badge
         class="mb-2 inline-block"
-        :type="mockData.project_category"
-        :name="mockData.project_category"
+        :type="detail.project_category"
+        :name="detail.project_category"
       />
-      <h3 class="mb-4 font-bold">{{ mockData.project_title }}</h3>
-      <p class="text-grey-500">{{ mockData.project_summary }}</p>
+      <h3 class="mb-4 font-bold">{{ detail.project_title }}</h3>
+      <p class="text-grey-500">{{ detail.project_summary }}</p>
     </div>
   </div>
   <div class="mb-8 grid grid-cols-9 gap-6 bg-light-emphasis p-8 lg:mb-16">
@@ -52,15 +56,15 @@ function seeMoreModal() {
     <div class="col-span-9 lg:col-span-4">
       <p class="text-grey-500">募資進度</p>
       <p class="text-2xl font-bold">
-        {{ mockData.project_progress }}
-        <span class="text-lg font-normal text-grey-500">(目標 ${{ mockData.project_target }})</span>
+        {{ detail.project_progress }}
+        <span class="text-lg font-normal text-grey-500">(目標 ${{ detail.project_target }})</span>
       </p>
       <ProgressBar
         class="mb-2"
-        :type="mockData.project_category"
+        :type="detail.project_category"
         :minAmount="0"
-        :maxAmount="mockData.project_target || 0"
-        :currentAmount="mockData.project_progress || 0"
+        :maxAmount="detail.project_target || 0"
+        :currentAmount="detail.project_progress || 0"
       />
     </div>
     <div class="col-span-9 lg:col-span-3">
@@ -73,7 +77,7 @@ function seeMoreModal() {
       <img class="mr-3 inline" src="@/assets/images/icons/detail.svg" alt="icon" />
       詳細內容
     </h4>
-    <p class="mb-5 text-grey-500">{{ mockData.project_content }}</p>
+    <p class="mb-5 text-grey-500">{{ detail.project_content }}</p>
 
     <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
       <button class="btn btn-primary-outline max-w-[155px]">修改提案</button>
@@ -108,7 +112,7 @@ function seeMoreModal() {
       </div>
 
       <div
-        v-for="option in mockData.options"
+        v-for="option in detail.options"
         class=" md:min-w-[960px] mb-5 flex md:mb-0 flex-col items-center rounded-lg md:border-0 border border-grey-200 px-6 py-8 sm:text-lg md:flex-row md:gap-10 md:px-2 md:py-[14px] md:text-base"
       >
         <div class="order-2 mb-2 md:order-1 md:mb-0 md:w-[220px]">
@@ -126,13 +130,13 @@ function seeMoreModal() {
           <button v-else class="btn-primary rounded-full px-5 py-2">已額滿</button>
         </div>
         <div class="order-5 flex w-2/3 flex-col justify-center md:order-4 md:w-[220px]">
-          <p class="mb-1">${{ mockData.project_progress }}(${{ mockData.project_target }})</p>
+          <p class="mb-1">${{ detail.project_progress }}(${{ detail.project_target }})</p>
           <ProgressBar
             class="mb-2 w-full"
-            :type="mockData.project_category"
+            :type="detail.project_category"
             :minAmount="0"
-            :maxAmount="mockData.project_target || 0"
-            :currentAmount="mockData.project_progress || 0"
+            :maxAmount="detail.project_target || 0"
+            :currentAmount="detail.project_progress || 0"
             :showPercent="false"
           />
         </div>
@@ -178,7 +182,7 @@ function seeMoreModal() {
           <p>客服處理</p>
         </div>
       </div>
-      <div  v-for="(item, index) in mockData.options" class="flex items-center gap-10 px-2 py-[14px] text-grey-500 md:min-w-[960px]">
+      <div  v-for="(item, index) in detail.options" class="flex items-center gap-10 px-2 py-[14px] text-grey-500 md:min-w-[960px]">
         <div class="w-[140px]">
           <p>備兔兔</p>
         </div>
@@ -216,7 +220,7 @@ function seeMoreModal() {
     <!-- 贊助名單小螢幕 -->
     <section class="block md:hidden">
       <div
-        v-for="(item, index) in mockData.options"
+        v-for="(item, index) in detail.options"
         class="mb-5 flex flex-col items-center rounded-lg border border-grey-200 sm:text-lg md:text-base"
       >
         <header class="flex w-full flex-col justify-center gap-2 bg-light-emphasis p-2">

@@ -10,6 +10,12 @@ export default function useApi() {
     });
   const putUserDetail = (data) =>
     useFetch('/me/user', { method: 'PUT', body: JSON.stringify(data) });
+  const getOwnerProjectDetail = (projectId: string) =>
+    useFetch(`/owner/projects/${projectId}`, { method: 'GET', server: false,  transform: (_projects) => _projects.data, });
+  const getOwnerProjectSupporters = (projectId: string) =>
+    useFetch(`/owner/projects/${projectId}/supporters`, { method: 'GET', server: false,  transform: (_supporters) => _supporters.data, });
+  const getOwnerProjectStatus = (projectId: string) =>
+    useFetch(`/owner/projects/${projectId}/status`, { method: 'GET', server: false,  transform: (_status) => _status.data, });
 
   const getProjects = (page: number, tag: string) => 
     useFetch(`/projects?page=${page}&tag=${tag}`, { method: 'GET', server: false, globalLoading: false });
@@ -30,6 +36,9 @@ export default function useApi() {
     signup,
     getUserDetail,
     putUserDetail,
+    getOwnerProjectDetail,
+    getOwnerProjectSupporters,
+    getOwnerProjectStatus,
     getProjects,
     getProject,
     getProjectOption,
