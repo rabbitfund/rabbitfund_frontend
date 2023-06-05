@@ -7,7 +7,7 @@ onMounted(async () => {
 
   getOwnerProject()
     .then((res) => {
-      console.log(res.data.value.data);
+      console.log('getOwnerProject', res.data.value.data);
       const projectData = res.data.value.data;
       project.value = projectData;
     })
@@ -15,7 +15,7 @@ onMounted(async () => {
       console.log(err);
     });
 });
-console.log(project);
+// console.log(project);
 </script>
 
 <template>

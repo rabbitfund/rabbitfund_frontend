@@ -11,11 +11,10 @@ const page = ref(1);
 function getMyOrderData(page) {
   getMyOrder(page)
     .then((res) => {
-      console.log(res);
-      console.log(res.data.value.data);
+      console.log('getMyOrderData', res.data.value.data);
       const orderData = res.data.value.data;
       order.value = orderData;
-      console.log(orderData);
+      // console.log(orderData);
     })
     .catch((err) => {
       console.log(err);

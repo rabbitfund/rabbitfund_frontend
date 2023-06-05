@@ -13,8 +13,8 @@ const props = defineProps({
 console.log('CardMemberOrder', props);
 
 const formattedAmount = (price) => {
-  console.count('formattedAmount');
-  console.log('formattedAmount', price);
+  // console.count('formattedAmount');
+  // console.log('formattedAmount', price);
   // console.trace(price);
   return price.toLocaleString();
 };
@@ -61,9 +61,11 @@ const copy = (projectId) => {
           </div>
         </div>
       </div>
+      <!-- 
       <div class="col-span-12 hidden lg:block">
         {{ props.order.order_info }}
       </div>
+       -->
     </div>
 
     <div class="flex flex-col items-center justify-center lg:min-w-[140px]">
