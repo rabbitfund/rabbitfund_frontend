@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import moment from 'moment';
 import { storeToRefs } from 'pinia';
 import { useProjectStore } from '~/stores/project';
 
@@ -31,7 +32,7 @@ modifiedNews.value = news.value.map((item: News) => {
   return {
     title: item.news_title,
     content: item.news_content,
-    create_date: item.news_update_date
+    create_date: moment(item.news_update_date).format('YYYY-MM-DD')
   };
 });
 </script>

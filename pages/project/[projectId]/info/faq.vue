@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import moment from 'moment';
 import { storeToRefs } from 'pinia';
 import { useProjectStore } from '~/stores/project';
 
@@ -35,7 +36,7 @@ modifiedQas.value = qas.value.map((item: Qas) => {
   return {
     title: item.qas_q,
     content: item.qas_a,
-    create_date: item.qas_update_date
+    create_date: moment(item.qas_update_date).format('YYYY-MM-DD')
   };
 });
 </script>
