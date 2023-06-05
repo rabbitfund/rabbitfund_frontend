@@ -15,7 +15,14 @@
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/2">
               <label for="name">真實姓名</label>
-              <input id="name" type="text" name="name" :value="userInfo.user_name" disabled />
+              <input
+                id="name"
+                type="text"
+                name="name"
+                :value="userInfo.user_name"
+                placeholder="姓名"
+                disabled
+              />
             </div>
             <div class="mb-6 md:w-1/2">
               <label for="cellphone">手機</label>
@@ -24,13 +31,21 @@
                 type="tel"
                 name="cellphone"
                 :value="userInfo.user_phone"
+                placeholder="09XX-XXX-XXX"
                 disabled
               />
             </div>
           </div>
           <div class="mb-6">
             <label for="email">電子信箱</label>
-            <input id="email" type="email" name="email" :value="userInfo.user_email" disabled />
+            <input
+              id="email"
+              type="email"
+              name="email"
+              :value="userInfo.user_email"
+              placeholder="example@rabbitfund.com"
+              disabled
+            />
           </div>
           <!-- 
           <div class="md:flex md:gap-6">

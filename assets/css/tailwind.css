@@ -48,11 +48,11 @@
   [multiple],
   textarea,
   select {
-    @apply w-full rounded border-grey-200 focus:border-primary focus:ring-primary;
+    @apply w-full rounded border-grey-300 focus:border-primary focus:ring-primary text-grey-500 disabled:border-grey-200;
   }
   [type='checkbox'],
   [type='radio'] {
-    @apply h-8 w-8 border-2 border-grey-200 hover:cursor-pointer focus:ring-primary;
+    @apply h-8 w-8 border-2 border-grey-300 hover:cursor-pointer focus:ring-primary disabled:border-grey-100;
   }
   [type='radio']:checked {
     @apply border-primary text-white;
@@ -66,6 +66,10 @@
   }
   [type='radio']:checked:hover {
     @apply border-primary text-white;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-grey-300;
   }
 }
 
@@ -82,7 +86,7 @@
   }
 
   .badge {
-    @apply mr-2 block cursor-pointer
+    @apply inline-block cursor-pointer
     whitespace-nowrap rounded-full px-5 py-2 text-center text-h6;
   }
 
