@@ -55,7 +55,7 @@ const { data: result } = await useAsyncData(
     </div>
   </section>
   <LayoutPagination
-    :totalPage="2"
+    :totalPage="result.totalPages"
     :currentPage="page"
     :handle-page-change="
       (i) => {

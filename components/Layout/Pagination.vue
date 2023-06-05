@@ -1,7 +1,8 @@
 <script setup>
 const props = defineProps({
   totalPage: {
-    type: [Number]
+    type: [Number],
+    default: 1
   },
   currentPage: {
     type: [Number]
