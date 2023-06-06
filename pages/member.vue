@@ -37,12 +37,14 @@ const route = useRoute();
         :class="{ 'active-aside': route.path.includes('/member/manage') }"
         >管理個人資料</NuxtLink
       >
+      <!-- 
       <NuxtLink
         to="/member/change-password"
         class="aside-default"
         :class="{ 'active-aside': route.path.includes('/member/change-password') }"
         >密碼變更</NuxtLink
       >
+       -->
     </aside>
     <div class="col-span-12 lg:col-span-9">
       <NuxtPage />
