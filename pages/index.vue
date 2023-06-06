@@ -172,22 +172,12 @@ onMounted(async () => {
         :btn="'我要提案'"
         :link="'/proposal'"
       />
-      <div
-        class="lg:pb-22 flex flex-col items-center bg-[url('/assets/images/sponsor-bg.png')] bg-cover bg-center bg-no-repeat pb-[71px] pt-[98px] sm:bg-contain lg:mt-20 lg:flex-row lg:justify-center lg:self-end lg:px-10 lg:pb-20 lg:pt-40 xl:pb-[140px] xl:pl-[82px] xl:pr-[98px] xl:pt-[229px]"
-      >
-        <img
-          src="~/assets/images/carrot.png"
-          alt="carrot"
-          class="mb-3 w-[140px] lg:mb-0 lg:mr-6 xl:mr-[50.76px] xl:w-[169.24px]"
-        />
-        <div class="text-center lg:text-left">
-          <p class="mb-6 text-xl font-bold text-primary xl:text-2xl">
-            <span class="block">每一份贊助，</span>
-            <span>都將成就更多的可能！</span>
-          </p>
-          <button class="btn btn-primary">我要贊助</button>
-        </div>
-      </div>
+      <CardBlockCarrot
+        :title="'每一份贊助，'"
+        :text="'都將成就更多的可能！'"
+        :btn="'我要贊助'"
+        :link="'/projects'"
+      />
     </div>
   </section>
 </template>
