@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useGlobalStateStore } from './globalState'
 
 interface UserTokenStorage {
   value: string;
@@ -20,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
           value: res.data.token,
           expired: Date.now() + Number(res.data.expired) * 1000
         };
-        navigateTo('/');
+        navigateTo(useGlobalStateStore().lastRoute);
       }
     },
     async handleSignUp(_data) {

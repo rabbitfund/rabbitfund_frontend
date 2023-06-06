@@ -13,7 +13,7 @@ watchEffect(() => {
   page.value = 1;
 });
 
-const { data: projects } = await useAsyncData(
+const { data: result } = await useAsyncData(
   'projectList' + page.value + '_' + type.value,
   () =>
     $fetch(`/projects`, {
@@ -42,11 +42,11 @@ const { data: projects } = await useAsyncData(
   </div>
 
   <section
-    v-if="projects?.length && projects.length > 0"
+    v-if="result?.projects.length && result.projects.length > 0"
     class="container grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
   >
     <div
-      v-for="project in projects"
+      v-for="project in result.projects"
       :key="project._id"
       class="cursor-pointer"
       @click="navigateTo(`/project/${project._id}/info`)"
@@ -55,7 +55,7 @@ const { data: projects } = await useAsyncData(
     </div>
   </section>
   <LayoutPagination
-    :totalPage="2"
+    :totalPage="result.totalPages"
     :currentPage="page"
     :handle-page-change="
       (i) => {

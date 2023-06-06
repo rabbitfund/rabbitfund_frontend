@@ -158,7 +158,7 @@ function generateRandomNumberById(objectId) {
               :type="category"
               :min-amount="0"
               :max-amount="target"
-              :current-amount="615846"
+              :current-amount="progress"
             />
             <Badge type="公益" name="已達標" class="mb-6 w-fit sm:mb-0"></Badge>
           </div>

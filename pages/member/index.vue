@@ -71,6 +71,7 @@ const content = reactive({
       </section>
     </div>
     <div>
+      <!-- 
       <ul class="flex justify-between py-8 md:justify-center md:gap-10">
         <li
           v-for="(item, index) in content[currentUser]"
@@ -91,6 +92,7 @@ const content = reactive({
       <p v-if='content[currentUser][currentTab].data == 0' class='text-center m-5'>
         Oops! 這裡什麼都沒有!
       </p>
+     -->
     </div>
   </section>
 </template>

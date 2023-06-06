@@ -3,7 +3,8 @@ import { defineStore } from 'pinia';
 export const useGlobalStateStore = defineStore('globalState', {
   state: () => ({
     isShowFullscreenLoading: false,
-    loadingStartTime: 0
+    loadingStartTime: 0,
+    lastRoute: '/'
   }),
   actions: {
     async toggleFullscreenLoading(state = undefined) {
@@ -25,6 +26,9 @@ export const useGlobalStateStore = defineStore('globalState', {
       if (this.isShowFullscreenLoading) {
         this.loadingStartTime = new Date().getTime();
       }
+    },
+    recordLastRoute(path: string) {
+      this.lastRoute = path;
     }
   }
 });
