@@ -166,22 +166,12 @@ onMounted(async () => {
     <div
       class="flex flex-col justify-center gap-8 pb-[79.21px] pt-[48.79px] lg:flex-row lg:gap-6 lg:px-3 xl:py-[84px]"
     >
-      <div
-        class="flex flex-col items-center bg-[url('/assets/images/proposal-bg.png')] bg-cover bg-center bg-no-repeat pb-[58.94px] pt-[70.14px] sm:bg-contain lg:flex-row lg:justify-center lg:self-start lg:px-10 lg:pb-20 lg:pt-40 xl:pb-[86px] xl:pl-[88px] xl:pr-[80px] xl:pt-[200px]"
-      >
-        <img
-          src="~/assets/images/rabbit.png"
-          alt="rabbit"
-          class="mb-6 h-[128px] w-20 md:h-auto lg:mb-0 lg:mr-12 xl:w-[131.7px]"
-        />
-        <div class="text-center lg:text-left">
-          <p class="mb-6 text-xl font-bold text-warning xl:text-2xl">
-            <span class="block">傳達你的願景，</span>
-            <span>讓你的好點子不再只是點子！</span>
-          </p>
-          <button class="btn btn-primary">我要提案</button>
-        </div>
-      </div>
+      <CardBlockRabbit
+        :title="'傳達你的願景，'"
+        :text="'讓你的好點子不再只是點子！'"
+        :btn="'我要提案'"
+        :link="'/proposal'"
+      />
       <div
         class="lg:pb-22 flex flex-col items-center bg-[url('/assets/images/sponsor-bg.png')] bg-cover bg-center bg-no-repeat pb-[71px] pt-[98px] sm:bg-contain lg:mt-20 lg:flex-row lg:justify-center lg:self-end lg:px-10 lg:pb-20 lg:pt-40 xl:pb-[140px] xl:pl-[82px] xl:pr-[98px] xl:pt-[229px]"
       >
