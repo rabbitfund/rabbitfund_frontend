@@ -29,7 +29,11 @@ function toggleSearchInput() {
 }
 
 function handleSearch(value) {
-  navigateTo(`/projects?k=${value}`);
+  let params = `?k=${value}`;
+  if (!value) {
+    params = '';
+  }
+  navigateTo(`/projects${params}`);
 }
 
 watch(isSigned, () => {
