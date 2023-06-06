@@ -45,6 +45,6 @@ watch([page], () => {
     />
   </div>
   <div v-else>
-    <h3>目前沒有贊助紀錄</h3>
+    <CardBlockCarrot :title="'目前沒有贊助紀錄'" :btn="'來去贊助'" :link="'/projects'" />
   </div>
 </template>
