@@ -1,0 +1,13 @@
+<script setup>
+const projectId = ref(0);
+</script>
+<template>
+  <h1>提案紀錄</h1>
+  <div class="flex flex-col gap-4">
+    <CardMemberProject
+      v-for="i in 3"
+      :key="i"
+      @click="navigateTo(`/member/proposals/${projectId}`)"
+    />
+  </div>
+</template>
