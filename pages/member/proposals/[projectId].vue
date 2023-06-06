@@ -2,9 +2,8 @@
 import arrowTop from '@/assets/images/icons/arrow-top.svg'
 import arrowBottom from '@/assets/images/icons/arrow-bottom.svg'
 
-// const route = useRoute();
-// const { projectId } = route.params;
-const projectId = '647ca9bcbf78241a75492bae';
+const route = useRoute();
+const { projectId } = route.params;
 const { getOwnerProjectDetail } = useApi();
 const { data: detail } = await getOwnerProjectDetail(projectId);
 
@@ -12,16 +11,6 @@ const { data: detail } = await getOwnerProjectDetail(projectId);
 function toggleSeeMore(index) {
   detail.options[index].showDetails = !detail.options[index].showDetails;
 }
-// const detail = reactive({
-//   project_title: '關愛偏鄉孩子集資計畫',
-//   project_category: '校園',
-//   project_summary: '簡單一句話介紹這個專案',
-//   project_content: `我們都知道，教育是改變命運的關鍵，但是在偏鄉地區，孩子們卻往往缺乏教育資源。透過您的捐款，我們將幫助這些孩子獲得更好的學習機會，讓他們擁有更美好的未來。
-// 請您一起加入我們的行列，支持這個值得關注的公益專案，您的每一筆捐款都將為偏鄉孩子帶來新的希望與改變。`,
-//   project_target: 500000,
-//   project_progress: 20000,
-//   options: [{ showDetail: false }, { showDetail: false }]
-// });
 
 function seeMoreModal() {
   // $swal.fire({

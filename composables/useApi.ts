@@ -42,7 +42,11 @@ export default function useApi() {
     getProject,
     getProjectOption,
     getProjectOptions,
+    getMyOrder,
     getOwnerProject,
+    getOwnerProjectDetail,
+    getOwnerProjectSupporters,
+    getOwnerProjectStatus,
     postOrder,
     getOrder
   };
