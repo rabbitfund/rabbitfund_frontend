@@ -13,7 +13,6 @@ onMounted(async () => {
     .then((res) => {
       const projectList = res.data.value.data;
       hotProjects.value = projectList.splice(0, 3);
-      hotProjects.value;
     })
     .catch((err) => {
       console.log(err);
@@ -22,7 +21,6 @@ onMounted(async () => {
     .then((res) => {
       const projectList = res.data.value.data;
       recentProjects.value = projectList.splice(0, 3);
-      recentProjects.value;
     })
     .catch((err) => {
       console.log(err);
@@ -31,7 +29,6 @@ onMounted(async () => {
     .then((res) => {
       const projectList = res.data.value.data;
       longProjects.value = projectList.splice(0, 3);
-      longProjects.value;
     })
     .catch((err) => {
       console.log(err);
