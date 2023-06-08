@@ -75,8 +75,8 @@ module.exports = {
 					emphasis: '#E2EBF5',
 				},
 				success: {
-					DEFAULT: '#1F958B',
-					emphasis: '#E2F5F4',
+					DEFAULT: '#27AE60', // '#1F958B',
+					emphasis: '#E5F8ED', // '#E2F5F4',
 				},
 				light: {
 					DEFAULT: '#FAEEE2',
