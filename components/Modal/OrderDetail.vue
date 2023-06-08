@@ -107,7 +107,7 @@ const formattedAmount = computed(() => {
               <p>{{ props.detail?.order_info.invoice_number }}</p>
             </li>
             <li class="basis-3/4 lg:px-2">
-              <span class="mb-1 text-grey-400">發票類型</span>
+              <span class="mb-1 text-grey-400">載具類型</span>
               <p>{{ props.detail?.order_info.invoice_type }}</p>
             </li>
           </ul>

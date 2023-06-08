@@ -34,6 +34,7 @@ watch([page], () => {
 <template>
   <div v-if="order.length !== 0" class="flex flex-col gap-4">
     <CardMemberOrder v-for="i in order" :key="i._id + i" :order="i" />
+    <CardMemberOrderInfo v-for="i in order" :key="i._id + i" :order="i" />
     <LayoutPagination
       :total-page="2"
       :current-page="page"
