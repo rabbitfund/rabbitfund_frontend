@@ -1,30 +1,60 @@
 <script setup>
-const page = ref(1);
-const type = ref('');
-const k = ref('');
-
 const route = useRoute();
+const page = ref(parseInt(route.query.page) || 1);
+const type = ref(route.query.type || '');
+const k = ref(route.query.k || '');
+const tag = ref(route.query.tag || '');
 
-watchEffect(() => {
-  type.value = route.query.type ? route.query.type : '';
-  k.value = route.query.k ? route.query.k : '';
+function createNewRoute(page, type, k, tag) {
+  const params = new URLSearchParams();
 
-  // 當 type 或 k 變化時，將 page 設置為 1
+  if (page !== 1) {
+    params.append('page', page);
+  }
+  if (type) {
+    params.append('type', type);
+  }
+  if (k) {
+    params.append('k', k);
+  }
+  if (tag) {
+    params.append('tag', tag);
+  }
+  if (!params.toString()) return '/projects';
+
+  return '/projects?' + params.toString();
+}
+watch(route, value => {
+  page.value = parseInt(value.query.page) || 1;
+  type.value = value.query.type || '';
+  k.value = value.query.k || '';
+  tag.value = value.query.tag || '';
+}, {deep: true, immediate: true})
+
+watch([page, type, k, tag], () => {
+  const newRoute = createNewRoute(page.value, type.value, k.value, tag.value);
+  if (newRoute === route.fullPath) return;
+  navigateTo(newRoute);
+});
+
+watch([type, k, tag], () => {
   page.value = 1;
 });
 
-const { data: projects } = await useAsyncData(
-  'projectList' + page.value + '_' + type.value,
+
+const { data: result } = await useAsyncData(
+  'projectList' + page.value + '_' + type.value + '_' + k.value + '_' + tag.value,
   () =>
     $fetch(`/projects`, {
       params: {
         page: page.value,
         type: type.value,
-        k: k.value
+        k: k.value,
+        tag: tag.value
       }
     }),
   {
-    watch: [page, type, k],
+    watch: [page, type, k, tag],
     transform: (_projects) => _projects.data,
     server: false
   }
@@ -33,20 +63,29 @@ const { data: projects } = await useAsyncData(
 <template>
   <div class="container mx-auto my-6 flex justify-between lg:my-12">
     <h2 class="">專案列表</h2>
-    <select v-model="type" class="w-[120px]" value="">
-      <option value="">全部</option>
-      <option value="校園">校園</option>
-      <option value="公益">公益</option>
-      <option value="市集">市集</option>
-    </select>
+    <div>
+      <select v-model="type" class="w-[120px] mr-5" value="">
+        <option value="">全部</option>
+        <option value="校園">校園</option>
+        <option value="公益">公益</option>
+        <option value="市集">市集</option>
+      </select>
+      <select v-model="tag" class="w-[120px]" value="">
+        <option value="">全部</option>
+        <option value="recent">近期</option>
+        <option value="hot">熱門</option>
+        <option value="long">長期贊助</option>
+      </select>
+    </div>
+
   </div>
 
   <section
-    v-if="projects?.length && projects.length > 0"
+    v-if="result?.projects.length && result.projects.length > 0"
     class="container grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
   >
     <div
-      v-for="project in projects"
+      v-for="project in result.projects"
       :key="project._id"
       class="cursor-pointer"
       @click="navigateTo(`/project/${project._id}/info`)"
@@ -55,7 +94,7 @@ const { data: projects } = await useAsyncData(
     </div>
   </section>
   <LayoutPagination
-    :totalPage="2"
+    :totalPage="result?.totalPages ? result.totalPages : 1"
     :currentPage="page"
     :handle-page-change="
       (i) => {

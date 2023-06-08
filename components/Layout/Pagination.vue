@@ -1,7 +1,8 @@
 <script setup>
 const props = defineProps({
   totalPage: {
-    type: [Number]
+    type: [Number],
+    default: 1
   },
   currentPage: {
     type: [Number]
@@ -15,7 +16,11 @@ const props = defineProps({
   <nav aria-label="Page navigation example" class="mx-auto my-4">
     <ul class="inline-flex items-center gap-x-5">
       <li class="h-6 w-6 text-center">
-        <button class="group hover:disabled:cursor-not-allowed">
+        <button
+          @click="handlePageChange(props.currentPage - 1)"
+          class="group hover:disabled:cursor-not-allowed"
+          :disable="props.currentPage === 1"
+        >
           <svg
             width="7"
             height="12"
@@ -44,7 +49,10 @@ const props = defineProps({
         </button>
       </li>
       <li class="h-6 w-6 text-center">
-        <button class="group hover:disabled:cursor-not-allowed">
+        <button
+          class="group hover:disabled:cursor-not-allowed"
+          :disable="props.currentPage === props.totalPage"
+        >
           <svg
             width="7"
             height="12"

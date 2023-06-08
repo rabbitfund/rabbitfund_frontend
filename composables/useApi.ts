@@ -10,6 +10,13 @@ export default function useApi() {
     });
   const putUserDetail = (data) =>
     useFetch('/me/user', { method: 'PUT', body: JSON.stringify(data) });
+  const getMyOrder = (page: number) => useFetch(`/me/orders?page=${page}`, { method: 'GET' });
+  const getOwnerProjectDetail = (projectId: string) =>
+    useFetch(`/owner/projects/${projectId}`, { method: 'GET', server: false,  transform: (_projects) => _projects.data, });
+  const getOwnerProjectSupporters = (projectId: string) =>
+    useFetch(`/owner/projects/${projectId}/supporters`, { method: 'GET', server: false,  transform: (_supporters) => _supporters.data, });
+  const getOwnerProjectStatus = (projectId: string) =>
+    useFetch(`/owner/projects/${projectId}/status`, { method: 'GET', server: false,  transform: (_status) => _status.data, });
 
   const getProjects = (page: number, tag: string) => 
     useFetch(`/projects?page=${page}&tag=${tag}`, { method: 'GET', server: false, globalLoading: false });
@@ -19,6 +26,7 @@ export default function useApi() {
     useFetch(`/projects/${projectId}/options/${optionId}`, { method: 'GET', server: false });
   const getProjectOptions = (projectId: string) =>
     useFetch(`/projects/${projectId}/options`, { method: 'GET', server: false });
+  const getOwnerProject = () => useFetch(`/owner/projects`, { method: 'GET' });
 
   // 訂單
   const postOrder = (data) => useFetch('/orders', { method: 'POST', body: JSON.stringify(data) });
@@ -34,6 +42,11 @@ export default function useApi() {
     getProject,
     getProjectOption,
     getProjectOptions,
+    getMyOrder,
+    getOwnerProject,
+    getOwnerProjectDetail,
+    getOwnerProjectSupporters,
+    getOwnerProjectStatus,
     postOrder,
     getOrder
   };
