@@ -68,10 +68,12 @@ onMounted(async () => {
       }"
     >
       <SwiperSlide v-for="project in recentProjects" :key="project._id">
-        <img
-          :src="project.project_cover"
-          class="mx-auto h-full rounded-lg object-cover lg:rounded-2xl"
-        />
+        <NuxtLink :to="`/project/${project._id}/info`">
+          <img
+            :src="project.project_cover"
+            class="mx-auto h-full rounded-lg object-cover lg:rounded-2xl"
+          />
+        </NuxtLink>
       </SwiperSlide>
     </Swiper>
   </section>
