@@ -19,7 +19,7 @@ const props = defineProps({
         <button
           @click="handlePageChange(props.currentPage - 1)"
           class="group hover:disabled:cursor-not-allowed"
-          :disable="props.currentPage === 1"
+          :disabled="props.currentPage === 1"
         >
           <svg
             width="7"
@@ -50,8 +50,9 @@ const props = defineProps({
       </li>
       <li class="h-6 w-6 text-center">
         <button
+          @click="handlePageChange(props.currentPage + 1)"
           class="group hover:disabled:cursor-not-allowed"
-          :disable="props.currentPage === props.totalPage"
+          :disabled="props.currentPage === props.totalPage"
         >
           <svg
             width="7"
