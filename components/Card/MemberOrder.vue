@@ -1,6 +1,12 @@
 <script setup>
 import mockImg from '~/assets/images/mock.png';
 
+const modalOrderDetail = ref(null);
+
+const openModalOrderDetail = () => {
+  modalOrderDetail.value.openModal();
+};
+
 const props = defineProps({
   // canModify: {
   //   type: [Boolean],
@@ -61,11 +67,9 @@ const copy = (projectId) => {
           </div>
         </div>
       </div>
-      <!-- 
       <div class="col-span-12 hidden lg:block">
         {{ props.order.order_info }}
       </div>
-       -->
     </div>
 
     <div class="flex flex-col items-center justify-center lg:min-w-[140px]">
@@ -74,7 +78,11 @@ const copy = (projectId) => {
         <p class="text-2xl font-bold">{{ formattedAmount(props.order.project?.project_progress) }}</p>
       </div> -->
       <div class="flex gap-4 lg:block">
-        <button class="btn btn-primary-outline lg:mb-7">詳細訂單資料</button>
+        <button class="btn btn-primary-outline lg:mb-7" @click="openModalOrderDetail()">
+          詳細訂單資料
+        </button>
+        <ModalOrderDetail ref="modalOrderDetail" :detail="props.order" />
+
         <button class="flex justify-center text-grey-400" @click="copy(props.order.project?._id)">
           <img class="mr-1 inline-block w-6" src="~/assets/images/icons/copy.svg" />分享連結
         </button>
