@@ -66,11 +66,11 @@ const formattedAmount = computed(() => {
               <span class="mb-1 text-grey-400">方案名稱</span>
               <p>{{ props.detail?.option.option_name }}</p>
             </li>
+            <!-- NOTE: 這邊所有 user 的資料暫時直接抓 userStore 的，未來資料庫有增加欄位，可以再調整成付款人與會員姓名資料不同 -->
             <li class="basis-1/3 lg:px-2">
               <span class="mb-1 text-grey-400">付款人姓名</span>
               <p>{{ userInfo?.user_name }}</p>
             </li>
-            <!-- NOTE: 由於 -->
             <li v-if="userInfo?.user_phone" class="basis-1/3 lg:px-2">
               <span class="mb-1 text-grey-400">付款人手機</span>
               <p>{{ userInfo?.user_phone }}</p>
