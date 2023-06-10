@@ -20,15 +20,13 @@ onMounted(async () => {
 
 <template>
   <!-- <h1>提案紀錄</h1> -->
-  <div v-if="project.length !== 0" class="flex flex-col gap-4">
+  <div v-if="project.length > 0" class="flex flex-col gap-4">
     <CardMemberProject
       v-for="i in project"
       :key="i._id + i"
       :can-modify="true"
-      :title="i.project_title"
-      :cover="i.project_cover"
       :project="i"
-      @click="navigateTo(`/member/proposals/${i._id}`)"
+      :navigate-to-path="`/member/proposals/${i._id}`"
     />
   </div>
   <div v-else>

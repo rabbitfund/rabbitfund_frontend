@@ -36,8 +36,8 @@ function handleSearch(value) {
   navigateTo(`/projects${params}`);
 }
 
-watch(isSigned, () => {
-  if (isSigned) {
+watch(()=>isSigned.value, () => {
+  if (isSigned.value) {
     userStore.handleGetUserData();
   }
 });
@@ -90,7 +90,7 @@ function signIn() {
             <div
               class="absolute right-0 top-full z-10 hidden cursor-default group-hover:block group-focus:block"
             >
-              <div class="rounded-md bg-white px-10 py-8 shadow-md">
+              <div class="shadow-md rounded-md bg-white px-10 py-8">
                 <ul class="mb-8 flex min-w-[124px] flex-col gap-7">
                   <li class="inline-block">
                     <NuxtLink

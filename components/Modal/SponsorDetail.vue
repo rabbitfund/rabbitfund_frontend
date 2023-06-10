@@ -4,15 +4,21 @@ const targetModal = ref(null);
 const { openModal, closeModal } = useModal(targetModal);
 
 const props = defineProps({
-  detail: [Object]
+  detail: [Object],
+  title: [String],
 });
 
 defineExpose({
   openModal
 });
 
+watch(()=>props.detail, ()=>{
+  console.log(props.detail)
+})
+
 const formattedAmount = computed(() => {
-  return props.detail?.value.order_info.payment_price.toLocaleString();
+  if(!props.detail)return;
+  return props.detail.order_info.payment_price.toLocaleString();
 });
 </script>
 
@@ -23,7 +29,9 @@ const formattedAmount = computed(() => {
     aria-hidden="true"
     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden p-3 pt-14 md:inset-0 lg:pt-[93px]"
   >
+  
     <div
+      v-if='props.detail'
       class="relative max-h-full lg:w-[calc(theme('screens.lg')*2/3)] xl:w-[calc(theme('screens.xl')*2/3)]"
     >
       <!-- Modal content -->
@@ -49,7 +57,7 @@ const formattedAmount = computed(() => {
         </button>
         <section class="mb-7 border-b border-grey-200 pb-4">
           <h3 class="text-h4 text-primary">
-            {{ props.detail?.value.project.project_title }}
+            {{ props.title }}
           </h3>
         </section>
         <!-- Modal body -->
@@ -57,23 +65,23 @@ const formattedAmount = computed(() => {
           <ul class="flex flex-col flex-wrap gap-y-5 lg:flex-row lg:gap-y-4 lg:-mx-2">
             <li class="lg:px-2 basis-1/3">
               <span class="mb-1 text-grey-400">方案名稱</span>
-              <p>{{ props.detail?.value.option.option_name }}</p>
+              <p>{{ props.detail.option.option_name }}</p>
             </li>
             <li class="lg:px-2 basis-1/3">
               <span class="mb-1 text-grey-400">付款人姓名</span>
-              <p>{{ props.detail?.value.user.user_name }}</p>
+              <p>{{ props.detail.user.user_name }}</p>
             </li>
             <li class="lg:px-2 basis-1/3">
               <span class="mb-1 text-grey-400">付款人手機</span>
-              <p>{{ props.detail?.value.user.user_phone }}</p>
+              <p>{{ props.detail.user.user_phone }}</p>
             </li>
             <li class="lg:px-2 basis-2/3">
               <span class="mb-1 text-grey-400">E-mail</span>
-              <p>{{ props.detail?.value.user.user_email }}</p>
+              <p>{{ props.detail.user.user_email }}</p>
             </li>
             <li class="lg:px-2 basis-1/3">
               <span class="mb-1 text-grey-400">備註</span>
-              <p>{{ props.detail?.value.order_note }}</p>
+              <p>{{ props.detail.order_note }}</p>
             </li>
           </ul>
         </section>
@@ -92,15 +100,15 @@ const formattedAmount = computed(() => {
             </li>
             <li class="basis-3/4 lg:px-2">
               <span class="mb-1 text-grey-400">付款方式</span>
-              <p>{{ props.detail?.value.order_info.payment_method }}</p>
+              <p>{{ props.detail.order_info.payment_method }}</p>
             </li>
             <li class="basis-1/4 lg:px-2">
               <span class="mb-1 text-grey-400">發票號碼</span>
-              <p>{{ props.detail?.value.order_info.invoice_number }}</p>
+              <p>{{ props.detail.order_info.invoice_number }}</p>
             </li>
             <li class="basis-3/4 lg:px-2">
               <span class="mb-1 text-grey-400">發票類型</span>
-              <p>{{ props.detail?.value.order_info.invoice_type }}</p>
+              <p>{{ props.detail.order_info.invoice_type }}</p>
             </li>
           </ul>
         </section>
