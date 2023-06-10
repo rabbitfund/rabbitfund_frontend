@@ -1,3 +1,5 @@
+import { lazy } from 'yup';
+
 export default function useApi() {
   // 登入相關
   const signin = (data) => useFetch('/signin', { method: 'POST', body: JSON.stringify(data) });
@@ -12,15 +14,39 @@ export default function useApi() {
     useFetch('/me/user', { method: 'PUT', body: JSON.stringify(data) });
   const getMyOrder = (page: number) => useFetch(`/me/orders?page=${page}`, { method: 'GET' });
   const getOwnerProjectDetail = (projectId: string) =>
-    useFetch(`/owner/projects/${projectId}`, { method: 'GET', server: false,  transform: (_projects) => _projects.data, });
+    useFetch(`/owner/projects/${projectId}`, {
+      method: 'GET',
+      server: false,
+      transform: (_projects) => _projects.data
+    });
   const getOwnerProjectSupporters = (projectId: string) =>
-    useFetch(`/owner/projects/${projectId}/supporters`, { method: 'GET', server: false,  transform: (_supporters) => _supporters.data, });
+    useFetch(`/owner/projects/${projectId}/supporters`, {
+      method: 'GET',
+      server: false,
+      transform: (_supporters) => _supporters.data
+    });
   const getOwnerProjectStatus = (projectId: string) =>
-    useFetch(`/owner/projects/${projectId}/status`, { method: 'GET', server: false,  transform: (_status) => _status.data, });
+    useFetch(`/owner/projects/${projectId}/status`, {
+      method: 'GET',
+      server: false,
+      transform: (_status) => _status.data
+    });
+  const getProjectsSupporters = (projectId: string) =>
+    useFetch(`/owner/projects/${projectId}/supporters`, {
+      method: 'GET',
+      server: false,
+      globalLoading: false,
+      lazy: true,
+      transform: (_supporters) => _supporters.data
+    });
 
-  const getProjects = (page: number, tag: string) => 
-    useFetch(`/projects?page=${page}&tag=${tag}`, { method: 'GET', server: false, globalLoading: false });
-  const getProject = (projectId: string) => 
+  const getProjects = (page: number, tag: string) =>
+    useFetch(`/projects?page=${page}&tag=${tag}`, {
+      method: 'GET',
+      server: false,
+      globalLoading: false
+    });
+  const getProject = (projectId: string) =>
     useFetch(`/projects/${projectId}`, { method: 'GET', server: false });
   const getProjectOption = (projectId: string, optionId: string) =>
     useFetch(`/projects/${projectId}/options/${optionId}`, { method: 'GET', server: false });
@@ -47,6 +73,7 @@ export default function useApi() {
     getOwnerProjectDetail,
     getOwnerProjectSupporters,
     getOwnerProjectStatus,
+    getProjectsSupporters,
     postOrder,
     getOrder
   };

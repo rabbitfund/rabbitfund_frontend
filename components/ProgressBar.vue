@@ -64,6 +64,8 @@ const formattedPercent = computed(() => {
     <div class="h-3 w-full overflow-hidden rounded-full bg-grey-200">
       <div :class="classes" :style="{ width: percent + '%' }"></div>
     </div>
-    <span v-if="props.showPercent" class="leading-none" :class="percentStyle">{{ formattedPercent }} %</span>
+    <span v-if="props.showPercent" class="leading-none" :class="percentStyle"
+      >{{ formattedPercent }} %</span
+    >
   </div>
 </template>
