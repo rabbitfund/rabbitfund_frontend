@@ -6,7 +6,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
   const { API_BASE } = runtimeConfig.public;
   const authStore = useAuthStore();
   const globalState = useGlobalStateStore();
-  const { toggleFullscreenLoading } = globalState;
+  const { toggleFullscreenLoading, addLoadingList } = globalState;
 
   const { showErrorMessage } = useSwalShowMessage();
 
@@ -19,6 +19,10 @@ export default defineNuxtPlugin((_nuxtApp) => {
       if (authStore.token) {
         options.headers = { Authorization: `Bearer ${authStore.token}` };
       }
+      const abortController: AbortController = new AbortController();
+      const abortSignal: AbortSignal = abortController.signal;
+      addLoadingList(abortController);
+      options.signal = abortSignal;
     },
     onRequestError({ error }) {
       showErrorMessage(error);

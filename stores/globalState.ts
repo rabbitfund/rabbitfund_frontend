@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 export const useGlobalStateStore = defineStore('globalState', {
   state: () => ({
     isShowFullscreenLoading: false,
+    loadingList: [] as AbortController[],
     loadingStartTime: 0,
     lastRoute: '/'
   }),
@@ -22,10 +23,21 @@ export const useGlobalStateStore = defineStore('globalState', {
 
       this.isShowFullscreenLoading =
         typeof state === 'boolean' ? state : !this.isShowFullscreenLoading;
-      
+
       if (this.isShowFullscreenLoading) {
         this.loadingStartTime = new Date().getTime();
       }
+    },
+
+    abortAllLoading() {
+      this.loadingList.forEach((abortController) => abortController.abort());
+      this.loadingList = [];
+    },
+    addLoadingList(abortController: AbortController) {
+      this.loadingList.push(abortController);
+      console.clear();
+      console.log('loadingList:');
+      console.dir(this.loadingList);
     },
     recordLastRoute(path: string) {
       this.lastRoute = path;
