@@ -30,22 +30,32 @@ export default function useCalcLeftTime(project: any) {
 
   const projectStatus = getRemainingSeconds(project?.project_end_date);
   const timeLeft = ref(projectStatus?.seconds);
+  const timerInstance: Ref<NodeJS.Timeout | null> = ref(null);
 
   onMounted(() => {
-    let timer: NodeJS.Timeout | null = null;
-    if (timeLeft.value && timeLeft.value > 0) {
-      timer = setInterval(() => {
-        timeLeft.value = <number>timeLeft.value - 1;
-      }, 1000);
-    }
-
-    // 清除計時器
-    onBeforeUnmount(() => {
-      if (timer) {
-        clearInterval(timer);
-      }
-    });
+    countdownTimer();
   });
+
+  onBeforeUnmount(() => {
+    if (timerInstance.value) {
+      clearTimeout(timerInstance.value);
+    }
+  });
+  function countdownTimer() {
+    console.log('timer');
+    if (timeLeft.value && timeLeft.value > 0) {
+      if (timeLeft.value >= 86400) {
+        timeLeft.value -= 3600;
+        timerInstance.value = setTimeout(countdownTimer, 3600000);
+      } else if (timeLeft.value >= 3600) {
+        timeLeft.value -= 60;
+        timerInstance.value = setTimeout(countdownTimer, 60000);
+      } else {
+        timeLeft.value--;
+        timerInstance.value = setTimeout(countdownTimer, 1000);
+      }
+    }
+  }
 
   const formatTime = (seconds: number) => {
     const duration = moment.duration(seconds, 'seconds');
@@ -54,9 +64,11 @@ export default function useCalcLeftTime(project: any) {
     const minutes = duration.minutes();
     const remainingSeconds = duration.seconds();
     if (days > 0) {
-      return `${days} 天 ${hours} 小時 ${minutes} 分`;
+      return `${days} 天 ${hours} 小時`;
+    } else if (hours > 0) {
+      return `${hours} 小時 ${minutes} 分`;
     } else {
-      return `${hours} 小時 ${minutes} 分 ${remainingSeconds} 秒`;
+      return `${minutes} 分 ${remainingSeconds} 秒`;
     }
   };
 
