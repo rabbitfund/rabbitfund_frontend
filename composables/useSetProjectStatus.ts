@@ -42,7 +42,6 @@ export default function useCalcLeftTime(project: any) {
     }
   });
   function countdownTimer() {
-    console.log('timer');
     if (timeLeft.value && timeLeft.value > 0) {
       if (timeLeft.value >= 86400) {
         timeLeft.value -= 3600;
@@ -59,7 +58,7 @@ export default function useCalcLeftTime(project: any) {
 
   const formatTime = (seconds: number) => {
     const duration = moment.duration(seconds, 'seconds');
-    const days = duration.days();
+    const days = Math.floor(duration.asDays());
     const hours = duration.hours();
     const minutes = duration.minutes();
     const remainingSeconds = duration.seconds();
