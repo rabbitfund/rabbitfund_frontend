@@ -5,7 +5,9 @@ import arrowBottom from '@/assets/images/icons/arrow-bottom.svg';
 const route = useRoute();
 const { projectId } = route.params;
 const { getOwnerProjectDetail, getProjectsSupporters } = useApi();
+
 const { data: detail, error } = await getOwnerProjectDetail(projectId);
+const { formatTimeLeft } = useSetProjectStatus(detail.value);
 const optionsPercent = ref(calcOptionPercent(detail.value.order));
 console.log(detail.value);
 console.log(optionsPercent.value);
@@ -32,7 +34,7 @@ function calcOptionPercent(orders) {
 }
 
 function toggleSeeMore(index) {
-  supporters.value[index].showDetails = !supporters.value[index]?.showDetails
+  supporters.value[index].showDetails = !supporters.value[index]?.showDetails;
 }
 
 function seeMoreModal(data) {
@@ -86,7 +88,7 @@ const copy = (projectId) => {
       </div>
       <div class="col-span-9 lg:col-span-3">
         <p class="text-grey-500">提案倒數</p>
-        <p class="text-2xl font-bold">倒數還沒做拉</p>
+        <p class="text-2xl font-bold">{{ formatTimeLeft }}</p>
       </div>
     </div>
     <div class="mb-8 lg:mb-16">
@@ -98,7 +100,10 @@ const copy = (projectId) => {
 
       <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
         <button class="btn btn-primary-outline max-w-[155px]">修改提案</button>
-        <div class="flex items-center justify-center text-grey-400 cursor-pointer" @click="copy(detail._id)">
+        <div
+          class="flex cursor-pointer items-center justify-center text-grey-400"
+          @click="copy(detail._id)"
+        >
           <img class="mr-1 inline-block w-6" src="~/assets/images/icons/copy.svg" />分享連結
         </div>
       </div>
@@ -148,12 +153,12 @@ const copy = (projectId) => {
           <div class="order-4 mb-6 md:order-3 md:mb-0 md:w-[120px]">
             <Badge
               :type="
-              option.option_total > 0 &&   optionsPercent?.[option._id]?.times> option.option_total
+                option.option_total > 0 && optionsPercent?.[option._id]?.times > option.option_total
                   ? 'danger'
                   : 'success'
               "
               :name="
-              option.option_total > 0 &&   optionsPercent?.[option._id]?.times> option.option_total
+                option.option_total > 0 && optionsPercent?.[option._id]?.times > option.option_total
                   ? '已額滿'
                   : '未額滿'
               "
@@ -181,11 +186,11 @@ const copy = (projectId) => {
         </div>
       </section>
       <LayoutPagination
-          class="mt-5 hidden md:flex justify-center"
-          :total-page="1"
-          :current-page="1"
-          :handle-page-change="() => {}"
-        />
+        class="mt-5 hidden justify-center md:flex"
+        :total-page="1"
+        :current-page="1"
+        :handle-page-change="() => {}"
+      />
     </div>
 
     <div class="mb-8 md:mb-16">
@@ -237,7 +242,9 @@ const copy = (projectId) => {
             <Badge :type="false ? 'success' : 'danger'" :name="false ? '已完成' : '未完成'" />
           </div>
           <div class="w-[108px]">
-            <p class="cursor-pointer text-primary underline" @click="seeMoreModal(supporter)">詳細</p>
+            <p class="cursor-pointer text-primary underline" @click="seeMoreModal(supporter)">
+              詳細
+            </p>
           </div>
           <div class="w-[68px]">
             <p class="cursor-pointer text-primary underline">備註</p>
@@ -246,11 +253,11 @@ const copy = (projectId) => {
       </section>
 
       <LayoutPagination
-          class="mt-5 hidden md:flex justify-center"
-          :total-page="1"
-          :current-page="1"
-          :handle-page-change="() => {}"
-        />
+        class="mt-5 hidden justify-center md:flex"
+        :total-page="1"
+        :current-page="1"
+        :handle-page-change="() => {}"
+      />
 
       <!-- 贊助名單小螢幕 -->
       <section class="block md:hidden">
@@ -283,14 +290,21 @@ const copy = (projectId) => {
             @click="toggleSeeMore(index)"
           >
             {{ !supporter?.showDetails ? '詳細' : '收起' }}
-            <img class="ml-2" :src="supporter?.showDetails ? arrowTop : arrowBottom" alt="see more" />
+            <img
+              class="ml-2"
+              :src="supporter?.showDetails ? arrowTop : arrowBottom"
+              alt="see more"
+            />
           </p>
 
           <div
             :class="supporter?.showDetails ? 'h-auto' : 'h-0'"
             class="w-full overflow-hidden border-t text-center text-grey-200 transition duration-500 ease-in-out"
           >
-            <p class="mb-5 mt-2 cursor-pointer text-primary underline" @click="seeMoreModal(supporter)">
+            <p
+              class="mb-5 mt-2 cursor-pointer text-primary underline"
+              @click="seeMoreModal(supporter)"
+            >
               付款詳細
             </p>
             <p class="mb-2 cursor-pointer text-primary underline">客服處理</p>
@@ -299,5 +313,9 @@ const copy = (projectId) => {
       </section>
     </div>
   </section>
-  <ModalSponsorDetail ref="modalSponsorDetail" :title="detail.project_title" :detail="currentSupporterData" />
+  <ModalSponsorDetail
+    ref="modalSponsorDetail"
+    :title="detail.project_title"
+    :detail="currentSupporterData"
+  />
 </template>
