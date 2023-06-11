@@ -1,5 +1,9 @@
 <script setup>
+import { storeToRefs } from 'pinia';
 import avatar from '@/assets/images/avatar.png';
+import { useUserStore } from '@/stores/user';
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
 const { uploadImage } = useApi();
 
 const { getUserDetail, putUserDetail } = useApi();
@@ -32,6 +36,12 @@ function handlePostUserDetail() {
     cover: userCover.value,
     intro: userIntro.value,
     website: userWebsite.value
+  }).then((res) => {
+    if (res.error.value) {
+      return;
+    }
+    userInfo.value.user_name = userName.value;
+    userInfo.value.user_cover = userCover.value;
   });
 }
 
