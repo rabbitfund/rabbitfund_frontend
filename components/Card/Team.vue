@@ -40,6 +40,8 @@ const props = defineProps({
         <span>{{ props.unifiedNumber }}</span>
       </div>
     </div>
-    <a class="btn btn-primary-outline" :href="`mailto:${email}`">聯絡團隊</a>
+    <a v-if="props.email" class="btn btn-primary-outline" :href="`mailto:${props.email}`"
+      >聯絡團隊</a
+    >
   </div>
 </template>
