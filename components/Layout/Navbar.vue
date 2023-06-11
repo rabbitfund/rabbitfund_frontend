@@ -38,7 +38,7 @@ function handleSearch(value) {
 
 watch(()=>isSigned.value, () => {
   if (isSigned.value) {
-    userStore.handleGetUserData();
+      userStore.handleGetUserData();
   }
 });
 
@@ -84,7 +84,7 @@ function signIn() {
           </div>
           <button v-if="!isSigned" class="btn btn-primary" @click="signIn">登入</button>
           <button v-else class="group relative flex cursor-pointer items-center">
-            <img class="mr-2 h-12" :src="user.avatar" alt="avatar" />
+            <img class="mr-2 h-12" :src="userInfo?.user_cover || avatar" alt="avatar" />
             <span class="font-bold text-primary">{{ userInfo?.user_name || '倍兔兔' }}</span>
 
             <div
