@@ -1,11 +1,13 @@
 <script setup>
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/user';
+
 import mockImg from '~/assets/images/mock.png';
+import arrowTop from '@/assets/images/icons/arrow-top.svg';
+import arrowBottom from '@/assets/images/icons/arrow-bottom.svg';
 
-const modalOrderDetail = ref(null);
-
-const openModalOrderDetail = () => {
-  modalOrderDetail.value.openModal();
-};
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
 
 const props = defineProps({
   // canModify: {
@@ -18,11 +20,22 @@ const props = defineProps({
 });
 console.log('CardMemberOrder', props);
 
+const showDetails = ref(false);
+function toggleSeeMore() {
+  showDetails.value = !showDetails.value;
+}
+
 const formattedAmount = (price) => {
   // console.count('formattedAmount');
   // console.log('formattedAmount', price);
   // console.trace(price);
   return price.toLocaleString();
+};
+const formattedDate = (date) => {
+  console.log(date);
+  return date;
+  // return date.slice(0, 10);
+  // TODO: 日期 format
 };
 
 const copy = (projectId) => {
@@ -46,17 +59,48 @@ const copy = (projectId) => {
         />
       </div>
       <div class="col-span-12 xl:col-span-7">
-        <h4 class="mt-2 font-bold text-grey-600">{{ props.order.project?.project_title }}</h4>
-        <h5 class="mt-2 font-bold text-grey-600">{{ props.order.option?.option_name }}</h5>
+        <div class="grid grid-cols-12 items-end gap-6 px-5 py-3">
+          <div class="col-span-10">
+            <h4 class="mt-2 font-bold text-grey-600">{{ props.order.project?.project_title }}</h4>
+            <h5 class="mt-2 font-bold text-grey-600">{{ props.order.option?.option_name }}</h5>
+            <!-- 預計於 2020 年四月送出 -->
+          </div>
+          <div class="min-w-[100px]">
+            <button
+              class="flex justify-center text-grey-400"
+              @click="copy(props.order.project?._id)"
+            >
+              <img class="mr-1 inline-block w-6" src="~/assets/images/icons/copy.svg" />分享連結
+            </button>
+          </div>
+        </div>
+
         <div class="mt-6 flex justify-between gap-6 bg-light-emphasis px-5 py-3">
           <div>
             <p>訂單狀態</p>
-            <p class="text-[20px] font-bold xl:text-2xl">{{ props.order.order_status }}</p>
+            <Badge
+              :type="props.order.order_status > 0 ? 'success' : 'danger'"
+              :name="props.order.order_status > 0 ? '已完成' : '未完成'"
+            />
+          </div>
+          <!-- <div>
+            <p>商品運送狀態</p>
+            <Badge
+              :type="props.order.order_shipping_status > 0 ? 'success' : 'danger' "
+              :name="props.order.order_shipping_status > 0 ? '已送達' : '未出貨'"
+            />
+          </div> -->
+          <div>
+            <p>付款狀態</p>
+            <Badge
+              :type="props.order.order_info.payment_status > 0 ? 'success' : 'danger'"
+              :name="props.order.order_info.payment_status > 0 ? '已付款' : '未付款'"
+            />
           </div>
           <div>
             <p>訂單日期</p>
             <p class="text-[20px] font-bold xl:text-2xl">
-              {{ props.order.order_create_date.slice(0, 10) }}
+              {{ formattedDate(props.order.order_create_date) }}
             </p>
           </div>
           <div>
@@ -67,25 +111,139 @@ const copy = (projectId) => {
           </div>
         </div>
       </div>
-      <div class="col-span-12 hidden lg:block">
-        {{ props.order.order_info }}
-      </div>
-    </div>
+      <div class="col-span-12">
+        <p
+          class="mb-1 flex cursor-pointer items-center justify-center p-2 text-grey-600"
+          @click="toggleSeeMore()"
+        >
+          {{ !showDetails ? '看更多' : '收起' }}
+          <img class="ml-2" :src="showDetails ? arrowTop : arrowBottom" alt="see more" />
+        </p>
 
-    <div class="flex flex-col items-center justify-center lg:min-w-[140px]">
-      <!-- <div class="mb-11 flex gap-1 lg:block">
-        <p class="leading-10 lg:leading-normal">目前募資金額</p>
-        <p class="text-2xl font-bold">{{ formattedAmount(props.order.project?.project_progress) }}</p>
-      </div> -->
-      <div class="flex gap-4 lg:block">
-        <button class="btn btn-primary-outline lg:mb-7" @click="openModalOrderDetail()">
-          詳細訂單資料
-        </button>
-        <ModalOrderDetail ref="modalOrderDetail" :detail="props.order" />
-
-        <button class="flex justify-center text-grey-400" @click="copy(props.order.project?._id)">
-          <img class="mr-1 inline-block w-6" src="~/assets/images/icons/copy.svg" />分享連結
-        </button>
+        <div
+          :class="showDetails ? 'h-auto' : 'h-0'"
+          class="w-full overflow-hidden border-t text-center transition duration-500 ease-in-out"
+        >
+          <div class="mb-7 rounded-lg bg-light-emphasis p-5">
+            <ul class="flex flex-col flex-wrap gap-y-5 lg:-mx-2 lg:flex-row lg:gap-y-4">
+              <!-- NOTE: 這邊所有 user 的資料暫時直接抓 userStore 的，未來資料庫有增加欄位，可以再調整成付款人與會員姓名資料不同 -->
+              <li class="basis-1/3 lg:px-2">
+                <span class="mb-1 text-grey-400">付款人姓名</span>
+                <p>{{ userInfo?.user_name }}</p>
+              </li>
+              <li class="basis-1/3 lg:px-2">
+                <span class="mb-1 text-grey-400">E-mail</span>
+                <p>{{ userInfo?.user_email }}</p>
+              </li>
+              <li v-if="userInfo?.user_phone" class="basis-1/3 lg:px-2">
+                <span class="mb-1 text-grey-400">付款人手機</span>
+                <p>{{ userInfo?.user_phone }}</p>
+              </li>
+              <li class="basis-1/3 lg:px-2">
+                <span class="mb-1 text-grey-400">備註</span>
+                <p>{{ props.order?.order_note }}</p>
+              </li>
+            </ul>
+          </div>
+          <div class="mb-[46px] lg:mb-12">
+            <h3 class="mb-3.5 flex items-center gap-2">
+              <span>
+                <img src="~/assets/images/icons/credit-card.svg" class="w-7" alt="信用卡" />
+              </span>
+              <span class="text-h4">訂單詳細資訊</span>
+            </h3>
+            <ul class="flex flex-col flex-wrap gap-y-4 lg:-mx-2 lg:flex-row lg:gap-y-5">
+              <li class="basis-1/4 lg:px-2">
+                <span class="mb-1 text-grey-400">付款總額</span>
+                <p>$ {{ formattedAmount(props.order?.order_total) }}</p>
+              </li>
+              <li class="basis-1/4 lg:px-2">
+                <span class="mb-1 text-grey-400">方案金額</span>
+                <p>$ {{ formattedAmount(props.order?.option.option_price) }}</p>
+              </li>
+              <li class="basis-1/4 lg:px-2">
+                <span class="mb-1 text-grey-400">額外贊助</span>
+                <p>$ {{ formattedAmount(props.order?.order_extra) }}</p>
+              </li>
+            </ul>
+          </div>
+          <div class="mb-[46px] lg:mb-12">
+            <h3 class="mb-3.5 flex items-center gap-2">
+              <span>
+                <img src="~/assets/images/icons/credit-card.svg" class="w-7" alt="信用卡" />
+              </span>
+              <span class="text-h4">付款資訊</span>
+            </h3>
+            <ul class="flex flex-col flex-wrap gap-y-4 lg:-mx-2 lg:flex-row lg:gap-y-5">
+              <li class="basis-3/4 lg:px-2">
+                <span class="mb-1 text-grey-400">訂單編號</span>
+                <p>{{ props.order?._id }}</p>
+              </li>
+              <li class="basis-1/4 lg:px-2">
+                <span class="mb-1 text-grey-400">付款總額</span>
+                <p>$ {{ formattedAmount(props.order?.order_total) }}</p>
+                <small>含額外贊助 $ {{ formattedAmount(props.order?.order_extra) }}</small>
+              </li>
+              <li class="basis-1/2 lg:px-2">
+                <span class="mb-1 text-grey-400">訂單建立日期</span>
+                <p>$ {{ formattedDate(props.order?.order_create_date) }}</p>
+              </li>
+              <li class="basis-1/2 lg:px-2">
+                <span class="mb-1 text-grey-400">訂單完成日期</span>
+                <p>$ {{ formattedDate(props.order?.order_final_date) }}</p>
+              </li>
+              <li class="basis-1/4 lg:px-2">
+                <span class="mb-1 text-grey-400">付款方式</span>
+                <p>{{ props.order?.order_info.payment_method }}</p>
+              </li>
+              <li
+                v-if="props.order?.order_info.payment_method == 'WEBATM'"
+                class="basis-1/4 lg:px-2"
+              >
+                <span class="mb-1 text-grey-400">付款銀行</span>
+                <p>
+                  {{ props.order?.order_info.newebpay_payBankCode == 809 ? '華南銀行' : '其他' }}
+                </p>
+              </li>
+              <li
+                v-else-if="props.order?.order_info.payment_method == 'CREDIT'"
+                class="basis-1/4 lg:px-2"
+              >
+                <span class="mb-1 text-grey-400">刷卡銀行</span>
+                <p>中國信託</p>
+                <!-- NOTE: 可以做 random 銀行名稱 -->
+              </li>
+              <li class="basis-1/4 lg:px-2">
+                <span class="mb-1 text-grey-400">付款時間</span>
+                <p>{{ props.order?.order_info.newebpay_timeStamp }}</p>
+                <!-- PayTime -->
+              </li>
+              <li class="basis-1/4 lg:px-2">
+                <!-- <span class="mb-1 text-grey-400">載具類型</span>
+                <p>{{ props.order?.order_info.invoice_type }}</p> -->
+              </li>
+              <li class="basis-1/4 lg:px-2">
+                <span class="mb-1 text-grey-400">載具類型</span>
+                <p>{{ props.order?.order_info.invoice_type }}</p>
+              </li>
+              <li
+                v-if="props.order?.order_info.invoice_type == '電子載具'"
+                class="basis-1/4 lg:px-2"
+              >
+                <span class="mb-1 text-grey-400">載具條碼</span>
+                <p>{{ props.order?.order_info.invoice_carrier }}</p>
+              </li>
+              <li class="basis-1/4 lg:px-2">
+                <span class="mb-1 text-grey-400">發票號碼</span>
+                <p>{{ props.order?.order_info.invoice_number }}</p>
+              </li>
+              <li class="basis-1/4 lg:px-2">
+                <span class="mb-1 text-grey-400">發票日期</span>
+                <p>{{ formattedDate(props.order?.order_info.invoice_date) }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </section>

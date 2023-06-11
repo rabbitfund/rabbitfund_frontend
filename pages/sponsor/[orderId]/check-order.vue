@@ -4,6 +4,10 @@ import { useOrderStore } from '@/stores/order';
 definePageMeta({
   middleware: ['auth']
 });
+
+const runtimeConfig = useRuntimeConfig();
+const { NEWEBPAY_FORM_ACTION, NEWEBPAY_MERCHANT_ID, NEWEBPAY_VERSION } = runtimeConfig.public;
+
 const orderStore = useOrderStore();
 const route = useRoute();
 const { orderId } = route.params;
@@ -49,18 +53,9 @@ onMounted(async () => {
     <div class="container gap-6 lg:flex">
       <div class="mb-12 bg-light-emphasis pt-12 lg:mb-20 lg:w-2/3 lg:p-12 lg:pb-20">
         <div class="mb-12">
-          <!-- TODO: env newebpay action -->
           <div class="mb-6 flex items-center gap-2">
             <span><img src="~/assets/images/icons/user-fill.svg" alt="使用者" /></span>
             <h2>確認訂單資料</h2>
-          </div>
-          <div class="mb-6">
-            <input type="hidden" name="MerchantID" value="MS148719690" disabled />
-            <!-- TODO: env MerchantID -->
-          </div>
-          <div class="mb-6">
-            <input type="hidden" name="Version" value="1.5" disabled />
-            <!-- TODO: env Version -->
           </div>
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-4/5">
@@ -127,9 +122,9 @@ onMounted(async () => {
               <span class="text-lg font-bold">總計</span
               ><span class="text-lg font-bold">$ {{ orderTotal }}</span>
             </div>
-            <form action="https://ccore.newebpay.com/MPG/mpg_gateway" method="post">
-              <input type="hidden" name="MerchantID" value="MS148719690" />
-              <input type="hidden" name="Version" value="1.5" />
+            <form :action="NEWEBPAY_FORM_ACTION" method="post">
+              <input type="hidden" name="MerchantID" :value="NEWEBPAY_MERCHANT_ID" />
+              <input type="hidden" name="Version" :value="NEWEBPAY_VERSION" />
               <input type="hidden" name="MerchantOrderNo" :value="order.order_id" />
               <input type="hidden" name="Name" :value="order.user_name" />
               <input type="hidden" name="Email" :value="order.user_email" />
