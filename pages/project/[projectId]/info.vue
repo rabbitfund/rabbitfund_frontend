@@ -17,6 +17,7 @@ const options = ref([]);
 const proposer = ref('');
 const taxId = ref('');
 const email = ref('');
+const ownerProjects = ref(1);
 const timeLeft = ref('');
 const cover = ref('');
 const totalOrder = ref(0);
@@ -48,6 +49,7 @@ onMounted(async () => {
       proposer.value = project.ownerInfo?.proposer_name;
       taxId.value = project.ownerInfo?.proposer_tax_id;
       email.value = project.ownerInfo?.proposer_email;
+      ownerProjects.value = project.ownerInfo?.proposer_project.length;
       timeLeft.value = getDaysLeft(project.project_end_date);
       cover.value =
         project.project_cover && project.project_cover !== 'cover URL'
@@ -260,7 +262,7 @@ function generateRandomNumberById(objectId) {
       >
         <CardTeam
           :brand="proposer"
-          :number="3"
+          :number="ownerProjects"
           :proposer="proposer"
           :unified-number="taxId"
           :email="email"

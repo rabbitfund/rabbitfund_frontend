@@ -29,7 +29,7 @@ const props = defineProps({
       />
     </div>
     <h3 class="mb-2">{{ props.brand }}</h3>
-    <span class="mb-8">{{ props.number }} 個專案 ｜ 團隊提案者</span>
+    <span class="mb-8">{{ props.number == 0 ? 1 : props.number }} 個專案 ｜ 團隊提案者</span>
     <div class="mb-8 flex w-full gap-4">
       <div class="flex flex-1 flex-col items-center gap-2">
         <span class="text-h6">提案者名稱</span>
