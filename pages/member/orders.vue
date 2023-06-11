@@ -13,7 +13,7 @@ function getMyOrderData(page) {
   getMyOrder(page.value)
     .then((res) => {
       console.log('getMyOrderData', res.data.value.data);
-      const orderData = res.data.value.data;
+      const orderData = res.data.value.data.data;
       order.value = orderData;
       // console.log(orderData);
     })
