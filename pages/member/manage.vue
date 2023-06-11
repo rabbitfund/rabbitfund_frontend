@@ -54,7 +54,7 @@ const doUploadImage = async (event) => {
 <template>
   <div class="mx-auto w-full">
     <h2>管理個人資料</h2>
-    <form class="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
+    <form class="shadow-md mb-4 rounded bg-white px-8 pb-8 pt-6">
       <div class="md:flex md:gap-6">
         <div class="mb-6 md:w-1/2">
           <div class="mb-6">
@@ -77,7 +77,7 @@ const doUploadImage = async (event) => {
             <label for="cover">大頭照</label>
             <input id="cover" type="file" name="cover" accept="image/*" @change="doUploadImage" />
           </div>
-          <img :src="userCover || avatar" />
+          <img class="h-[100px]" :src="userCover || avatar" />
         </div>
       </div>
 
