@@ -92,21 +92,16 @@ const copy = (projectId) => {
       </div>
     </div>
     <div class="mb-8 lg:mb-16">
-      <h4 class="mb-5 flex items-center">
-        <img class="mr-3 inline" src="@/assets/images/icons/detail.svg" alt="icon" />
-        詳細內容
-      </h4>
-      <p class="mb-5 text-grey-500">{{ detail.project_content }}</p>
-
-      <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
-        <button class="btn btn-primary-outline max-w-[155px]">修改提案</button>
-        <div
-          class="flex cursor-pointer items-center justify-center text-grey-400"
-          @click="copy(detail._id)"
-        >
+      <div class="flex justify-between">
+        <h4 class="mb-5 flex items-center">
+          <img class="mr-3 inline" src="@/assets/images/icons/detail.svg" alt="icon" />
+          詳細內容
+        </h4>
+        <button class="text-grey-400" @click="copy(detail._id)">
           <img class="mr-1 inline-block w-6" src="~/assets/images/icons/copy.svg" />分享連結
-        </div>
+        </button>
       </div>
+      <p class="mb-5 text-grey-500" v-html="detail.project_content"></p>
     </div>
     <div class="mb-8 md:mb-16">
       <h4 class="mb-5 flex items-center">
@@ -185,12 +180,12 @@ const copy = (projectId) => {
           </div>
         </div>
       </section>
-      <LayoutPagination
+      <!-- <LayoutPagination
         class="mt-5 hidden justify-center md:flex"
         :total-page="1"
         :current-page="1"
         :handle-page-change="() => {}"
-      />
+      /> -->
     </div>
 
     <div class="mb-8 md:mb-16">
