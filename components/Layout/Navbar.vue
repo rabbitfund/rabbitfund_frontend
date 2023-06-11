@@ -38,7 +38,7 @@ function handleSearch(value) {
 
 watch(()=>isSigned.value, () => {
   if (isSigned.value) {
-      userStore.handleGetUserData();
+    userStore.handleGetUserData();
   }
 });
 
@@ -207,7 +207,7 @@ function signIn() {
                   <div class="my-5 border-t border-primary"></div>
                   <li class="mb-3 mt-6">
                     <NuxtLink to="/member" class="flex items-center justify-center">
-                      <img class="mr-2 h-12" :src="user.avatar" alt="avatar" />
+                      <img class="mr-2 h-12" :src="userInfo?.user_cover || avatar" alt="avatar" />
                       <span class="text-base font-bold text-primary">{{
                         userInfo?.user_name || '倍兔兔'
                       }}</span>
