@@ -14,9 +14,7 @@ const progress = ref(0);
 const target = ref(0);
 const title = ref('');
 const options = ref([]);
-const proposer = ref('');
-const taxId = ref('');
-const email = ref('');
+const proposerInfo = ref('');
 const timeLeft = ref('');
 const cover = ref('');
 const totalOrder = ref(0);
@@ -45,9 +43,7 @@ onMounted(async () => {
       endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
       progress.value = project.project_progress;
       options.value = project.option;
-      proposer.value = project.ownerInfo?.proposer_name;
-      taxId.value = project.ownerInfo?.proposer_tax_id;
-      email.value = project.ownerInfo?.proposer_email;
+      proposerInfo.value = project.ownerInfo;
       timeLeft.value = getDaysLeft(project.project_end_date);
       cover.value =
         project.project_cover && project.project_cover !== 'cover URL'
@@ -258,18 +254,13 @@ function generateRandomNumberById(objectId) {
       <div
         class="container -order-1 flex flex-col gap-4 py-16 lg:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.lg'))/2)] lg:w-[calc(theme('screens.lg')*1/3)] lg:py-0 xl:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.xl'))/2)] xl:w-[calc(theme('screens.xl')*1/3)]"
       >
-        <CardTeam
-          :brand="proposer"
-          :number="3"
-          :proposer="proposer"
-          :unified-number="taxId"
-          :email="email"
-        />
+        <CardTeam :proposerInfo="proposerInfo" />
         <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
         <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
         <CardPlan
           v-for="option in options"
           :plan-id="option._id"
+          :cover="option.option_cover"
           :plan="option.option_name"
           :price="option.option_price"
           :times="generateRandomNumberById(option._id)"
