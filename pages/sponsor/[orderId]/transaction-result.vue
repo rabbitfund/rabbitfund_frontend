@@ -47,7 +47,7 @@ order.value = {
       <div class="mb-16 border-grey-200 lg:w-1/2 lg:pt-12">
         <CardBlockCarrot
           :title="'感謝您的贊助'"
-          :text="'.'"
+          :text="'^.^'"
           :btn="'查看贊助紀錄'"
           :link="'/member/orders'"
         />

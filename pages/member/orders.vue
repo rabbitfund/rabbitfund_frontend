@@ -1,19 +1,23 @@
 <script setup>
-// definePageMeta({
-//   middleware: ['auth']
-// });
+definePageMeta({
+  middleware: ['auth']
+});
 
 const { getMyOrder } = useApi();
 
 const order = ref([]);
+const totalPages = ref(1);
 const page = ref(1);
 
 function getMyOrderData(page) {
-  getMyOrder(page)
+  console.log(page.value);
+  getMyOrder(page.value)
     .then((res) => {
       console.log('getMyOrderData', res.data.value.data);
-      const orderData = res.data.value.data;
+      const orderData = res.data.value.data.data;
       order.value = orderData;
+      totalPages.value = res.data.value.data.totalPages;
+      page.value = res.data.value.data.pageNum;
       // console.log(orderData);
     })
     .catch((err) => {
@@ -25,9 +29,8 @@ onMounted(async () => {
   getMyOrderData(page);
 });
 
-// TODO: 換頁取資料
 watch([page], () => {
-  console.log(page);
+  // console.log(page);
   getMyOrderData(page);
 });
 </script>
@@ -35,7 +38,7 @@ watch([page], () => {
   <div v-if="order.length !== 0" class="flex flex-col gap-4">
     <CardMemberOrder v-for="i in order" :key="i._id + i" :order="i" />
     <LayoutPagination
-      :total-page="2"
+      :total-page="totalPages"
       :current-page="page"
       :handle-page-change="
         (i) => {
