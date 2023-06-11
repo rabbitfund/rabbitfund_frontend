@@ -216,6 +216,7 @@ const copy = (projectId) => {
               <li class="basis-1/4 lg:px-2">
                 <span class="mb-1 text-grey-400">付款時間</span>
                 <p>{{ props.order?.order_info.newebpay_timeStamp }}</p>
+                <!-- PayTime -->
               </li>
               <li class="basis-1/4 lg:px-2">
                 <!-- <span class="mb-1 text-grey-400">載具類型</span>
