@@ -260,6 +260,7 @@ function generateRandomNumberById(objectId) {
         <CardPlan
           v-for="option in options"
           :plan-id="option._id"
+          :cover="option.option_cover"
           :plan="option.option_name"
           :price="option.option_price"
           :times="generateRandomNumberById(option._id)"

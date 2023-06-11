@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import mockImg from '~/assets/images/mock-plan.png';
 import projectSuccessImg from '~/assets/images/project-success.svg';
 import projectFailImg from '~/assets/images/project-fail.svg';
 
 const props = defineProps({
   planId: {
+    type: [String]
+  },
+  cover: {
     type: [String]
   },
   plan: {
@@ -47,9 +51,9 @@ const { projectId } = route.params;
   <div class="flex flex-col rounded-lg bg-white px-6 py-8 ring-1 ring-grey-200 md:px-8 md:py-10">
     <div class="relative mb-6 bg-primary-light md:mb-8">
       <img
-        src="~/assets/images/mock-plan.png"
+        :src="props.cover == '' || props.cover == 'cover URL' ? mockImg : props.cover"
         class="h-[112px] w-full object-contain md:h-[110px]"
-        alt="plan"
+        :alt="props.plan"
       />
       <div
         v-if="typeof projectFinishedStatus == 'boolean'"
