@@ -17,7 +17,7 @@ const props = defineProps({
     default: '/'
   }
 });
-console.log('BlockRabbit', props);
+// console.log('BlockRabbit', props);
 </script>
 <template>
   <div

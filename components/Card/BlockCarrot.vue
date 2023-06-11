@@ -17,7 +17,7 @@ const props = defineProps({
     default: '/'
   }
 });
-console.log('BlockCarrot', props);
+// console.log('BlockCarrot', props);
 </script>
 <template>
   <div
