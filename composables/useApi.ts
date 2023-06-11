@@ -59,6 +59,8 @@ export default function useApi() {
   const getOrder = (orderId: string) =>
     useFetch(`/order/${orderId}`, { method: 'GET', server: false });
 
+  const uploadImage = (formdata) => useFetch(`/upload/image`, { method: 'POST', body: formdata });
+
   return {
     signin,
     signup,
@@ -75,6 +77,7 @@ export default function useApi() {
     getOwnerProjectStatus,
     getProjectsSupporters,
     postOrder,
-    getOrder
+    getOrder,
+    uploadImage
   };
 }
