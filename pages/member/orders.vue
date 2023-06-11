@@ -9,7 +9,8 @@ const order = ref([]);
 const page = ref(1);
 
 function getMyOrderData(page) {
-  getMyOrder(page)
+  console.log(page.value);
+  getMyOrder(page.value)
     .then((res) => {
       console.log('getMyOrderData', res.data.value.data);
       const orderData = res.data.value.data;
