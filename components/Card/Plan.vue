@@ -42,6 +42,10 @@ const shipDate = computed(() => {
   return `${newDate.getFullYear()} 年 ${newDate.getMonth() + 1} 月`;
 });
 
+const coverUrl = computed(() => {
+  return `https://fakeimg.pl/352x110/f3e3f5/9d1ead?text=${props.plan}&font=noto`;
+});
+
 const route = useRoute();
 const { projectId } = route.params;
 // const planId = ref('123');
@@ -51,7 +55,7 @@ const { projectId } = route.params;
   <div class="flex flex-col rounded-lg bg-white px-6 py-8 ring-1 ring-grey-200 md:px-8 md:py-10">
     <div class="relative mb-6 bg-primary-light md:mb-8">
       <img
-        :src="props.cover == '' || props.cover == 'cover URL' ? mockImg : props.cover"
+        :src="props.cover == '' || props.cover == 'cover URL' ? coverUrl : props.cover"
         class="h-[112px] w-full object-contain md:h-[110px]"
         :alt="props.plan"
       />
