@@ -34,7 +34,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
       return response._data;
     },
     onResponseError(context) {
-      showErrorMessage(context);
+      showErrorMessage(context.response._data.msg);
     }
   });
 });
