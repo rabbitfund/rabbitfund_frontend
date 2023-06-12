@@ -46,7 +46,7 @@ onMounted(async () => {
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
-      <CheckoutProcess step="3" />
+      <CheckoutProcess :step="3" />
     </div>
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
