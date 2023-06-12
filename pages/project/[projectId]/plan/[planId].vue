@@ -9,7 +9,7 @@
       <div class="mb-12 bg-light-emphasis pt-12 lg:mb-20 lg:w-2/3 lg:p-12 lg:pb-20">
         <div class="mb-20 flex flex-col gap-6 lg:flex-row">
           <div class="rounded-2 lg:w-3/8">
-            <img src="~/assets/images/mock.png" alt="假圖" />
+            <img :src="coverUrl" alt="假圖" />
           </div>
           <div class="lg:w-5/8">
             <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
@@ -17,7 +17,7 @@
             <span class="mb-6 block text-h4 font-bold lg:text-h3">$ {{ price }}</span>
             <ul class="mb-6">
               <li>
-                <p class="text-grey-500">已被贊助 100 次</p>
+                <p class="text-grey-500">已被贊助 {{ generateRandomNumberById(planId) }} 次</p>
               </li>
               <li>
                 <p class="text-grey-500">預計 {{ shipDate }}出貨</p>
@@ -128,6 +128,7 @@
 </template>
 
 <script setup>
+import moment from 'moment';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
@@ -159,6 +160,7 @@ const content = ref('');
 const price = ref(0);
 const projectTitle = ref('');
 const shipDate = ref('');
+const coverUrl = ref('');
 
 onMounted(async () => {
   await nextTick();
@@ -170,6 +172,12 @@ onMounted(async () => {
       price.value = option.option_price;
       shipDate.value = getShipDate(option.option_parent.project_end_date);
       projectTitle.value = option.option_parent.project_title;
+
+      if (option.option_cover === '' || option.option_cover === 'cover URL') {
+        coverUrl.value = `https://fakeimg.pl/352x110/f3e3f5/9d1ead?text=${option.option_name}&font=noto`;
+      } else {
+        coverUrl.value = option.option_cover;
+      }
 
       console.log(option);
     })
@@ -183,6 +191,16 @@ const getShipDate = (endDate) => {
   const newDate = new Date(date.setMonth(date.getMonth() + 2));
   return `${newDate.getFullYear()} 年 ${newDate.getMonth() + 1} 月`;
 };
+
+function generateRandomNumberById(objectId) {
+  const seed = objectId.substring(20); // last four
+  let total = 1;
+  for (const el of seed) {
+    total *= el.charCodeAt(0);
+  }
+  const date = moment().format('MMDD');
+  return Math.round(total / parseInt(date)) % 1000;
+}
 
 const quantity = ref(1);
 const extra = ref(0);
