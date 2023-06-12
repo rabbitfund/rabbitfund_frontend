@@ -55,7 +55,7 @@ const doUploadImage = async (event) => {
   }
   const image = event.target.files[0];
   const data = new FormData();
-  data.append('', image);
+  data.append('file', image);
   const res = await uploadImage(data);
   userCover.value = res.data.value.file.file_url;
 };
