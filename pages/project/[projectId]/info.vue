@@ -3,6 +3,12 @@ import moment from 'moment';
 import { useProjectStore } from '~/stores/project';
 import mockImg from '~/assets/images/mock.png';
 
+const modalFeedback = ref(null);
+
+const openModalFeedback = () => {
+  modalFeedback.value.openModal();
+};
+
 const { getProject } = useApi();
 const route = useRoute();
 const { projectId } = route.params;
@@ -189,7 +195,10 @@ function generateRandomNumberById(objectId) {
               >
                 贊助專案
               </NuxtLink>
-              <button class="btn btn-primary-outline w-1/2 xl:text-md">追蹤專案</button>
+              <button class="btn btn-primary-outline w-1/2 xl:text-md" @click="openModalFeedback()">
+                追蹤專案
+              </button>
+              <ModalFeedback ref="modalFeedback" :detail="{ title, text: '感謝您的追蹤' }" />
             </div>
             <button class="flex gap-1 text-grey-400" @click="copy">
               <img src="~/assets/images/icons/copy.svg" alt="copy" />
