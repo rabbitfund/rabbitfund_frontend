@@ -119,7 +119,7 @@ function generateRandomNumberById(objectId) {
           >集資專案 ｜ {{ category }}</span
         >
         <h2 class="mb-4 text-h4 xl:text-h1">{{ title }}</h2>
-        <p class="text-grey-500 xl:text-lg">提案者 {{ proposer }}</p>
+        <p class="text-grey-500 xl:text-lg">提案者 {{ proposerInfo.proposer_name }}</p>
       </div>
     </section>
 
