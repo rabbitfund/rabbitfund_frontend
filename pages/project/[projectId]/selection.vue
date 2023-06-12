@@ -79,30 +79,26 @@ function generateRandomNumberById(objectId) {
   <!-- <h1>方案選擇</h1> -->
   <section class="bg-light-emphasis">
     <div class="container flex flex-col items-center px-[55.55px] py-8 md:py-16">
-      <span class="mb-4 font-bold text-warning xl:mb-8 xl:text-lg"
-        >集資專案 ｜ {{ category }}</span
-      >
+      <span class="mb-4 font-bold text-warning xl:mb-8 xl:text-lg">集資專案 ｜ {{ category }}</span>
       <h2 class="mb-4 text-h4 xl:text-h1">{{ title }}</h2>
       <p class="text-grey-500 xl:text-lg">提案者 {{ proposerInfo.proposer_name }}</p>
     </div>
   </section>
-  <section class="bg-light-emphasis py-16 xl:py-30">
-    <div class="container">
-      <div class="flex flex-col items-center">
-        <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-        <CardPlan
-          v-for="option in options"
-          :plan-id="option._id"
-          :cover="option.option_cover"
-          :plan="option.option_name"
-          :price="option.option_price"
-          :times="generateRandomNumberById(option._id)"
-          :content="option.option_content"
-          :endDate="endDate"
-          :projectFinishedStatus="projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null"
-          />
-        </ul>
-      </div>
-    </div>
-</section>
+  <section
+    class="container grid grid-cols-1 gap-5 bg-light-emphasis pb-16 md:grid-cols-2 lg:grid-cols-3"
+  >
+    <CardPlan
+      v-for="option in options"
+      :plan-id="option._id"
+      :cover="option.option_cover"
+      :plan="option.option_name"
+      :price="option.option_price"
+      :times="generateRandomNumberById(option._id)"
+      :content="option.option_content"
+      :end-date="endDate"
+      :project-finished-status="
+        projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
+      "
+    />
+  </section>
 </template>
