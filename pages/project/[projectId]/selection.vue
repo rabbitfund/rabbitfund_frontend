@@ -80,7 +80,9 @@ function generateRandomNumberById(objectId) {
   <section class="bg-light-emphasis">
     <div class="container flex flex-col items-center px-[55.55px] py-8 md:py-16">
       <span class="mb-4 font-bold text-warning xl:mb-8 xl:text-lg">集資專案 ｜ {{ category }}</span>
-      <h2 class="mb-4 text-h4 xl:text-h1">{{ title }}</h2>
+      <NuxtLink :to="`/project/${projectId}/info`">
+        <h2 class="mb-4 text-h4 xl:text-h1">{{ title }}</h2>
+      </NuxtLink>
       <p class="text-grey-500 xl:text-lg">提案者 {{ proposerInfo.proposer_name }}</p>
     </div>
   </section>

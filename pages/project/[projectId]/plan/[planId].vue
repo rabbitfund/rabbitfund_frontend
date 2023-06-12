@@ -12,7 +12,9 @@
             <img :src="coverUrl" alt="假圖" />
           </div>
           <div class="lg:w-5/8">
-            <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
+            <NuxtLink :to="`/project/${projectId}/info`">
+              <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
+            </NuxtLink>
             <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
             <span class="mb-6 block text-h4 font-bold lg:text-h3">$ {{ price }}</span>
             <ul class="mb-6">
