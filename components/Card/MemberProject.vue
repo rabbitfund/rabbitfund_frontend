@@ -79,7 +79,7 @@ const copy = (projectId) => {
         <p class="text-2xl font-bold">{{ formattedAmount(props.project?.project_progress) }}</p>
       </div>
       <div class="flex gap-4 lg:block">
-        <button v-if="props.canModify" class="btn btn-primary-outline lg:mb-7" @click.stop="">修改提案</button>
+        <!-- <button v-if="props.canModify" class="btn btn-primary-outline lg:mb-7" @click.stop="">修改提案</button> -->
         <button class="flex justify-center text-grey-400" @click.stop="copy(props.project?._id)">
           <img class="mr-1 inline-block w-6" src="~/assets/images/icons/copy.svg" />分享連結
         </button>
