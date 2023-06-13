@@ -3,12 +3,21 @@ import { Navigation, Pagination } from 'swiper';
 const modules = [Navigation, Pagination];
 
 const { getProjects } = useApi();
+const banners = ref([]);
 const hotProjects = ref([]);
 const recentProjects = ref([]);
 const longProjects = ref([]);
 
 onMounted(async () => {
   await nextTick();
+  getProjects(1, 'banner')
+    .then((res) => {
+      const projectList = res.data.value.data.projects;
+      banners.value = projectList;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   getProjects(1, 'hot')
     .then((res) => {
       const projectList = res.data.value.data.projects;
@@ -51,7 +60,7 @@ onMounted(async () => {
     </div>
   </section>
 
-  <section class="px-3 pb-12 lg:px-0 lg:pb-20">
+  <section class="container pb-12 lg:pb-20">
     <Swiper
       :modules="modules"
       :grab-cursor="true"
@@ -63,17 +72,17 @@ onMounted(async () => {
         clickable: true
       }"
       :breakpoints="{
-        '960': {
-          slidesPerView: 1.25,
-          spaceBetween: 24
-        },
-        '1320': {
-          slidesPerView: 1.56,
-          spaceBetween: 40
-        }
+        // '960': {
+        //   slidesPerView: 1.25,
+        //   spaceBetween: 24
+        // },
+        // '1320': {
+        //   slidesPerView: 1.56,
+        //   spaceBetween: 40
+        // }
       }"
     >
-      <SwiperSlide v-for="project in recentProjects" :key="project._id">
+      <SwiperSlide v-for="project in banners" :key="project._id">
         <NuxtLink :to="`/project/${project._id}/info`">
           <img
             :src="project.project_cover"
