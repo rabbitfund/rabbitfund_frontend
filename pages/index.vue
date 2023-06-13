@@ -39,9 +39,15 @@ onMounted(async () => {
 <template>
   <section class="py-6 lg:py-8">
     <div class="flex justify-center gap-4">
-      <Badge type="校園" name="校園" :to="'/projects?type=校園'"/>
-      <Badge type="公益" name="公益" :to="'/projects?type=公益'"/>
-      <Badge type="市集" name="市集" :to="'/projects?type=市集'"/>
+      <NuxtLink :to="'/projects?type=校園'">
+        <Badge type="校園" name="校園"/>
+      </NuxtLink>
+      <NuxtLink :to="'/projects?type=公益'">
+        <Badge type="公益" name="公益"/>
+      </NuxtLink>
+      <NuxtLink :to="'/projects?type=市集'">
+        <Badge type="市集" name="市集"/>
+      </NuxtLink>
     </div>
   </section>
 
@@ -90,7 +96,9 @@ onMounted(async () => {
             </NuxtLink>
           </li>
         </ul>
-        <button class="btn btn-primary-outline" :to="'/projects?tag=hot'">查看更多</button>
+        <NuxtLink :to="'/projects?tag=hot'">
+          <button class="btn btn-primary-outline">查看更多</button>
+        </NuxtLink>
       </div>
     </div>
   </section>
@@ -142,7 +150,9 @@ onMounted(async () => {
             </NuxtLink>
           </li>
         </ul>
-        <button class="btn btn-primary-outline" :to="'/projects?tag=recent'">查看更多</button>
+        <NuxtLink :to="'/projects?tag=recent'">
+          <button class="btn btn-primary-outline">查看更多</button>
+        </NuxtLink>
       </div>
     </div>
   </section>
@@ -159,7 +169,9 @@ onMounted(async () => {
             </NuxtLink>
           </li>
         </ul>
-        <button class="btn btn-primary-outline" :to="'/projects?tag=long'">查看更多</button>
+        <NuxtLink :to="'/projects?tag=long'">
+          <button class="btn btn-primary-outline">查看更多</button>
+        </NuxtLink>
       </div>
     </div>
   </section>
