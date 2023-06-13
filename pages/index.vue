@@ -39,9 +39,15 @@ onMounted(async () => {
 <template>
   <section class="py-6 lg:py-8">
     <div class="flex justify-center gap-4">
-      <Badge type="校園" name="校園" />
-      <Badge type="公益" name="公益" />
-      <Badge type="市集" name="市集" />
+      <NuxtLink :to="'/projects?type=校園'">
+        <Badge type="校園" name="校園"/>
+      </NuxtLink>
+      <NuxtLink :to="'/projects?type=公益'">
+        <Badge type="公益" name="公益"/>
+      </NuxtLink>
+      <NuxtLink :to="'/projects?type=市集'">
+        <Badge type="市集" name="市集"/>
+      </NuxtLink>
     </div>
   </section>
 
@@ -68,10 +74,12 @@ onMounted(async () => {
       }"
     >
       <SwiperSlide v-for="project in recentProjects" :key="project._id">
-        <img
-          :src="project.project_cover"
-          class="mx-auto h-full rounded-lg object-cover lg:rounded-2xl"
-        />
+        <NuxtLink :to="`/project/${project._id}/info`">
+          <img
+            :src="project.project_cover"
+            class="mx-auto h-full rounded-lg object-cover lg:rounded-2xl"
+          />
+        </NuxtLink>
       </SwiperSlide>
     </Swiper>
   </section>
@@ -82,13 +90,15 @@ onMounted(async () => {
         <img src="~/assets/images/rabbit-ears.png" alt="rabbit ears" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">精選專案</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-          <li class="hover:shadow lg:w-1/3" v-for="project in hotProjects">
+          <li v-for="project in hotProjects" :key="project._id" class="hover:shadow lg:w-1/3">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
           </li>
         </ul>
-        <button class="btn btn-primary-outline">查看更多</button>
+        <NuxtLink :to="'/projects?tag=hot'">
+          <button class="btn btn-primary-outline">查看更多</button>
+        </NuxtLink>
       </div>
     </div>
   </section>
@@ -134,13 +144,15 @@ onMounted(async () => {
         <img src="~/assets/images/sparkle.png" alt="sparkle" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">募資進行中</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-          <li class="hover:shadow lg:w-1/3" v-for="project in recentProjects">
+          <li v-for="project in recentProjects" :key="project._id" class="hover:shadow lg:w-1/3">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
           </li>
         </ul>
-        <button class="btn btn-primary-outline">查看更多</button>
+        <NuxtLink :to="'/projects?tag=recent'">
+          <button class="btn btn-primary-outline">查看更多</button>
+        </NuxtLink>
       </div>
     </div>
   </section>
@@ -151,13 +163,15 @@ onMounted(async () => {
         <img src="~/assets/images/heart1.png" alt="heart" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">長期贊助</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-          <li class="hover:shadow lg:w-1/3" v-for="project in longProjects">
+          <li v-for="project in longProjects" :key="project._id" class="hover:shadow lg:w-1/3">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
           </li>
         </ul>
-        <button class="btn btn-primary-outline">查看更多</button>
+        <NuxtLink :to="'/projects?tag=long'">
+          <button class="btn btn-primary-outline">查看更多</button>
+        </NuxtLink>
       </div>
     </div>
   </section>

@@ -1,24 +1,25 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/user';
+
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+
 const targetModal = ref(null);
 
 const { openModal, closeModal } = useModal(targetModal);
 
 const props = defineProps({
-  detail: [Object],
-  title: [String],
+  detail: [Object]
 });
+console.log('modalOrderDetail', props.detail);
 
 defineExpose({
   openModal
 });
 
-watch(()=>props.detail, ()=>{
-  console.log(props.detail)
-})
-
 const formattedAmount = computed(() => {
-  if(!props.detail)return;
-  return props.detail.order_info.payment_price.toLocaleString();
+  return props.detail?.order_info.payment_price.toLocaleString();
 });
 </script>
 
@@ -29,18 +30,16 @@ const formattedAmount = computed(() => {
     aria-hidden="true"
     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden p-3 pt-14 md:inset-0 lg:pt-[93px]"
   >
-  
     <div
-      v-if='props.detail'
       class="relative max-h-full lg:w-[calc(theme('screens.lg')*2/3)] xl:w-[calc(theme('screens.xl')*2/3)]"
     >
       <!-- Modal content -->
       <div class="relative bg-white p-5 pb-12 pt-[60px] shadow lg:px-8 lg:py-12">
         <!-- Modal header -->
         <button
-          @click="closeModal()"
           type="button"
           class="absolute right-5 top-5 rounded hover:bg-primary-light"
+          @click="closeModal()"
         >
           <svg
             width="24"
@@ -57,31 +56,32 @@ const formattedAmount = computed(() => {
         </button>
         <section class="mb-7 border-b border-grey-200 pb-4">
           <h3 class="text-h4 text-primary">
-            {{ props.title }}
+            {{ props.detail?.project.project_title }}
           </h3>
         </section>
         <!-- Modal body -->
         <section class="mb-7 rounded-lg bg-light-emphasis p-5">
-          <ul class="flex flex-col flex-wrap gap-y-5 lg:flex-row lg:gap-y-4 lg:-mx-2">
-            <li class="lg:px-2 basis-1/3">
+          <ul class="flex flex-col flex-wrap gap-y-5 lg:-mx-2 lg:flex-row lg:gap-y-4">
+            <li class="basis-1/3 lg:px-2">
               <span class="mb-1 text-grey-400">方案名稱</span>
-              <p>{{ props.detail.option.option_name }}</p>
+              <p>{{ props.detail?.option.option_name }}</p>
             </li>
-            <li class="lg:px-2 basis-1/3">
+            <!-- NOTE: 這邊所有 user 的資料暫時直接抓 userStore 的，未來資料庫有增加欄位，可以再調整成付款人與會員姓名資料不同 -->
+            <li class="basis-1/3 lg:px-2">
               <span class="mb-1 text-grey-400">付款人姓名</span>
-              <p>{{ props.detail.user.user_name }}</p>
+              <p>{{ userInfo?.user_name }}</p>
             </li>
-            <li class="lg:px-2 basis-1/3">
+            <li v-if="userInfo?.user_phone" class="basis-1/3 lg:px-2">
               <span class="mb-1 text-grey-400">付款人手機</span>
-              <p>{{ props.detail.user.user_phone }}</p>
+              <p>{{ userInfo?.user_phone }}</p>
             </li>
-            <li class="lg:px-2 basis-2/3">
+            <li class="basis-2/3 lg:px-2">
               <span class="mb-1 text-grey-400">E-mail</span>
-              <p>{{ props.detail.user.user_email }}</p>
+              <p>{{ userInfo?.user_email }}</p>
             </li>
-            <li class="lg:px-2 basis-1/3">
+            <li class="basis-1/3 lg:px-2">
               <span class="mb-1 text-grey-400">備註</span>
-              <p>{{ props.detail.order_note }}</p>
+              <p>{{ props.detail?.order_note }}</p>
             </li>
           </ul>
         </section>
@@ -100,21 +100,21 @@ const formattedAmount = computed(() => {
             </li>
             <li class="basis-3/4 lg:px-2">
               <span class="mb-1 text-grey-400">付款方式</span>
-              <p>{{ props.detail.order_info.payment_method }}</p>
+              <p>{{ props.detail?.order_info.payment_method }}</p>
             </li>
             <li class="basis-1/4 lg:px-2">
               <span class="mb-1 text-grey-400">發票號碼</span>
-              <p>{{ props.detail.order_info.invoice_number }}</p>
+              <p>{{ props.detail?.order_info.invoice_number }}</p>
             </li>
             <li class="basis-3/4 lg:px-2">
               <span class="mb-1 text-grey-400">發票類型</span>
-              <p>{{ props.detail.order_info.invoice_type }}</p>
+              <p>{{ props.detail?.order_info.invoice_type }}</p>
             </li>
           </ul>
         </section>
         <!-- Modal footer -->
         <section class="text-center">
-          <button @click="closeModal()" type="button" class="btn btn-primary px-12">確定</button>
+          <button type="button" class="btn btn-primary px-12" @click="closeModal()">確定</button>
         </section>
       </div>
     </div>

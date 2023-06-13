@@ -1,4 +1,11 @@
 <script setup>
+import { storeToRefs } from 'pinia';
+import avatar from '@/assets/images/avatar.png';
+import { useUserStore } from '@/stores/user';
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+const { uploadImage } = useApi();
+
 const { getUserDetail, putUserDetail } = useApi();
 const userName = ref('');
 const userEmail = ref('');
@@ -29,18 +36,35 @@ function handlePostUserDetail() {
     cover: userCover.value,
     intro: userIntro.value,
     website: userWebsite.value
+  }).then((res) => {
+    if (res.error.value) {
+      return;
+    }
+    userInfo.value.user_name = userName.value;
+    userInfo.value.user_cover = userCover.value;
   });
 }
 
 definePageMeta({
   middleware: ['auth']
 });
+
+const doUploadImage = async (event) => {
+  if (event.target.files.length === 0) {
+    return;
+  }
+  const image = event.target.files[0];
+  const data = new FormData();
+  data.append('file', image);
+  const res = await uploadImage(data);
+  userCover.value = res.data.value.file.file_url;
+};
 </script>
 
 <template>
   <div class="mx-auto w-full">
     <h2>管理個人資料</h2>
-    <form class="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
+    <form class="shadow-md mb-4 rounded bg-white px-8 pb-8 pt-6">
       <div class="md:flex md:gap-6">
         <div class="mb-6 md:w-1/2">
           <div class="mb-6">
@@ -61,10 +85,9 @@ definePageMeta({
         <div class="mb-6 md:w-1/2">
           <div class="mb-6">
             <label for="cover">大頭照</label>
-            <input id="cover" type="file" name="cover" />
+            <input id="cover" type="file" name="cover" accept="image/*" @change="doUploadImage" />
           </div>
-          <img src="@/assets/images/avatar.png" />
-          <!-- <img src="{{ userCover || @/assets/images/avatar.png}}" /> -->
+          <img class="h-[100px]" :src="userCover || avatar" />
         </div>
       </div>
 

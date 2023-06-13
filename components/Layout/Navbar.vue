@@ -36,11 +36,14 @@ function handleSearch(value) {
   navigateTo(`/projects${params}`);
 }
 
-watch(isSigned, () => {
-  if (isSigned) {
-    userStore.handleGetUserData();
+watch(
+  () => isSigned.value,
+  () => {
+    if (isSigned.value) {
+      userStore.handleGetUserData();
+    }
   }
-});
+);
 
 const user = ref({
   name: '倍兔兔',
@@ -84,13 +87,17 @@ function signIn() {
           </div>
           <button v-if="!isSigned" class="btn btn-primary" @click="signIn">登入</button>
           <button v-else class="group relative flex cursor-pointer items-center">
-            <img class="mr-2 h-12" :src="user.avatar" alt="avatar" />
+            <img
+              class="mr-2 h-12 rounded-full"
+              :src="userInfo?.user_cover || avatar"
+              alt="avatar"
+            />
             <span class="font-bold text-primary">{{ userInfo?.user_name || '倍兔兔' }}</span>
 
             <div
               class="absolute right-0 top-full z-10 hidden cursor-default group-hover:block group-focus:block"
             >
-              <div class="rounded-md bg-white px-10 py-8 shadow-md">
+              <div class="shadow-md rounded-md bg-white px-10 py-8">
                 <ul class="mb-8 flex min-w-[124px] flex-col gap-7">
                   <li class="inline-block">
                     <NuxtLink
@@ -207,7 +214,11 @@ function signIn() {
                   <div class="my-5 border-t border-primary"></div>
                   <li class="mb-3 mt-6">
                     <NuxtLink to="/member" class="flex items-center justify-center">
-                      <img class="mr-2 h-12" :src="user.avatar" alt="avatar" />
+                      <img
+                        class="mr-2 h-12 rounded-full"
+                        :src="userInfo?.user_cover || avatar"
+                        alt="avatar"
+                      />
                       <span class="text-base font-bold text-primary">{{
                         userInfo?.user_name || '倍兔兔'
                       }}</span>

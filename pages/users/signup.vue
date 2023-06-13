@@ -27,7 +27,8 @@ const googleSignUp = (response) => {
     email: responsePayload.email,
     pass: '',
     oauth_google_id: responsePayload.sub,
-    name: responsePayload.name
+    name: responsePayload.name,
+    cover: responsePayload.picture
   });
 };
 

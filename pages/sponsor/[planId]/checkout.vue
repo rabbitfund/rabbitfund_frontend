@@ -1,7 +1,7 @@
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
-      <CheckoutProcess step="2" />
+      <CheckoutProcess :step="2" />
     </div>
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
@@ -12,6 +12,7 @@
             <span><img src="~/assets/images/icons/user-fill.svg" alt="使用者" /></span>
             <h2>購買（贊助）人</h2>
           </div>
+          <!-- NOTE: 這邊所有 user 的資料暫時直接抓 userStore 的，未來可以優化成這邊有修改等於修改會員資料 -->
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/2">
               <label for="name">真實姓名</label>
