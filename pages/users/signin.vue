@@ -13,7 +13,7 @@ const handleSubmit = (values) => {
   handleSignIn({
     method: 0,
     email: values.email,
-    pass: values.password,
+    pass: values.密碼,
     forget: false
   });
 };
