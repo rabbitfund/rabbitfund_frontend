@@ -1,6 +1,7 @@
 <script setup>
 // const currentTab = ref(0);
 const currentUser = ref('proposer');
+// TODO: get user role 
 
 const content = reactive({
   proposer: [
@@ -9,11 +10,11 @@ const content = reactive({
     //   data: []
     // },
     {
-      title: '贊助紀錄',
+      title: '贊助專案',
       data: [1]
     },
     {
-      title: '提案紀錄',
+      title: '發起提案',
       data: [1, 4]
     }
   ],
@@ -80,6 +81,11 @@ const content = reactive({
       </section> -->
     </div>
     <div>
+      <CardBlockRabbit
+        :title="'去探索更多新發現！'"
+        :btn="'瞧一瞧'"
+        :link="'/projects'"
+      />
       <!-- 
       <ul class="flex justify-between py-8 md:justify-center md:gap-10">
         <li
