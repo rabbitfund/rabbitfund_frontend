@@ -45,8 +45,9 @@ watch(
 
 <style scoped>
 .loading {
-  background: #e2b29f;
+  background: #e2b29f80;
   font-size: 120%;
+  backdrop-filter: blur(10px);
 }
 
 .rabbit {
