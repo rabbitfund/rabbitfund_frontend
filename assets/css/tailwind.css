@@ -93,8 +93,4 @@
   .progress {
     @apply h-full rounded-full;
   }
-
-  .text-error {
-    @apply text-sm text-primary;
-  }
 }
