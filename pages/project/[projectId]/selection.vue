@@ -84,21 +84,21 @@ function generateRandomNumberById(objectId) {
       <p class="text-grey-500 xl:text-lg">提案者 {{ proposerInfo.proposer_name }}</p>
     </div>
   </section>
-  <section
-    class="container grid grid-cols-1 gap-5 bg-light-emphasis pb-16 md:grid-cols-2 lg:grid-cols-3"
-  >
-    <CardPlan
-      v-for="option in options"
-      :plan-id="option._id"
-      :cover="option.option_cover"
-      :plan="option.option_name"
-      :price="option.option_price"
-      :times="generateRandomNumberById(option._id)"
-      :content="option.option_content"
-      :end-date="endDate"
-      :project-finished-status="
-        projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
-      "
-    />
+  <section class="bg-light-emphasis">
+    <div class="container grid grid-cols-1 gap-5 pb-16 md:grid-cols-2 lg:grid-cols-3">
+      <CardPlan
+        v-for="option in options"
+        :plan-id="option._id"
+        :cover="option.option_cover"
+        :plan="option.option_name"
+        :price="option.option_price"
+        :times="generateRandomNumberById(option._id)"
+        :content="option.option_content"
+        :end-date="endDate"
+        :project-finished-status="
+          projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
+        "
+      />
+    </div>
   </section>
 </template>
