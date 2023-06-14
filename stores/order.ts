@@ -32,5 +32,6 @@ export const useOrderStore = defineStore('order', {
       this.invoice_type = orderData.invoice_type;
       this.invoice_carrier = orderData.invoice_carrier;
     }
-  }
+  },
+  persist: true // localStorage
 });
