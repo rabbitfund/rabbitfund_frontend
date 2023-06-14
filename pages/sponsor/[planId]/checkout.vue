@@ -229,6 +229,7 @@
             <span><img src="~/assets/images/icons/credit-card.svg" alt="信用卡" /></span>
             <h2>付款方式</h2>
           </div>
+          <!-- 
           <ul class="mb-6 flex flex-col gap-4">
             <li class="relative flex items-center">
               <input
@@ -265,6 +266,7 @@
               </label>
             </li>
           </ul>
+           -->
           <ol class="list-decimal ps-5 text-grey-500">
             <li class="mb-2">本募資平台目前開放的支付方式為信用卡付款及線上 ATM。</li>
             <li class="mb-2">
@@ -344,7 +346,7 @@ const orderExtra = orderStore.order_extra;
 const orderTotal = orderStore.order_total;
 const orderNote = orderStore.order_note;
 
-console.log(projectPrice);
+// console.log(projectPrice);
 const navigateToCheckOrder = async () => {
   try {
     const orderOtherData = {
@@ -352,7 +354,7 @@ const navigateToCheckOrder = async () => {
       invoice_type: invoiceType.value,
       invoice_carrier: invoiceCarrier.value
     };
-    console.log('orderOtherData', orderOtherData);
+    // console.log('orderOtherData', orderOtherData);
 
     // console.log('orderData', orderData);
 
@@ -370,13 +372,13 @@ const navigateToCheckOrder = async () => {
       ...orderOtherData
     };
 
-    console.log('orderPayload', orderPayload);
+    // console.log('orderPayload', orderPayload);
     orderStore.setOrder(orderPayload);
 
     // 建立訂單
     const { data } = await postOrder(orderPayload);
-    console.log(data.value.data);
-    console.log(data.value.data._id);
+    // console.log(data.value.data);
+    // console.log(data.value.data._id);
 
     const orderId = data.value.data._id;
     // 前往下一步驟：確認訂單資料

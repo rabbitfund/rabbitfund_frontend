@@ -20,13 +20,13 @@ const projectPrice = orderStore.project_price;
 const orderExtra = orderStore.order_extra;
 const orderTotal = orderStore.order_total;
 
-console.log(orderStore);
+// console.log(orderStore);
 
 onMounted(async () => {
   await nextTick();
   getOrder(orderId)
     .then((res) => {
-      console.log('res', res.data.value.data);
+      // console.log('res', res.data.value.data);
       order.value = res.data.value.data;
       // const option = res.data.value.data;
       // optionName.value = option.option_name;
