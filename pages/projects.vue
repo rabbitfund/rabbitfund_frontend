@@ -24,23 +24,28 @@ function createNewRoute(page, type, k, tag) {
 
   return '/projects?' + params.toString();
 }
-watch(route, value => {
-  page.value = parseInt(value.query.page) || 1;
-  type.value = value.query.type || '';
-  k.value = value.query.k || '';
-  tag.value = value.query.tag || '';
-}, {deep: true, immediate: true})
+watch(
+  route,
+  (value) => {
+    page.value = parseInt(value.query.page) || 1;
+    type.value = value.query.type || '';
+    k.value = value.query.k || '';
+    tag.value = value.query.tag || '';
+  },
+  { deep: true, immediate: true }
+);
 
 watch([page, type, k, tag], () => {
   const newRoute = createNewRoute(page.value, type.value, k.value, tag.value);
   if (newRoute === route.fullPath) return;
   navigateTo(newRoute);
+
+  window && window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 watch([type, k, tag], () => {
   page.value = 1;
 });
-
 
 const { data: result } = await useAsyncData(
   'projectList' + page.value + '_' + type.value + '_' + k.value + '_' + tag.value,
@@ -64,7 +69,7 @@ const { data: result } = await useAsyncData(
   <div class="container mx-auto my-6 flex justify-between lg:my-12">
     <h2 class="">專案列表</h2>
     <div>
-      <select v-model="type" class="w-[120px] mr-5" value="">
+      <select v-model="type" class="mr-5 w-[120px]" value="">
         <option value="">全部</option>
         <option value="校園">校園</option>
         <option value="公益">公益</option>
@@ -77,7 +82,6 @@ const { data: result } = await useAsyncData(
         <option value="long">長期贊助</option>
       </select>
     </div>
-
   </div>
 
   <section
