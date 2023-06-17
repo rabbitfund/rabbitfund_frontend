@@ -22,7 +22,7 @@ const formattedAmount = computed(() => {
 
 <template>
   <div
-    class="flex cursor-pointer flex-col overflow-hidden rounded-lg bg-white h-full"
+    class="flex h-full cursor-pointer flex-col overflow-hidden rounded-lg bg-white ring-1 ring-primary-light transition hover:scale-105 hover:shadow"
     @click="navigateTo(`/project/${props.project?._id}/info`)"
   >
     <div class="relative overflow-hidden rounded-t-lg">
@@ -59,7 +59,7 @@ const formattedAmount = computed(() => {
       <h3 class="mb-2 line-clamp-2 text-h5 lg:text-h4">
         {{ props.project?.project_title }}
       </h3>
-      <span class="mb-4 mt-auto block lg:text-lg lg:mb-6">{{
+      <span class="mb-4 mt-auto block lg:mb-6 lg:text-lg">{{
         props.project?.ownerInfo && props.project.ownerInfo?.proposer_name
           ? props.project.ownerInfo.proposer_name
           : 'not found'
