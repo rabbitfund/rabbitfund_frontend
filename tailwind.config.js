@@ -45,9 +45,6 @@ module.exports = {
 				fontWeight: '700'
 			}]
 		},
-		boxShadow: {
-			DEFAULT: '0 4px 16px rgba(0, 0, 0, 0.06)'
-		},
 		extend: {
 			padding: {
 				'30': '120px',
@@ -93,6 +90,9 @@ module.exports = {
 			},
 			borderRadius: {
 				'4xl': '50px',
+			},
+			boxShadow: {
+				DEFAULT: '0 4px 16px rgba(0, 0, 0, 0.06)'
 			},
 		},
 	},
