@@ -45,10 +45,17 @@ watch(
   }
 );
 
-const user = ref({
-  name: '倍兔兔',
-  avatar: '' || avatar
-});
+const isHamburgerMenuVisible = ref(false);
+function toggleHamburgerMenu() {
+  isHamburgerMenuVisible.value = !isHamburgerMenuVisible.value;
+}
+watch(
+  () => route.fullPath,
+  () => {
+    isHamburgerMenuVisible.value = false;
+  }
+);
+
 function signIn() {
   navigateTo('/users/signin');
 }
@@ -155,13 +162,14 @@ function signIn() {
           </button>
         </div>
         <!-- 手機板 -->
-        <div class="group flex self-stretch font-bold text-primary md:hidden">
-          <button>
+        <div class="flex self-stretch font-bold text-primary md:hidden">
+          <button ref="hamburgerMenu" @click="toggleHamburgerMenu">
             <img class="h-10" src="@/assets/images/icons/bars.svg" alt="bars" />
           </button>
 
           <div
-            class="transition-height absolute left-0 top-full z-10 h-0 w-full overflow-hidden duration-1000 ease-in-out group-hover:h-auto group-focus:h-auto"
+            class="transition-height absolute left-0 top-full z-10 h-0 w-full overflow-hidden duration-1000 ease-in-out"
+            :class="{ 'h-auto': isHamburgerMenuVisible }"
           >
             <div class="bg-light px-3">
               <ul class="flex flex-col gap-1 pb-7 text-center text-xl">
