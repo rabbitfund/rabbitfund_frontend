@@ -62,13 +62,8 @@ definePageMeta({
           </button>
         </Form>
 
-        <div class="flex justify-between font-bold text-primary mb-6">
-          <NuxtLink to="/users/signup" class="hover:text-primary-dark hover:underline"
-            >尚未註冊？</NuxtLink
-          >
-          <NuxtLink to="/users/reset-password" class="hover:text-primary-dark hover:underline"
-            >忘記密碼？</NuxtLink
-          >
+        <div class="mb-6 flex font-bold text-primary">
+          <NuxtLink to="/users/signup" class="link link-primary">尚未註冊？</NuxtLink>
         </div>
 
         <div>

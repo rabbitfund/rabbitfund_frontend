@@ -73,8 +73,8 @@ definePageMeta({
         </Form>
 
         <div class="mb-6 flex font-bold text-primary">
-          <NuxtLink to="/users/signin" class="hover:text-primary-dark hover:underline"
-            >返回登入</NuxtLink
+          <NuxtLink to="/users/signin" class="link link-primary"
+            >前往登入</NuxtLink
           >
         </div>
 
