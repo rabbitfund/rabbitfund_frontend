@@ -15,6 +15,10 @@ const props = defineProps({
   link: {
     type: String,
     default: '/'
+  },
+  close: {
+    type: Function,
+    default: ()=>{}
   }
 });
 // console.log('BlockCarrot', props);
@@ -33,7 +37,7 @@ const props = defineProps({
         <span class="block">{{ props.title }}</span>
         <span>{{ props.text }}</span>
       </p>
-      <NuxtLink :to="props.link" class="btn btn-primary">{{ props.btn }}</NuxtLink>
+      <NuxtLink :to="props.link" class="btn btn-primary" @click="props.close">{{ props.btn }}</NuxtLink>
     </div>
   </div>
 </template>
