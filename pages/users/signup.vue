@@ -46,22 +46,22 @@ definePageMeta({
             <span class="w-8"><img src="~/assets/images/icons/user-fill.svg" alt="user" /></span>
             <span>註冊</span>
           </h2>
-          <TextInput
-            label="電子信箱"
+          <FormInput
+            :label="['電子信箱', '*']"
             type="email"
             id="email"
             name="email"
             placeholder="rabbit@example.com"
           />
-          <TextInput
-            label="密碼"
+          <FormInput
+            :label="['密碼', '*']"
             type="password"
             id="password"
             name="密碼"
             placeholder="請輸入密碼"
           />
-          <TextInput
-            label="使用者名稱"
+          <FormInput
+            :label="['使用者名稱', '*']"
             type="text"
             id="name"
             name="使用者名稱"

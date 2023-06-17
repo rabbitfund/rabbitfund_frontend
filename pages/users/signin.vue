@@ -36,22 +36,22 @@ definePageMeta({
 
 <template>
   <section class="container max-w-lg">
-    <div class="my-8 rounded bg-light-emphasis drop-shadow md:my-16">
+    <div class="my-8 rounded bg-primary-light drop-shadow md:my-16">
       <div class="p-5 sm:px-20 lg:py-10">
         <Form class="mb-8" :validation-schema="formSchema" v-slot="{ meta }" @submit="handleSubmit">
           <h2 class="mb-6 flex items-center gap-2">
             <span class="w-8"><img src="~/assets/images/icons/user-fill.svg" alt="user" /></span>
             <span>登入</span>
           </h2>
-          <TextInput
-            label="電子信箱"
+          <FormInput
+            :label="['電子信箱', '*']"
             type="email"
             id="email"
             name="email"
             placeholder="rabbit@example.com"
           />
-          <TextInput
-            label="密碼"
+          <FormInput
+            :label="['密碼', '*']"
             type="password"
             id="password"
             name="密碼"
