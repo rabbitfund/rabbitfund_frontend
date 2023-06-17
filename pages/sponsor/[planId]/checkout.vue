@@ -364,7 +364,7 @@ const navigateToCheckOrder = async () => {
       project_title: projectTitle,
       project_price: projectPrice,
       option_id: optionId,
-      option_namee: optionName,
+      option_name: optionName,
       order_option_quantity: orderOptionQuantity,
       order_extra: orderExtra,
       order_total: orderTotal,
