@@ -59,11 +59,14 @@ watch(
 function signIn() {
   navigateTo('/users/signin');
 }
+function signUp() {
+  navigateTo('/users/signup');
+}
 </script>
 <template>
-  <section class="relative bg-light">
-    <div class="container flex items-center justify-between">
-      <NuxtLink to="/" class="py-3">
+  <nav class="relative bg-light">
+    <div class="container flex items-center justify-between py-4">
+      <NuxtLink to="/">
         <img class="h-[58px]" src="@/assets/images/logo.png" alt="logo" />
       </NuxtLink>
 
@@ -71,8 +74,8 @@ function signIn() {
         <!-- 平板以上 -->
         <div class="hidden items-center gap-10 md:flex">
           <div class="relative flex h-full items-center gap-4 font-bold text-primary">
-            <NuxtLink to="/projects" class="p-2 hover:text-primary-dark"> 探索 </NuxtLink>
-            <NuxtLink to="/proposal" class="p-2 hover:text-primary-dark"> 提案 </NuxtLink>
+            <NuxtLink to="/projects" class="link p-2"> 探索 </NuxtLink>
+            <NuxtLink to="/proposal" class="link p-2"> 提案 </NuxtLink>
 
             <button
               class="flex items-center gap-1 p-2 hover:text-primary-dark"
@@ -92,7 +95,10 @@ function signIn() {
               @keyup.enter="handleSearch($event.target.value)"
             />
           </div>
-          <button v-if="!isSigned" class="btn btn-primary" @click="signIn">登入</button>
+          <div v-if="!isSigned" class="flex gap-6">
+            <button class="btn btn-primary" @click="signIn">登入</button>
+            <button class="btn btn-primary-outline" @click="signUp">註冊</button>
+          </div>
           <button v-else class="group relative flex cursor-pointer items-center">
             <img
               class="mr-2 h-12 rounded-full"
@@ -104,7 +110,7 @@ function signIn() {
             <div
               class="absolute right-0 top-full z-10 hidden cursor-default group-hover:block group-focus:block"
             >
-              <div class="shadow-md rounded-md bg-white px-10 py-8">
+              <div class="shadow rounded-xl bg-white px-10 py-8">
                 <ul class="mb-8 flex min-w-[124px] flex-col gap-7">
                   <li class="inline-block">
                     <NuxtLink
@@ -209,13 +215,9 @@ function signIn() {
                     </button>
                   </div>
                 </li>
-                <li v-if="!isSigned">
-                  <button
-                    class="rounded-full bg-primary px-8 py-3 text-[18px] font-bold text-white"
-                    @click="handleSignIn"
-                  >
-                    登入
-                  </button>
+                <li v-if="!isSigned" class="flex justify-center gap-6">
+                  <button class="btn btn-primary" @click="signIn">登入</button>
+                  <button class="btn btn-primary-outline" @click="signUp">註冊</button>
                 </li>
 
                 <template v-else>
@@ -234,7 +236,7 @@ function signIn() {
                   </li>
                   <li>
                     <NuxtLink
-                      to="/member/proposals"
+                      to="/member"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
                       <img class="w-5" src="@/assets/images/icons/user-fill.svg" alt="會員中心" />
@@ -282,19 +284,16 @@ function signIn() {
                     >
                   </li>
                   <li class="mt-3">
-                    <button
-                      class="rounded-full bg-primary px-8 py-3 text-[18px] font-bold text-white"
-                      @click="handleSignOut"
-                    >
+                    <button class="btn btn-primary-outline" @click="authStore.handleSignOut()">
                       登出
                     </button>
-                  </li></template
-                >
+                  </li>
+                </template>
               </ul>
             </div>
           </div>
         </div>
       </ClientOnly>
     </div>
-  </section>
+  </nav>
 </template>
