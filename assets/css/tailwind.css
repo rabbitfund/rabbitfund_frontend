@@ -93,4 +93,11 @@
   .progress {
     @apply h-full rounded-full;
   }
+
+  .link {
+    @apply hover:underline hover:scale-110 transition duration-300;
+  }
+  .link-primary {
+    @apply hover:text-primary-dark;
+  }
 }
