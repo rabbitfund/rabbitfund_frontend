@@ -29,13 +29,9 @@ const props = defineProps({
       {{ props.label[0] }}
       <span v-if="props.label[1]" class="ml-1 text-primary">*</span>
     </label>
-    <Field :id="id" :name="name" as="select" :v-bind="value">
+    <Field :id="id" :name="name" as="select" :value="value">
       <option value="" disabled>--- 請選擇 ---</option>
-      <option
-        v-for="(item, index) in options"
-        :key="index"
-        :value="index + 1"
-      >
+      <option v-for="(item, index) in options" :key="index" :value="index + 1">
         {{ item }}
       </option>
     </Field>
