@@ -2,33 +2,23 @@ import { defineStore } from 'pinia';
 
 export const useGlobalStateStore = defineStore('globalState', {
   state: () => ({
-    isShowFullscreenLoading: false,
+    loadingRequest: [],
     loadingStartTime: 0,
     lastRoute: '/'
   }),
   actions: {
-    async toggleFullscreenLoading(state = undefined) {
-      const minimumWaitTime = 1300; // 最小等待时间，单位：毫秒
-
-      if (state === false || !this.isShowFullscreenLoading === false) {
-        const currentTime = new Date().getTime();
-        const loadingTimeDiff = currentTime - this.loadingStartTime;
-
-        if (loadingTimeDiff < minimumWaitTime) {
-          const additionalWaitTime = minimumWaitTime - loadingTimeDiff;
-          await new Promise((resolve) => setTimeout(resolve, additionalWaitTime));
-        }
-      }
-
-      this.isShowFullscreenLoading =
-        typeof state === 'boolean' ? state : !this.isShowFullscreenLoading;
-      
-      if (this.isShowFullscreenLoading) {
-        this.loadingStartTime = new Date().getTime();
-      }
+    addLoadingRequest(info = {}) {
+      this.loadingRequest.push(info);
     },
-    recordLastRoute(path: string) {
+    removeLoadingRequest() {
+      this.loadingRequest.pop();
+    },
+    recordLastRoute(path) {
       this.lastRoute = path;
     }
+  },
+  getters: {
+    // 監聽 loadingRequest 的變化，如果有不是空的，就顯示 loading
+    isShowFullscreenLoading: (state) => Object.keys(state.loadingRequest).length > 0
   }
 });

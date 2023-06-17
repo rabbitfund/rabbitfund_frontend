@@ -19,10 +19,7 @@ watch(
       v-show="globalState.isShowFullscreenLoading"
       class="loading fixed z-50 h-screen w-screen overflow-hidden"
     >
-      <div
-        v-show="globalState.isShowFullscreenLoading"
-        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
-      >
+      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
         <div class="rabbit">
           <div class="tail"></div>
           <div class="ears"></div>
