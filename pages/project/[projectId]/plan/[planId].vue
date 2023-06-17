@@ -1,7 +1,7 @@
 <template>
   <section class="border-b py-6 lg:py-12">
     <div class="container">
-      <CheckoutProcess />
+      <ProcessCheckout />
     </div>
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
