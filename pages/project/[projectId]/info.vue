@@ -2,6 +2,8 @@
 import moment from 'moment';
 import { useProjectStore } from '~/stores/project';
 import mockImg from '~/assets/images/mock.png';
+import projectSuccessImg from '~/assets/images/project-success.svg';
+import projectFailImg from '~/assets/images/project-fail.svg';
 
 const modalFeedback = ref(null);
 
@@ -27,8 +29,7 @@ const totalOrder = ref(0);
 
 const projectStore = useProjectStore();
 const { setProject } = projectStore;
-
-const projectStatus = ref({});
+const projectStatus = ref(null);
 
 onMounted(async () => {
   await nextTick();
@@ -37,7 +38,7 @@ onMounted(async () => {
       const project = res.data.value.data;
       console.log('project:', project);
       // 專案狀態
-      projectStatus.value = useSetProjectStatus(project);
+      projectStatus.value = useSetProjectStatus(project).projectStatus;
       // title.value = project.project_title;
       // summary.value = project.project_summary;
       // info.value = project;
@@ -132,13 +133,8 @@ function generateRandomNumberById(objectId) {
     <section class="container mb-16 pt-4 lg:pt-16">
       <div class="lg:-mx-3 lg:flex lg:gap-4">
         <div class="mb-6 lg:mb-0 lg:flex-1 lg:px-3">
-          <div class="mb-4 overflow-hidden rounded-lg relative">
-            <img
-              :src="cover"
-              class="w-full object-cover xl:h-[370px]"
-              alt="project image"
-            />
-
+          <div class="relative mb-4 overflow-hidden rounded-lg">
+            <img :src="cover" class="w-full object-cover xl:h-[370px]" alt="project image" />
             <div
               v-if="projectStatus?.status === '已結束'"
               class="absolute inset-0 flex items-center justify-center bg-grey-500/40 p-5 lg:p-[25px]"
@@ -275,8 +271,10 @@ function generateRandomNumberById(objectId) {
           :times="generateRandomNumberById(option._id)"
           :content="option.option_content"
           :endDate="endDate"
-          :projectFinishedStatus="projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null"
-          />
+          :projectFinishedStatus="
+            projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
+          "
+        />
       </div>
     </section>
   </main>
