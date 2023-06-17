@@ -9,7 +9,7 @@
       <div class="mb-12 bg-light-emphasis pt-12 lg:mb-20 lg:w-2/3 lg:p-12 lg:pb-20">
         <div class="mb-20 flex flex-col gap-6 lg:flex-row">
           <div class="rounded-2 lg:w-3/8">
-            <img :src="coverUrl" alt="假圖" />
+            <img :src="coverUrl" :alt="projectTitle" />
           </div>
           <div class="lg:w-5/8">
             <NuxtLink :to="`/project/${projectId}/info`">
@@ -77,28 +77,23 @@
               </div>
             </div>
             <ul class="flex flex-wrap gap-4">
-              <!-- <li
-                class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
-              >
-                <span>最低額度</span>
-              </li> -->
               <li
                 class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+                @click="addExtra(100)"
               >
-                <!-- <span>+100</span> -->
-                <button @click="addExtra(100)">+100</button>
+                <span>+100</span>
               </li>
               <li
                 class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+                @click="addExtra(1000)"
               >
-                <!-- <span>+1000</span> -->
-                <button @click="addExtra(1000)">+1000</button>
+                <span>+1000</span>
               </li>
               <li
                 class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+                @click="roundExtra()"
               >
-                <!-- <span>補整數</span> -->
-                <button @click="roundExtra()">補整數</button>
+                <span>補整數</span>
               </li>
             </ul>
           </div>

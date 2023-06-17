@@ -6,7 +6,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
   const { API_BASE } = runtimeConfig.public;
   const authStore = useAuthStore();
   const globalState = useGlobalStateStore();
-  const { toggleFullscreenLoading } = globalState;
+  const { addLoadingRequest, removeLoadingRequest } = globalState;
 
   const { showErrorMessage } = useSwalShowMessage();
 
@@ -14,7 +14,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     baseURL: API_BASE,
     onRequest({ options }) {
       if (options?.globalLoading !== false) {
-        toggleFullscreenLoading(true);
+        addLoadingRequest();
       }
       if (authStore.token) {
         options.headers = { Authorization: `Bearer ${authStore.token}` };
@@ -22,10 +22,11 @@ export default defineNuxtPlugin((_nuxtApp) => {
     },
     onRequestError({ error }) {
       showErrorMessage(error);
+      removeLoadingRequest();
     },
     onResponse({ response, options }) {
       if (options.globalLoading !== false) {
-        toggleFullscreenLoading(false);
+        removeLoadingRequest();
       }
       if (!response.ok) {
         showErrorMessage(response._data.msg);
@@ -34,6 +35,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
       return response._data;
     },
     onResponseError(context) {
+      removeLoadingRequest();
       showErrorMessage(context.response._data.msg);
     }
   });
