@@ -247,8 +247,6 @@ function resetData(project) {
         class="container -order-1 flex flex-col gap-4 py-16 lg:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.lg'))/2)] lg:w-[calc(theme('screens.lg')*1/3)] lg:py-0 xl:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.xl'))/2)] xl:w-[calc(theme('screens.xl')*1/3)]"
       >
         <CardTeam :proposerInfo="proposerInfo" />
-        <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
-        <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
         <CardPlan
           v-for="option in options"
           :plan-id="option._id"

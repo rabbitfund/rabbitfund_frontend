@@ -60,8 +60,7 @@ const { data: result } = await useAsyncData(
     }),
   {
     watch: [page, type, k, tag],
-    transform: (_projects) => _projects.data,
-    server: false
+    transform: (_projects) => _projects.data
   }
 );
 

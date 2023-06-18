@@ -18,44 +18,41 @@ const timeLeft = ref('');
 const cover = ref('');
 const totalOrder = ref(0);
 
-onMounted(async () => {
-  await nextTick();
-  getProject(projectId)
-    .then((res) => {
-      const project = res.data.value.data;
-      console.log('project:', project);
-      // 專案狀態
-      // projectStatus.value = useSetProjectStatus(project);
-      // title.value = project.project_title;
-      // summary.value = project.project_summary;
-      // info.value = project;
-      title.value = project.project_title;
-      category.value = project.project_category;
-      content.value = project.project_content;
-      target.value = project.project_target; // 逗號分隔之後再處理
-      startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
-      endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
-      progress.value = project.project_progress;
-      options.value = project.option;
-      proposerInfo.value = project.ownerInfo;
-      timeLeft.value = getDaysLeft(project.project_end_date);
-      cover.value =
-        project.project_cover && project.project_cover !== 'cover URL'
-          ? project.project_cover
-          : mockImg;
-      console.log('options.value', options.value);
+getProject(projectId)
+  .then((res) => {
+    const project = res.data.value.data;
+    console.log('project:', project);
+    // 專案狀態
+    // projectStatus.value = useSetProjectStatus(project);
+    // title.value = project.project_title;
+    // summary.value = project.project_summary;
+    // info.value = project;
+    title.value = project.project_title;
+    category.value = project.project_category;
+    content.value = project.project_content;
+    target.value = project.project_target; // 逗號分隔之後再處理
+    startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
+    endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
+    progress.value = project.project_progress;
+    options.value = project.option;
+    proposerInfo.value = project.ownerInfo;
+    timeLeft.value = getDaysLeft(project.project_end_date);
+    cover.value =
+      project.project_cover && project.project_cover !== 'cover URL'
+        ? project.project_cover
+        : mockImg;
+    console.log('options.value', options.value);
 
-      for (const item of project.option) {
-        const id = item._id;
-        totalOrder.value += generateRandomNumberById(id);
-      }
+    for (const item of project.option) {
+      const id = item._id;
+      totalOrder.value += generateRandomNumberById(id);
+    }
 
-      // setProject(project);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+    // setProject(project);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const getDaysLeft = (projectEndDate) => {
   const today = new Date();

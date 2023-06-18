@@ -36,14 +36,13 @@ function handleSearch(value) {
   navigateTo(`/projects${params}`);
 }
 
-watch(
-  () => isSigned.value,
-  () => {
-    if (isSigned.value) {
-      userStore.handleGetUserData();
-    }
+const { getUserDetail } = useApi();
+watch(isSigned, async () => {
+  if (isSigned) {
+    const { data } = await getUserDetail();
+    userStore.handleGetUserData(data);
   }
-);
+});
 
 const isHamburgerMenuVisible = ref(false);
 function toggleHamburgerMenu() {
@@ -212,7 +211,7 @@ function signIn() {
                 <li v-if="!isSigned">
                   <button
                     class="rounded-full bg-primary px-8 py-3 text-[18px] font-bold text-white"
-                    @click="handleSignIn"
+                    @click="signIn"
                   >
                     登入
                   </button>
