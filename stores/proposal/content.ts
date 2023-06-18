@@ -4,7 +4,7 @@ type FAQ = {
   answer: string;
 };
 
-export const useProposalStore = defineStore('outline', {
+export const useProposalStore = defineStore('content', {
   state: (): { content: string; risk: string; faqs: FAQ[] } => ({
     content: '',
     risk: '',
