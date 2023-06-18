@@ -287,6 +287,7 @@ function generateRandomNumberById(objectId) {
         <div v-if="showCardPlans">
           <CardPlan
             v-for="option in options"
+            :key="option._id"
             :plan-id="option._id"
             :cover="option.option_cover"
             :plan="option.option_name"
