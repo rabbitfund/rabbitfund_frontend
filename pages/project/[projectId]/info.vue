@@ -30,6 +30,7 @@ const showRisk = ref(true);
 const showQas = ref(true);
 const showNews = ref(true);
 const showCardPlans = ref(true);
+const badgeName = ref('未達標');
 
 const projectStore = useProjectStore();
 const { setProject } = projectStore;
@@ -65,6 +66,7 @@ onMounted(async () => {
       if (!project.project_risks) showRisk.value = false;
       if (project.qas.length === 0) showRisk.value = false;
       if (project.news.length === 0) showRisk.value = false;
+      if (progress.value >= target.value) badgeName.value = '已達標';
 
       for (const item of project.option) {
         const id = item._id;
@@ -177,7 +179,7 @@ function generateRandomNumberById(objectId) {
               :max-amount="target"
               :current-amount="progress"
             />
-            <Badge type="公益" name="已達標" class="mb-6 w-fit sm:mb-0"></Badge>
+            <Badge :type="category" :name="badgeName" class="mb-6 w-fit sm:mb-0"></Badge>
           </div>
           <div class="mb-6 rounded-lg bg-light-emphasis px-8 py-6 lg:mb-9">
             <ul class="-mx-2 flex flex-wrap">
