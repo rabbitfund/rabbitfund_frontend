@@ -7,6 +7,9 @@ export default function () {
       callback() {
         nuxtApp.$router.push('/users/signin');
       }
+    },
+    找不到贊助紀錄: {
+      message: '找不到贊助紀錄'
     }
   };
   const showErrorMessage = (errorMessage) => {

@@ -54,7 +54,7 @@ const copy = (projectId) => {
         <div class="mt-6 flex justify-between gap-6 bg-light-emphasis px-5 py-3">
           <div>
             <p>贊助人次</p>
-            <p class="text-[20px] font-bold xl:text-2xl">{{ props.project?.order.length }}</p>
+            <p class="text-[20px] font-bold xl:text-2xl">{{ props.project?.order?.length }}</p>
           </div>
           <div>
             <p>提案倒數</p>
