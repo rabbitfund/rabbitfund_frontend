@@ -17,7 +17,7 @@ const props = defineProps({
     required: true
   },
   value: {
-    type: Number,
+    type: String,
     required: true
   }
 });
@@ -30,7 +30,7 @@ const props = defineProps({
       <span v-if="props.label[1]" class="ml-1 text-primary">*</span>
     </label>
     <Field :id="id" :name="name" as="select" :value="value">
-      <option value="" disabled>--- 請選擇 ---</option>
+      <option value="" disabled selected>--- 請選擇 ---</option>
       <option v-for="(item, index) in options" :key="index" :value="index + 1">
         {{ item }}
       </option>
