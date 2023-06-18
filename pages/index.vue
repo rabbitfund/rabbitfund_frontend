@@ -91,7 +91,7 @@ try {
         <img src="~/assets/images/rabbit-ears.png" alt="rabbit ears" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">精選專案</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-          <li v-for="project in hotProjects" :key="project._id" class="hover:shadow lg:w-1/3">
+          <li v-for="project in hotProjects" :key="project._id" class="lg:w-1/3">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
@@ -145,7 +145,7 @@ try {
         <img src="~/assets/images/sparkle.png" alt="sparkle" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">募資進行中</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-          <li v-for="project in recentProjects" :key="project._id" class="hover:shadow lg:w-1/3">
+          <li v-for="project in recentProjects" :key="project._id" class="lg:w-1/3">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
@@ -164,7 +164,7 @@ try {
         <img src="~/assets/images/heart1.png" alt="heart" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">長期贊助</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-          <li v-for="project in longProjects" :key="project._id" class="hover:shadow lg:w-1/3">
+          <li v-for="project in longProjects" :key="project._id" class="lg:w-1/3">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
@@ -187,12 +187,13 @@ try {
         :btn="'我要提案'"
         :link="'/proposal'"
       />
-      <CardBlockCarrot
-        :title="'每一份贊助，'"
-        :text="'都將成就更多的可能！'"
-        :btn="'我要贊助'"
-        :link="'/projects'"
-      />
+        <CardBlockCarrot
+          class="lg:mt-20"
+          :title="'每一份贊助，'"
+          :text="'都將成就更多的可能！'"
+          :btn="'我要贊助'"
+          :link="'/projects'"
+        />
     </div>
   </section>
 </template>

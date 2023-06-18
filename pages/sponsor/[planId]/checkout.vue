@@ -6,7 +6,7 @@
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
     <div class="container gap-6 lg:flex">
-      <div class="mb-12 bg-light-emphasis pt-12 lg:mb-20 lg:w-2/3 lg:p-12 lg:pb-20">
+      <div class="mb-12 bg-light-emphasis pt-12 lg:mb-0 lg:w-2/3 lg:p-12 lg:pb-20">
         <div class="mb-12">
           <div class="mb-6 flex items-center gap-2">
             <span><img src="~/assets/images/icons/user-fill.svg" alt="使用者" /></span>
@@ -273,14 +273,14 @@
               您將會直接導入藍新金流支付平台，請勿返回其他頁面，以免造成交易失敗。
             </li>
             <li class="mb-2">支付需於指定時間內完成付款，超過時限則會取消交易。</li>
-            <li class="mb-2">
+            <li>
               信用卡授權成功後，本系統不會存留該刷卡人信用卡相關資料，只會保留刷卡成功之授權碼。
             </li>
           </ol>
         </div>
       </div>
-      <div class="mb-16 border-grey-200 lg:w-1/3 lg:pt-12">
-        <div class="mb-6 rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200">
+      <div class="mb-16 border-grey-200 lg:mb-20 lg:w-1/3 lg:pt-12">
+        <aside class="sticky top-6 rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200">
           <div class="border-b pb-6">
             <div class="mb-6 flex items-center gap-2">
               <span><img src="~/assets/images/icons/bars.svg" alt="信用卡" class="w-8" /></span>
@@ -307,7 +307,7 @@
               >確認訂單</NuxtLink
             >
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   </section>

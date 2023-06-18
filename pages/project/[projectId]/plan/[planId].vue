@@ -6,7 +6,7 @@
   </section>
   <section class="bg-light-emphasis lg:bg-transparent">
     <div class="container gap-6 lg:flex">
-      <div class="mb-12 bg-light-emphasis pt-12 lg:mb-20 lg:w-2/3 lg:p-12 lg:pb-20">
+      <div class="mb-12 bg-light-emphasis pt-12 lg:mb-0 lg:w-2/3 lg:p-12 lg:pb-20">
         <div class="mb-20 flex flex-col gap-6 lg:flex-row">
           <div class="rounded-2 lg:w-3/8">
             <img :src="coverUrl" :alt="projectTitle" />
@@ -66,59 +66,62 @@
           </div>
         </div>
       </div>
-      <div class="mb-16 border-grey-200 lg:w-1/3 lg:pt-12">
-        <div class="mb-6 rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200">
-          <div class="border-b pb-8">
-            <div class="mb-4 flex items-center justify-between">
-              <label for="extra-donation" class="mb-0 font-normal text-grey-400">額外贊助</label>
-              <div class="flex w-1/2 items-center gap-4">
-                <span class="text-grey-400">$</span>
-                <input id="extra-donation" v-model="extra" type="number" name="extra-donation" />
+
+      <div class="mb-16 border-grey-200 lg:mb-20 lg:w-1/3 lg:pt-12">
+        <aside class="sticky top-6">
+          <div class="rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200">
+            <div class="border-b pb-8">
+              <div class="mb-4 flex items-center justify-between">
+                <label for="extra-donation" class="mb-0 font-normal text-grey-400">額外贊助</label>
+                <div class="flex w-1/2 items-center gap-4">
+                  <span class="text-grey-400">$</span>
+                  <input id="extra-donation" v-model="extra" type="number" name="extra-donation" />
+                </div>
               </div>
+              <ul class="flex flex-wrap gap-4">
+                <li
+                  class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+                  @click="addExtra(100)"
+                >
+                  <span>+100</span>
+                </li>
+                <li
+                  class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+                  @click="addExtra(1000)"
+                >
+                  <span>+1000</span>
+                </li>
+                <li
+                  class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+                  @click="roundExtra()"
+                >
+                  <span>補整數</span>
+                </li>
+              </ul>
             </div>
-            <ul class="flex flex-wrap gap-4">
-              <li
-                class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
-                @click="addExtra(100)"
+            <div class="pt-6">
+              <div class="mb-8 flex justify-end">
+                <span class="text-lg font-bold">NT$ {{ total }}</span>
+              </div>
+              <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckout()"
+                >直接結帳</NuxtLink
               >
-                <span>+100</span>
-              </li>
-              <li
-                class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
-                @click="addExtra(1000)"
-              >
-                <span>+1000</span>
-              </li>
-              <li
-                class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
-                @click="roundExtra()"
-              >
-                <span>補整數</span>
-              </li>
-            </ul>
-          </div>
-          <div class="pt-6">
-            <div class="mb-8 flex justify-end">
-              <span class="text-lg font-bold">NT$ {{ total }}</span>
             </div>
-            <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckout()"
-              >直接結帳</NuxtLink
-            >
           </div>
-        </div>
-        <p class="font-sansTC font-medium leading-relaxed tracking-wider text-grey-500">
-          點擊「直接結帳」即表示您已閱讀並同意<NuxtLink
-            to="/terms"
-            class="cursor-pointer text-blue-600 visited:text-purple-600"
-            target="_blank"
-            >使用者條款</NuxtLink
-          >與<NuxtLink
-            to="/privacy"
-            class="cursor-pointer text-blue-600 visited:text-purple-600"
-            target="blank"
-            >隱私權政策</NuxtLink
-          >。
-        </p>
+          <p class="font-sansTC font-medium leading-relaxed tracking-wider text-grey-500">
+            點擊「直接結帳」即表示您已閱讀並同意<NuxtLink
+              to="/terms"
+              class="link link-primary"
+              target="_blank"
+              >使用者條款</NuxtLink
+            >與<NuxtLink
+              to="/privacy"
+              class="link link-primary"
+              target="blank"
+              >隱私權政策</NuxtLink
+            >。
+          </p>
+        </aside>
       </div>
     </div>
   </section>
