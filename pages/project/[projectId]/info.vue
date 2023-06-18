@@ -44,9 +44,6 @@ onMounted(async () => {
       console.log('project:', project);
       // 專案狀態
       projectStatus.value = useSetProjectStatus(project).projectStatus;
-      // title.value = project.project_title;
-      // summary.value = project.project_summary;
-      // info.value = project;
       title.value = project.project_title;
       category.value = project.project_category;
       content.value = project.project_content;
@@ -135,8 +132,6 @@ function generateRandomNumberById(objectId) {
   const date = moment().format('MMDD');
   return Math.round(total / parseInt(date)) % 1000;
 }
-// const randomNumber = generateRandomNumber();
-// console.log(randomNumber);
 </script>
 
 <template>

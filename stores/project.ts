@@ -1,9 +1,17 @@
 import { defineStore } from 'pinia';
 
+type Option = {
+  option_content: string;
+  option_cover: string;
+  option_name: string;
+  option_price: number;
+  _id: string;
+};
+
 export const useProjectStore = defineStore('project', {
   state: () => ({
     content: '',
-    option: [],
+    option: [] as Option[],
     risks: '',
     qas: [],
     news: []
