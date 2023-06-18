@@ -13,6 +13,14 @@ const route = useRoute();
         :class="{ 'active-aside': route.path === '/info/about' }"
         >關於我們</NuxtLink
       >
+      <!--       
+      <NuxtLink
+        to="/info"
+        class="aside-default"
+        :class="{ 'active-aside': route.path === '/info' }"
+        >團隊成員</NuxtLink
+      >
+       -->
       <NuxtLink
         to="/info/regulations"
         class="aside-default"
