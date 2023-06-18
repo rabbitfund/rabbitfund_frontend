@@ -24,7 +24,10 @@ const googleSignIn = (response) => {
   handleSignIn({
     method: 1,
     email: responsePayload.email,
+    pass: '',
     oauth_google_id: responsePayload.sub,
+    name: responsePayload.name,
+    cover: responsePayload.picture,
     forget: false
   });
 };
