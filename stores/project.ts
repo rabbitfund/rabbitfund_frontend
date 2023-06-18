@@ -10,6 +10,18 @@ type Option = {
 
 export const useProjectStore = defineStore('project', {
   state: () => ({
+    // FIXME: 可以寫在一起，之後再說
+    projectInfo: {
+      title: '',
+      category: '',
+      content: '',
+      target: '',
+      startDate: 0,
+      endDate: 0,
+      progress: 0,
+      cover: ''
+    },
+    title: '',
     content: '',
     option: [] as Option[],
     risks: '',
@@ -18,7 +30,10 @@ export const useProjectStore = defineStore('project', {
   }),
   actions: {
     setProject(projectInfo: any) {
+      this.projectInfo = projectInfo;
+      this.title = projectInfo.project_title;
       this.content = projectInfo.project_content;
+
       this.option = projectInfo.option;
       this.risks = projectInfo.project_risks;
       this.qas = projectInfo.qas;

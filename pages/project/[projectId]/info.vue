@@ -11,7 +11,6 @@ const openModalFeedback = () => {
   modalFeedback.value.openModal();
 };
 
-const { getProject } = useApi();
 const route = useRoute();
 const { projectId } = route.params;
 const category = ref('');
@@ -33,49 +32,9 @@ const showCardPlans = ref(true);
 const badgeName = ref('未達標');
 
 const projectStore = useProjectStore();
-const { setProject } = projectStore;
+
 const projectStatus = ref(null);
-
-onMounted(async () => {
-  await nextTick();
-  getProject(projectId)
-    .then((res) => {
-      const project = res.data.value.data;
-      console.log('project:', project);
-      // 專案狀態
-      projectStatus.value = useSetProjectStatus(project).projectStatus;
-      title.value = project.project_title;
-      category.value = project.project_category;
-      content.value = project.project_content;
-      target.value = project.project_target; // 逗號分隔之後再處理
-      startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
-      endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
-      progress.value = project.project_progress;
-      options.value = project.option;
-      proposerInfo.value = project.ownerInfo;
-      timeLeft.value = getDaysLeft(project.project_end_date);
-      cover.value =
-        project.project_cover && project.project_cover !== 'cover URL'
-          ? project.project_cover
-          : mockImg;
-      console.log('options.value', options.value);
-
-      if (!project.project_risks) showRisk.value = false;
-      if (project.qas.length === 0) showRisk.value = false;
-      if (project.news.length === 0) showRisk.value = false;
-      if (progress.value >= target.value) badgeName.value = '已達標';
-
-      for (const item of project.option) {
-        const id = item._id;
-        totalOrder.value += generateRandomNumberById(id);
-      }
-
-      setProject(project);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+resetData(projectStore.projectInfo);
 
 watch(
   () => route.path,
@@ -96,12 +55,12 @@ const formattedProgress = computed(() => {
   return progress.value.toLocaleString();
 });
 
-const getDaysLeft = (projectEndDate) => {
+function getDaysLeft(projectEndDate) {
   const today = new Date();
   const endDate = new Date(projectEndDate);
   const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
   return `${days} 天`;
-};
+}
 
 const copy = () => {
   navigator.clipboard.writeText(window.location.href);
@@ -131,6 +90,33 @@ function generateRandomNumberById(objectId) {
   }
   const date = moment().format('MMDD');
   return Math.round(total / parseInt(date)) % 1000;
+}
+function resetData(project) {
+  try {
+    // 專案狀態
+    projectStatus.value = useSetProjectStatus(project).projectStatus;
+    title.value = project.project_title;
+    category.value = project.project_category;
+    content.value = project.project_content;
+    target.value = project.project_target; // 逗號分隔之後再處理
+    startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
+    endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
+    progress.value = project.project_progress;
+    options.value = project.option;
+    proposerInfo.value = project.ownerInfo;
+    timeLeft.value = getDaysLeft(project.project_end_date);
+    cover.value =
+      project.project_cover && project.project_cover !== 'cover URL'
+        ? project.project_cover
+        : mockImg;
+
+    for (const item of project.option) {
+      const id = item._id;
+      totalOrder.value += generateRandomNumberById(id);
+    }
+  } catch (e) {
+    console.error(e);
+  }
 }
 </script>
 

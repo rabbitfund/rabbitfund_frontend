@@ -10,7 +10,15 @@ const tabComponents = ref({
   Options: ProposalOptions,
   OwnerInfo: ProposalOwnerInfo
 });
+
 const currentTab = ref('Outline');
+
+useSeoMeta({
+  title: '提案列表 - 倍而兔募資平台',
+  ogTitle: '提案列表 - 倍而兔募資平台',
+  description: '這裡是我們的提案列表，您可以在這裡發起各種募資提案。',
+  ogDescription: '這裡是我們的提案列表，您可以在這裡發起各種募資提案。'
+});
 </script>
 <template>
   <section class="container py-6 md:py-16">
