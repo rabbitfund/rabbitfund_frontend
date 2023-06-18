@@ -3,7 +3,7 @@ import { useProposalStore } from '~~/stores/proposal/outline.ts';
 
 const formSchema = {
   專案標題: 'required',
-  內容摘要: 'required',
+  // 內容摘要: 'required',
   專案封面: 'image',
   開始時間: 'required',
   結束時間: 'required',
@@ -49,6 +49,19 @@ const handleSubmit = (values) => {
     return { title, summary, cover, startDate, endDate, category, target, video };
   }
 };
+
+let editor;
+const editorContainer = ref(null);
+
+onMounted(async () => {
+  if (process.client) {
+    const ClassicEditor = (await import('@ckeditor/ckeditor5-build-classic')).default;
+    const CKEditor = (await import('@ckeditor/ckeditor5-vue')).default;
+
+    editor = await ClassicEditor.create(editorContainer.value);
+    CKEditor.watch(editor);
+  }
+});
 </script>
 
 <template>
@@ -63,14 +76,17 @@ const handleSubmit = (values) => {
           :value="data.title"
           placeholder="請輸入專案標題"
         />
-        <FormTextarea
+        <!-- <FormTextarea
           :label="['內容摘要', '*']"
           id="summary"
           name="內容摘要"
           :value="data.summary"
           placeholder="請輸入內容摘要"
-        />
-        <FormInput :label="['專案封面']" type="file" id="cover" name="專案封面" />
+        /> -->
+        <div class="mb-6">
+          <label>內容摘要</label>
+          <div ref="editorContainer"></div>
+        </div>
         <div class="mb-6 border-b border-grey-200">
           <h3 class="mb-2 flex items-center text-md font-bold">
             <span class="mr-2"
