@@ -1,9 +1,16 @@
 import { defineStore } from 'pinia';
 
+type Option = {
+  option_content: string;
+  option_cover: string;
+  option_name: string;
+  option_price: number;
+  _id: string;
+};
+
 export const useProjectStore = defineStore('project', {
   state: () => ({
-    title: '',
-    content: '',
+    // FIXME: 可以寫在一起，之後再說
     projectInfo: {
       title: '',
       category: '',
@@ -14,7 +21,9 @@ export const useProjectStore = defineStore('project', {
       progress: 0,
       cover: ''
     },
-    option: [],
+    title: '',
+    content: '',
+    option: [] as Option[],
     risks: '',
     qas: [],
     news: []

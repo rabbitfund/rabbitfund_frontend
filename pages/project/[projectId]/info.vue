@@ -21,15 +21,31 @@ const progress = ref(0);
 const target = ref(0);
 const title = ref('');
 const options = ref([]);
-const proposerInfo = ref('');
+const proposerInfo = ref({});
 const timeLeft = ref('');
 const cover = ref('');
 const totalOrder = ref(0);
+const showRisk = ref(true);
+const showQas = ref(true);
+const showNews = ref(true);
+const showCardPlans = ref(true);
+const badgeName = ref('未達標');
 
 const projectStore = useProjectStore();
 
 const projectStatus = ref(null);
 resetData(projectStore.projectInfo);
+
+watch(
+  () => route.path,
+  () => {
+    if (route.path.endsWith('/plans')) {
+      showCardPlans.value = false;
+    } else {
+      showCardPlans.value = true;
+    }
+  }
+);
 
 const formattedTarget = computed(() => {
   return target.value.toLocaleString();
@@ -76,7 +92,6 @@ function generateRandomNumberById(objectId) {
   return Math.round(total / parseInt(date)) % 1000;
 }
 function resetData(project) {
-  console.log('reset');
   try {
     // 專案狀態
     projectStatus.value = useSetProjectStatus(project).projectStatus;
@@ -145,7 +160,7 @@ function resetData(project) {
               :max-amount="target"
               :current-amount="progress"
             />
-            <Badge type="公益" name="已達標" class="mb-6 w-fit sm:mb-0"></Badge>
+            <Badge :type="category" :name="badgeName" class="mb-6 w-fit sm:mb-0"></Badge>
           </div>
           <div class="mb-6 rounded-lg bg-light-emphasis px-8 py-6 lg:mb-9">
             <ul class="-mx-2 flex flex-wrap">
@@ -214,6 +229,7 @@ function resetData(project) {
             回饋方案
           </NuxtLink>
           <NuxtLink
+            v-if="showRisk"
             :to="`/project/${projectId}/info/disclosures`"
             class="nav-default"
             :class="{ 'active-nav': route.path === `/project/${projectId}/info/disclosures` }"
@@ -221,6 +237,7 @@ function resetData(project) {
             資訊揭露與承諾
           </NuxtLink>
           <NuxtLink
+            v-if="showQas"
             :to="`/project/${projectId}/info/faq`"
             class="nav-default"
             :class="{ 'active-nav': route.path === `/project/${projectId}/info/faq` }"
@@ -228,6 +245,7 @@ function resetData(project) {
             常見問題
           </NuxtLink>
           <NuxtLink
+            v-if="showNews"
             :to="`/project/${projectId}/info/news`"
             class="nav-default"
             :class="{ 'active-nav': route.path === `/project/${projectId}/info/news` }"
@@ -247,19 +265,24 @@ function resetData(project) {
         class="container -order-1 flex flex-col gap-4 py-16 lg:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.lg'))/2)] lg:w-[calc(theme('screens.lg')*1/3)] lg:py-0 xl:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.xl'))/2)] xl:w-[calc(theme('screens.xl')*1/3)]"
       >
         <CardTeam :proposerInfo="proposerInfo" />
-        <CardPlan
-          v-for="option in options"
-          :plan-id="option._id"
-          :cover="option.option_cover"
-          :plan="option.option_name"
-          :price="option.option_price"
-          :times="generateRandomNumberById(option._id)"
-          :content="option.option_content"
-          :endDate="endDate"
-          :projectFinishedStatus="
-            projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
-          "
-        />
+        <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
+        <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
+        <div v-if="showCardPlans">
+          <CardPlan
+            v-for="option in options"
+            :key="option._id"
+            :plan-id="option._id"
+            :cover="option.option_cover"
+            :plan="option.option_name"
+            :price="option.option_price"
+            :times="generateRandomNumberById(option._id)"
+            :content="option.option_content"
+            :endDate="endDate"
+            :projectFinishedStatus="
+              projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
+            "
+          />
+        </div>
       </div>
     </section>
   </main>

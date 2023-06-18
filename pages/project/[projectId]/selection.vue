@@ -17,16 +17,14 @@ const proposerInfo = ref('');
 const timeLeft = ref('');
 const cover = ref('');
 const totalOrder = ref(0);
+const projectStatus = ref(null);
 
 getProject(projectId)
   .then((res) => {
     const project = res.data.value.data;
     console.log('project:', project);
     // 專案狀態
-    // projectStatus.value = useSetProjectStatus(project);
-    // title.value = project.project_title;
-    // summary.value = project.project_summary;
-    // info.value = project;
+    projectStatus.value = useSetProjectStatus(project);
     title.value = project.project_title;
     category.value = project.project_category;
     content.value = project.project_content;
@@ -47,8 +45,6 @@ getProject(projectId)
       const id = item._id;
       totalOrder.value += generateRandomNumberById(id);
     }
-
-    // setProject(project);
   })
   .catch((err) => {
     console.log(err);
@@ -87,6 +83,7 @@ function generateRandomNumberById(objectId) {
     <div class="container grid grid-cols-1 gap-5 pb-16 md:grid-cols-2 lg:grid-cols-3">
       <CardPlan
         v-for="option in options"
+        :key="option._id"
         :plan-id="option._id"
         :cover="option.option_cover"
         :plan="option.option_name"
