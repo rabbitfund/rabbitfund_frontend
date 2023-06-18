@@ -52,37 +52,49 @@ try {
     </div>
   </section>
 
-  <section class="container pb-12 lg:pb-20">
-    <Swiper
+  <section class="px-3 pb-12 lg:px-0 lg:pb-20">
+    <swiper
       :modules="modules"
       :grab-cursor="true"
       :slides-per-view="1"
+      :space-between="10"
       :centered-slides="true"
       :loop="true"
-      :navigation="true"
+      :navigation="{
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      }"
       :pagination="{
+        el: '.swiper-pagination',
         clickable: true
       }"
+      :autoplay="{
+        delay: 3000,
+        disableOnInteraction: false
+      }"
       :breakpoints="{
-        // '960': {
-        //   slidesPerView: 1.25,
-        //   spaceBetween: 24
-        // },
-        // '1320': {
-        //   slidesPerView: 1.56,
-        //   spaceBetween: 40
-        // }
+        960: {
+          slidesPerView: 1.25,
+          spaceBetween: 24
+        },
+        1320: {
+          slidesPerView: 1.56,
+          spaceBetween: 40
+        }
       }"
     >
-      <SwiperSlide v-for="project in banners" :key="project._id">
+      <swiper-slide v-for="project in banners" :key="project._id">
         <NuxtLink :to="`/project/${project._id}/info`">
           <img
             :src="project.project_cover"
             class="mx-auto h-full rounded-lg object-cover lg:rounded-2xl"
           />
         </NuxtLink>
-      </SwiperSlide>
-    </Swiper>
+      </swiper-slide>
+      <button class="swiper-button-prev"></button>
+      <button class="swiper-button-next"></button>
+      <div class="swiper-pagination"></div>
+    </swiper>
   </section>
 
   <section class="bg-light-emphasis py-16 xl:py-30">
