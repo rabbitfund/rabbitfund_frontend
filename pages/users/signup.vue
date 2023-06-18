@@ -3,6 +3,7 @@ import { decodeCredential } from 'vue3-google-login';
 import { useAuthStore } from '@/stores/auth';
 
 const { handleSignUp } = useAuthStore();
+const { signup } = useApi();
 
 const formSchema = {
   email: 'required|email',
@@ -10,19 +11,20 @@ const formSchema = {
   使用者名稱: 'required'
 };
 
-function handleSubmit(values) {
-  handleSignUp({
+async function handleSubmit(values) {
+  const { data } = await signup({
     method: 0,
     email: values.email,
     pass: values.密碼,
     name: values.使用者名稱
   });
+  handleSignUp(data.value);
 }
 
-const googleSignUp = (response) => {
+const googleSignUp = async (response) => {
   const responsePayload = decodeCredential(response.credential);
 
-  handleSignUp({
+  const { data } = await signup({
     method: 1,
     email: responsePayload.email,
     pass: '',
@@ -30,6 +32,7 @@ const googleSignUp = (response) => {
     name: responsePayload.name,
     cover: responsePayload.picture
   });
+  handleSignUp(data.value);
 };
 
 definePageMeta({
@@ -73,8 +76,8 @@ definePageMeta({
         </Form>
 
         <div class="mb-6 flex font-bold text-primary">
-          <NuxtLink to="/users/signin" class="hover:text-primary-dark hover:underline"
-            >返回登入</NuxtLink
+          <NuxtLink to="/users/signin" class="link link-primary"
+            >前往登入</NuxtLink
           >
         </div>
 

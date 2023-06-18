@@ -1,21 +1,19 @@
 import { defineStore } from 'pinia';
-import { useGlobalStateStore } from './globalState'
+import { useGlobalStateStore } from './globalState';
 
 interface UserTokenStorage {
   value: string;
   expired: number;
 }
 
-const { signin, signup } = useApi();
+// const { signin, signup } = useApi();
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     _token: {} as UserTokenStorage
   }),
   actions: {
-    async handleSignIn(_data) {
-      const { data } = await signin(_data);
-      const res = data.value;
+    handleSignIn(res) {
       if (res && res?.ok) {
         this._token = {
           value: res.data.token,
@@ -24,9 +22,7 @@ export const useAuthStore = defineStore('auth', {
         navigateTo(useGlobalStateStore().lastRoute);
       }
     },
-    async handleSignUp(_data) {
-      const { data } = await signup(_data);
-      const res = data.value;
+    handleSignUp(res) {
       if (res && res?.ok) {
         navigateTo('/users/signin');
       }

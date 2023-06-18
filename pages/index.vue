@@ -8,54 +8,46 @@ const hotProjects = ref([]);
 const recentProjects = ref([]);
 const longProjects = ref([]);
 
-onMounted(async () => {
-  await nextTick();
-  getProjects(1, 'banner')
-    .then((res) => {
-      const projectList = res.data.value.data.projects;
-      banners.value = projectList;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  getProjects(1, 'hot')
-    .then((res) => {
-      const projectList = res.data.value.data.projects;
-      hotProjects.value = projectList.splice(0, 3);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  getProjects(1, 'recent')
-    .then((res) => {
-      const projectList = res.data.value.data.projects;
-      recentProjects.value = projectList.splice(0, 3);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  getProjects(1, 'long')
-    .then((res) => {
-      const projectList = res.data.value.data.projects;
-      longProjects.value = projectList.splice(0, 3);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+try {
+  const { data: bannerData } = await getProjects(1, 'banner');
+  banners.value = bannerData.value.data.projects;
+} catch (err) {
+  console.log(err);
+}
+
+try {
+  const { data: hotData } = await getProjects(1, 'hot');
+  hotProjects.value = hotData.value.data.projects.splice(0, 3);
+} catch (err) {
+  console.log(err);
+}
+
+try {
+  const { data: recentData } = await getProjects(1, 'recent');
+  recentProjects.value = recentData.value.data.projects.splice(0, 3);
+} catch (err) {
+  console.log(err);
+}
+
+try {
+  const { data: longData } = await getProjects(1, 'long');
+  longProjects.value = longData.value.data.projects.splice(0, 3);
+} catch (err) {
+  console.log(err);
+}
 </script>
 
 <template>
   <section class="py-6 lg:py-8">
     <div class="flex justify-center gap-4">
       <NuxtLink :to="'/projects?type=校園'">
-        <Badge type="校園" name="校園"/>
+        <Badge type="校園" name="校園" />
       </NuxtLink>
       <NuxtLink :to="'/projects?type=公益'">
-        <Badge type="公益" name="公益"/>
+        <Badge type="公益" name="公益" />
       </NuxtLink>
       <NuxtLink :to="'/projects?type=市集'">
-        <Badge type="市集" name="市集"/>
+        <Badge type="市集" name="市集" />
       </NuxtLink>
     </div>
   </section>
@@ -99,7 +91,7 @@ onMounted(async () => {
         <img src="~/assets/images/rabbit-ears.png" alt="rabbit ears" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">精選專案</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-          <li v-for="project in hotProjects" :key="project._id" class="hover:shadow lg:w-1/3">
+          <li v-for="project in hotProjects" :key="project._id" class="lg:w-1/3">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
@@ -153,7 +145,7 @@ onMounted(async () => {
         <img src="~/assets/images/sparkle.png" alt="sparkle" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">募資進行中</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-          <li v-for="project in recentProjects" :key="project._id" class="hover:shadow lg:w-1/3">
+          <li v-for="project in recentProjects" :key="project._id" class="lg:w-1/3">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
@@ -172,7 +164,7 @@ onMounted(async () => {
         <img src="~/assets/images/heart1.png" alt="heart" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">長期贊助</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
-          <li v-for="project in longProjects" :key="project._id" class="hover:shadow lg:w-1/3">
+          <li v-for="project in longProjects" :key="project._id" class="lg:w-1/3">
             <NuxtLink :to="`/project/${project._id}/info`">
               <Card :project="project"></Card>
             </NuxtLink>
@@ -195,12 +187,13 @@ onMounted(async () => {
         :btn="'我要提案'"
         :link="'/proposal'"
       />
-      <CardBlockCarrot
-        :title="'每一份贊助，'"
-        :text="'都將成就更多的可能！'"
-        :btn="'我要贊助'"
-        :link="'/projects'"
-      />
+        <CardBlockCarrot
+          class="lg:mt-20"
+          :title="'每一份贊助，'"
+          :text="'都將成就更多的可能！'"
+          :btn="'我要贊助'"
+          :link="'/projects'"
+        />
     </div>
   </section>
 </template>

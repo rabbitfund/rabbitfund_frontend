@@ -1,65 +1,64 @@
-import { lazy } from 'yup';
+export const useApi = () => {
+  const config = useRuntimeConfig();
+  const { API_BASE } = config.public;
 
-export default function useApi() {
   // 登入相關
-  const signin = (data) => useFetch('/signin', { method: 'POST', body: JSON.stringify(data) });
-  const signup = (data) => useFetch('/signup', { method: 'POST', body: JSON.stringify(data) });
+  const signin = (data) =>
+    useFetch(`${API_BASE}/signin`, { method: 'POST', body: JSON.stringify(data), server: false });
+  const signup = (data) =>
+    useFetch(`${API_BASE}/signup`, { method: 'POST', body: JSON.stringify(data) });
 
   // 會員中心
   const getUserDetail = () =>
-    useFetch('/me/user').catch(() => {
+    useFetch(`${API_BASE}/me/user`, { server: false }).catch(() => {
       navigateTo('/users/signin');
     });
   const putUserDetail = (data) =>
-    useFetch('/me/user', { method: 'PUT', body: JSON.stringify(data) });
-  const getMyOrder = (page: number) => useFetch(`/me/orders?page=${page}`, { method: 'GET' });
-  const getOwnerProjectDetail = (projectId: string) =>
-    useFetch(`/owner/projects/${projectId}`, {
+    useFetch(`${API_BASE}/me/user`, { method: 'PUT', body: JSON.stringify(data) });
+  const getMyOrder = (page) => useFetch(`${API_BASE}/me/orders?page=${page}`, { method: 'GET' });
+  const getOwnerProjectDetail = (projectId) =>
+    useFetch(`${API_BASE}/owner/projects/${projectId}`, {
       method: 'GET',
-      server: false,
       transform: (_projects) => _projects.data
     });
-  const getOwnerProjectSupporters = (projectId: string) =>
-    useFetch(`/owner/projects/${projectId}/supporters`, {
+  const getOwnerProjectSupporters = (projectId) =>
+    useFetch(`${API_BASE}/owner/projects/${projectId}/supporters`, {
       method: 'GET',
-      server: false,
       transform: (_supporters) => _supporters.data
     });
-  const getOwnerProjectStatus = (projectId: string) =>
-    useFetch(`/owner/projects/${projectId}/status`, {
+  const getOwnerProjectStatus = (projectId) =>
+    useFetch(`${API_BASE}/owner/projects/${projectId}/status`, {
       method: 'GET',
-      server: false,
       transform: (_status) => _status.data
     });
-  const getProjectsSupporters = (projectId: string) =>
-    useFetch(`/owner/projects/${projectId}/supporters`, {
+  const getProjectsSupporters = (projectId) =>
+    useFetch(`${API_BASE}/owner/projects/${projectId}/supporters`, {
       method: 'GET',
-      server: false,
       globalLoading: false,
       lazy: true,
       transform: (_supporters) => _supporters.data
     });
 
-  const getProjects = (page: number, tag: string) =>
-    useFetch(`/projects?page=${page}&tag=${tag}`, {
+  const getProjects = (page, tag) =>
+    useFetch(`${API_BASE}/projects?page=${page}&tag=${tag}`, {
       method: 'GET',
-      server: false,
       globalLoading: false
     });
-  const getProject = (projectId: string) =>
-    useFetch(`/projects/${projectId}`, { method: 'GET', server: false });
-  const getProjectOption = (projectId: string, optionId: string) =>
-    useFetch(`/projects/${projectId}/options/${optionId}`, { method: 'GET', server: false });
-  const getProjectOptions = (projectId: string) =>
-    useFetch(`/projects/${projectId}/options`, { method: 'GET', server: false });
-  const getOwnerProject = () => useFetch(`/owner/projects`, { method: 'GET' });
+  const getProject = (projectId) =>
+    useFetch(`${API_BASE}/projects/${projectId}`, { method: 'GET' });
+  const getProjectOption = (projectId, optionId) =>
+    useFetch(`${API_BASE}/projects/${projectId}/options/${optionId}`, { method: 'GET' });
+  const getProjectOptions = (projectId) =>
+    useFetch(`${API_BASE}/projects/${projectId}/options`, { method: 'GET' });
+  const getOwnerProject = () => useFetch(`${API_BASE}/owner/projects`, { method: 'GET' });
 
   // 訂單
-  const postOrder = (data) => useFetch('/orders', { method: 'POST', body: JSON.stringify(data) });
-  const getOrder = (orderId: string) =>
-    useFetch(`/order/${orderId}`, { method: 'GET', server: false });
+  const postOrder = (data) =>
+    useFetch(`${API_BASE}/orders`, { method: 'POST', body: JSON.stringify(data) });
+  const getOrder = (orderId) => useFetch(`${API_BASE}/order/${orderId}`, { method: 'GET' });
 
-  const uploadImage = (formdata) => useFetch(`/upload/image`, { method: 'POST', body: formdata });
+  const uploadImage = (formdata) =>
+    useFetch(`${API_BASE}/upload/image`, { method: 'POST', body: formdata });
 
   return {
     signin,
@@ -80,4 +79,4 @@ export default function useApi() {
     getOrder,
     uploadImage
   };
-}
+};

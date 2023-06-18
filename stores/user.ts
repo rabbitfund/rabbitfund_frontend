@@ -1,14 +1,11 @@
 import { defineStore } from 'pinia';
 
-const { getUserDetail } = useApi();
-
 export const useUserStore = defineStore('user', {
   state: () => ({
     userInfo: null
   }),
   actions: {
-    async handleGetUserData() {
-      const { data } = await getUserDetail();
+    handleGetUserData(data) {
       const res = data.value;
       if (res && res.ok) {
         this.userInfo = res.data;

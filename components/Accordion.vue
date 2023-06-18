@@ -7,18 +7,22 @@ onMounted(() => {
 
 const props = defineProps({
   data: {
-    type: [Object],
-  }
+    type: [Object]
+  },
+  option: {
+    type: [String],
+    default: 'collapse'
+  },
 });
 </script>
 
 <template>
-  <ul id="accordion-collapse" data-accordion="collapse">
+  <ul id="accordion-collapse" :data-accordion="props.option">
     <li v-for="(item, index) in props.data" :key="`${index}`" class="mb-3 rounded border">
       <h3 :id="`accordion-collapse-heading-${index + 1}`">
         <button
           type="button"
-          class="flex w-full items-center justify-between gap-4 p-4 text-left text-lg font-bold hover:bg-primary-light"
+          class="flex w-full items-center justify-between gap-4 bg-primary-light p-4 text-left text-lg font-bold hover:bg-secondary-emphasis"
           :data-accordion-target="`#accordion-collapse-body-${index + 1}`"
           aria-expanded="true"
           :aria-controls="`accordion-collapse-body-${index + 1}`"

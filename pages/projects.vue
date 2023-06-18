@@ -60,23 +60,29 @@ const { data: result } = await useAsyncData(
     }),
   {
     watch: [page, type, k, tag],
-    transform: (_projects) => _projects.data,
-    server: false
+    transform: (_projects) => _projects.data
   }
 );
+
+useSeoMeta({
+  title: '專案列表 - 倍而兔募資平台',
+  ogTitle: '專案列表 - 倍而兔募資平台',
+  description: '這裡是我們的專案列表，您可以在這裡瀏覽和支持不同的募資專案。',
+  ogDescription: '這裡是我們的專案列表，您可以在這裡瀏覽和支持不同的募資專案。'
+});
 </script>
 <template>
-  <div class="container mx-auto my-6 flex justify-between lg:my-12">
-    <h2 class="">專案列表</h2>
-    <div>
-      <select v-model="type" class="mr-5 w-[120px]" value="">
-        <option value="">全部</option>
+  <div class="container my-6 flex flex-col justify-between gap-3 sm:flex-row lg:my-12">
+    <h2 class="whitespace-nowrap">專案列表</h2>
+    <div class="flex gap-6">
+      <select v-model="type" class="w-1/2 sm:w-[120px]" value="">
+        <option value="">全部分類</option>
         <option value="校園">校園</option>
         <option value="公益">公益</option>
         <option value="市集">市集</option>
       </select>
-      <select v-model="tag" class="w-[120px]" value="">
-        <option value="">全部</option>
+      <select v-model="tag" class="w-1/2 sm:w-[120px]" value="">
+        <option value="">全部主題</option>
         <option value="recent">近期</option>
         <option value="hot">熱門</option>
         <option value="long">長期贊助</option>
@@ -86,18 +92,21 @@ const { data: result } = await useAsyncData(
 
   <section
     v-if="result?.projects.length && result.projects.length > 0"
-    class="container grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
+    class="container mb-8 lg:mb-12"
   >
-    <div
-      v-for="project in result.projects"
-      :key="project._id"
-      class="cursor-pointer"
-      @click="navigateTo(`/project/${project._id}/info`)"
-    >
-      <Card :project="project" />
-    </div>
+    <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <li
+        v-for="project in result.projects"
+        :key="project._id"
+        class="cursor-pointer"
+        @click="navigateTo(`/project/${project._id}/info`)"
+      >
+        <Card :project="project" />
+      </li>
+    </ul>
   </section>
-  <LayoutPagination
+
+  <LayoutPagination class="mb-16 lg:mb-20"
     :totalPage="result?.totalPages ? result.totalPages : 1"
     :currentPage="page"
     :handle-page-change="

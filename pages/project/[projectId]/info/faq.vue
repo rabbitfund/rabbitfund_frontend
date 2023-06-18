@@ -25,5 +25,5 @@ modifiedQas.value = qas.value.map((item: Qas) => {
 
 <template>
   <h2 class="mb-7 text-center text-h3 lg:text-left xl:text-h2">常見問題</h2>
-  <Accordion :data="modifiedQas"></Accordion>
+  <Accordion :data="modifiedQas" option="open"></Accordion>
 </template>
