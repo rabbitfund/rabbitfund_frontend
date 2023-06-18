@@ -3,30 +3,38 @@ import { decodeCredential } from 'vue3-google-login';
 import { useAuthStore } from '@/stores/auth';
 
 const { handleSignIn } = useAuthStore();
+const { signin } = useApi();
 
 const formSchema = {
   email: 'required|email',
   密碼: 'required|min:8'
 };
 
-const handleSubmit = (values) => {
-  handleSignIn({
+const handleSubmit = async (values) => {
+  const { data } = await signin({
     method: 0,
     email: values.email,
     pass: values.密碼,
     forget: false
   });
+
+  handleSignIn(data.value);
 };
 
-const googleSignIn = (response) => {
+const googleSignIn = async (response) => {
   const responsePayload = decodeCredential(response.credential);
 
-  handleSignIn({
+  const { data } = await signin({
     method: 1,
     email: responsePayload.email,
+    pass: '',
     oauth_google_id: responsePayload.sub,
+    name: responsePayload.name,
+    cover: responsePayload.picture,
     forget: false
   });
+
+  handleSignIn(data.value);
 };
 
 definePageMeta({

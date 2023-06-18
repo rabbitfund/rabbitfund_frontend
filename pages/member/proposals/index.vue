@@ -2,19 +2,16 @@
 const { getOwnerProject } = useApi();
 
 const project = ref([]);
-onMounted(async () => {
-  await nextTick();
 
-  getOwnerProject()
-    .then((res) => {
-      console.log('getOwnerProject', res.data.value.data);
-      const projectData = res.data.value.data;
-      project.value = projectData;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+getOwnerProject()
+  .then((res) => {
+    console.log('getOwnerProject', res.data.value.data);
+    const projectData = res.data.value.data;
+    project.value = projectData;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 // console.log(project);
 </script>
 

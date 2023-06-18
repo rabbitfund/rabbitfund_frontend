@@ -36,14 +36,13 @@ function handleSearch(value) {
   navigateTo(`/projects${params}`);
 }
 
-watch(
-  () => isSigned.value,
-  () => {
-    if (isSigned.value) {
-      userStore.handleGetUserData();
-    }
+const { getUserDetail } = useApi();
+watch(isSigned, async () => {
+  if (isSigned) {
+    const { data } = await getUserDetail();
+    userStore.handleGetUserData(data);
   }
-);
+});
 
 const isHamburgerMenuVisible = ref(false);
 function toggleHamburgerMenu() {
@@ -215,6 +214,7 @@ function signUp() {
                     </button>
                   </div>
                 </li>
+
                 <li v-if="!isSigned" class="flex justify-center gap-6">
                   <button class="btn btn-primary" @click="signIn">登入</button>
                   <button class="btn btn-primary-outline" @click="signUp">註冊</button>

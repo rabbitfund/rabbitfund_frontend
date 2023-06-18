@@ -8,54 +8,46 @@ const hotProjects = ref([]);
 const recentProjects = ref([]);
 const longProjects = ref([]);
 
-onMounted(async () => {
-  await nextTick();
-  getProjects(1, 'banner')
-    .then((res) => {
-      const projectList = res.data.value.data.projects;
-      banners.value = projectList;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  getProjects(1, 'hot')
-    .then((res) => {
-      const projectList = res.data.value.data.projects;
-      hotProjects.value = projectList.splice(0, 3);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  getProjects(1, 'recent')
-    .then((res) => {
-      const projectList = res.data.value.data.projects;
-      recentProjects.value = projectList.splice(0, 3);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  getProjects(1, 'long')
-    .then((res) => {
-      const projectList = res.data.value.data.projects;
-      longProjects.value = projectList.splice(0, 3);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+try {
+  const { data: bannerData } = await getProjects(1, 'banner');
+  banners.value = bannerData.value.data.projects;
+} catch (err) {
+  console.log(err);
+}
+
+try {
+  const { data: hotData } = await getProjects(1, 'hot');
+  hotProjects.value = hotData.value.data.projects.splice(0, 3);
+} catch (err) {
+  console.log(err);
+}
+
+try {
+  const { data: recentData } = await getProjects(1, 'recent');
+  recentProjects.value = recentData.value.data.projects.splice(0, 3);
+} catch (err) {
+  console.log(err);
+}
+
+try {
+  const { data: longData } = await getProjects(1, 'long');
+  longProjects.value = longData.value.data.projects.splice(0, 3);
+} catch (err) {
+  console.log(err);
+}
 </script>
 
 <template>
   <section class="py-6 lg:py-8">
     <div class="flex justify-center gap-4">
       <NuxtLink :to="'/projects?type=校園'">
-        <Badge type="校園" name="校園"/>
+        <Badge type="校園" name="校園" />
       </NuxtLink>
       <NuxtLink :to="'/projects?type=公益'">
-        <Badge type="公益" name="公益"/>
+        <Badge type="公益" name="公益" />
       </NuxtLink>
       <NuxtLink :to="'/projects?type=市集'">
-        <Badge type="市集" name="市集"/>
+        <Badge type="市集" name="市集" />
       </NuxtLink>
     </div>
   </section>

@@ -24,15 +24,15 @@
       <div class="flex flex-col items-center gap-4">
         <div class="flex gap-x-6 md:gap-x-12">
           <NuxtLink to="/projects" class="link">探索</NuxtLink>
-          <NuxtLink to="/about" class="link">關於我們</NuxtLink>
-          <NuxtLink to="/about" class="link">贊助保障方案</NuxtLink>
-          <NuxtLink to="/about" class="link">使用者條款</NuxtLink>
+          <NuxtLink to="/info/about" class="link">關於我們</NuxtLink>
+          <NuxtLink to="/info/regulations" class="link">贊助保障方案</NuxtLink>
+          <NuxtLink to="/info/terms" class="link">使用者條款</NuxtLink>
         </div>
         <div class="flex gap-x-6 md:gap-x-12">
-          <NuxtLink to="/about" class="link">提案</NuxtLink>
-          <NuxtLink to="/faq" class="link">常見問題</NuxtLink>
-          <NuxtLink to="/about" class="link">提案服務說明</NuxtLink>
-          <NuxtLink to="/privacy" class="link">隱私權政策</NuxtLink>
+          <NuxtLink to="/proposal" class="link">提案</NuxtLink>
+          <NuxtLink to="/info/faq-sponsor" class="link">常見問題</NuxtLink>
+          <NuxtLink to="/info/proposal" class="link">提案服務說明</NuxtLink>
+          <NuxtLink to="/info/privacy" class="link">隱私權政策</NuxtLink>
         </div>
       </div>
     </nav>

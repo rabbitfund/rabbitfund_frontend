@@ -24,10 +24,8 @@ function getMyOrderData(page) {
       console.log(err);
     });
 }
-onMounted(async () => {
-  await nextTick();
-  getMyOrderData(page);
-});
+
+getMyOrderData(page);
 
 watch([page], () => {
   // console.log(page);

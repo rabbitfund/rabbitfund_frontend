@@ -11,7 +11,6 @@ const openModalFeedback = () => {
   modalFeedback.value.openModal();
 };
 
-const { getProject } = useApi();
 const route = useRoute();
 const { projectId } = route.params;
 const category = ref('');
@@ -22,53 +21,31 @@ const progress = ref(0);
 const target = ref(0);
 const title = ref('');
 const options = ref([]);
-const proposerInfo = ref('');
+const proposerInfo = ref({});
 const timeLeft = ref('');
 const cover = ref('');
 const totalOrder = ref(0);
+const showRisk = ref(true);
+const showQas = ref(true);
+const showNews = ref(true);
+const showCardPlans = ref(true);
+const badgeName = ref('未達標');
 
 const projectStore = useProjectStore();
-const { setProject } = projectStore;
+
 const projectStatus = ref(null);
+resetData(projectStore.projectInfo);
 
-onMounted(async () => {
-  await nextTick();
-  getProject(projectId)
-    .then((res) => {
-      const project = res.data.value.data;
-      console.log('project:', project);
-      // 專案狀態
-      projectStatus.value = useSetProjectStatus(project).projectStatus;
-      // title.value = project.project_title;
-      // summary.value = project.project_summary;
-      // info.value = project;
-      title.value = project.project_title;
-      category.value = project.project_category;
-      content.value = project.project_content;
-      target.value = project.project_target; // 逗號分隔之後再處理
-      startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
-      endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
-      progress.value = project.project_progress;
-      options.value = project.option;
-      proposerInfo.value = project.ownerInfo;
-      timeLeft.value = getDaysLeft(project.project_end_date);
-      cover.value =
-        project.project_cover && project.project_cover !== 'cover URL'
-          ? project.project_cover
-          : mockImg;
-      console.log('options.value', options.value);
-
-      for (const item of project.option) {
-        const id = item._id;
-        totalOrder.value += generateRandomNumberById(id);
-      }
-
-      setProject(project);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+watch(
+  () => route.path,
+  () => {
+    if (route.path.endsWith('/plans')) {
+      showCardPlans.value = false;
+    } else {
+      showCardPlans.value = true;
+    }
+  }
+);
 
 const formattedTarget = computed(() => {
   return target.value.toLocaleString();
@@ -78,12 +55,12 @@ const formattedProgress = computed(() => {
   return progress.value.toLocaleString();
 });
 
-const getDaysLeft = (projectEndDate) => {
+function getDaysLeft(projectEndDate) {
   const today = new Date();
   const endDate = new Date(projectEndDate);
   const days = Math.ceil((endDate - today) / (1000 * 3600 * 24));
   return `${days} 天`;
-};
+}
 
 const copy = () => {
   navigator.clipboard.writeText(window.location.href);
@@ -114,8 +91,33 @@ function generateRandomNumberById(objectId) {
   const date = moment().format('MMDD');
   return Math.round(total / parseInt(date)) % 1000;
 }
-// const randomNumber = generateRandomNumber();
-// console.log(randomNumber);
+function resetData(project) {
+  try {
+    // 專案狀態
+    projectStatus.value = useSetProjectStatus(project).projectStatus;
+    title.value = project.project_title;
+    category.value = project.project_category;
+    content.value = project.project_content;
+    target.value = project.project_target; // 逗號分隔之後再處理
+    startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
+    endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
+    progress.value = project.project_progress;
+    options.value = project.option;
+    proposerInfo.value = project.ownerInfo;
+    timeLeft.value = getDaysLeft(project.project_end_date);
+    cover.value =
+      project.project_cover && project.project_cover !== 'cover URL'
+        ? project.project_cover
+        : mockImg;
+
+    for (const item of project.option) {
+      const id = item._id;
+      totalOrder.value += generateRandomNumberById(id);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
 </script>
 
 <template>
@@ -158,7 +160,7 @@ function generateRandomNumberById(objectId) {
               :max-amount="target"
               :current-amount="progress"
             />
-            <Badge type="公益" name="已達標" class="mb-6 w-fit sm:mb-0"></Badge>
+            <Badge :type="category" :name="badgeName" class="mb-6 w-fit sm:mb-0"></Badge>
           </div>
           <div class="mb-6 rounded-lg bg-light-emphasis px-8 py-6 lg:mb-9">
             <ul class="-mx-2 flex flex-wrap">
@@ -227,6 +229,7 @@ function generateRandomNumberById(objectId) {
             回饋方案
           </NuxtLink>
           <NuxtLink
+            v-if="showRisk"
             :to="`/project/${projectId}/info/disclosures`"
             class="nav-default"
             :class="{ 'active-nav': route.path === `/project/${projectId}/info/disclosures` }"
@@ -234,6 +237,7 @@ function generateRandomNumberById(objectId) {
             資訊揭露與承諾
           </NuxtLink>
           <NuxtLink
+            v-if="showQas"
             :to="`/project/${projectId}/info/faq`"
             class="nav-default"
             :class="{ 'active-nav': route.path === `/project/${projectId}/info/faq` }"
@@ -241,6 +245,7 @@ function generateRandomNumberById(objectId) {
             常見問題
           </NuxtLink>
           <NuxtLink
+            v-if="showNews"
             :to="`/project/${projectId}/info/news`"
             class="nav-default"
             :class="{ 'active-nav': route.path === `/project/${projectId}/info/news` }"
@@ -262,19 +267,22 @@ function generateRandomNumberById(objectId) {
         <CardTeam :proposerInfo="proposerInfo" />
         <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
         <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
-        <CardPlan
-          v-for="option in options"
-          :plan-id="option._id"
-          :cover="option.option_cover"
-          :plan="option.option_name"
-          :price="option.option_price"
-          :times="generateRandomNumberById(option._id)"
-          :content="option.option_content"
-          :endDate="endDate"
-          :projectFinishedStatus="
-            projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
-          "
-        />
+        <div v-if="showCardPlans">
+          <CardPlan
+            v-for="option in options"
+            :key="option._id"
+            :plan-id="option._id"
+            :cover="option.option_cover"
+            :plan="option.option_name"
+            :price="option.option_price"
+            :times="generateRandomNumberById(option._id)"
+            :content="option.option_content"
+            :endDate="endDate"
+            :projectFinishedStatus="
+              projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
+            "
+          />
+        </div>
       </div>
     </section>
   </main>
