@@ -1,24 +1,27 @@
 import { defineStore } from 'pinia';
 
 export const useProposalStore = defineStore('outline', {
-  state: () => ({
-    專案標題: '',
-    內容摘要: '',
-    專案封面: {},
-    開始時間: '',
-    結束時間: '',
-    專案類別: 0,
-    募資目標金額: '',
+  state: (): { title: string; summary: string; cover: object; startDate: string; endDate: string; category: string; target: string; video: string } => ({
+    title: '',
+    summary: '',
+    cover: {},
+    startDate: '',
+    endDate: '',
+    category: '',
+    target: '',
+    video: '',
   }),
+
   actions: {
-    setProposal(proposalInfo: any) {
-      this.專案標題 = proposalInfo.專案標題;
-      this.內容摘要 = proposalInfo.內容摘要;
-      this.專案封面 = proposalInfo.專案封面;
-      this.開始時間 = proposalInfo.開始時間;
-      this.結束時間 = proposalInfo.結束時間;
-      this.專案類別 = proposalInfo.專案類別;
-      this.募資目標金額 = proposalInfo.募資目標金額;
+    saveData(data: { title: string; summary: string; cover: object; startDate: string; endDate: string; category: string; target: string; video: string  }) {
+      this.title = data.title;
+      this.summary = data.summary;
+      this.cover = data.cover;
+      this.startDate = data.startDate;
+      this.endDate = data.endDate;
+      this.category = data.category;
+      this.target = data.target;
+      this.video = data.video;
     }
   },
   persist: true

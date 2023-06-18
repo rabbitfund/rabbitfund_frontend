@@ -1,6 +1,5 @@
 <script setup>
 import { useProposalStore } from '~~/stores/proposal/outline.ts';
-import { storeToRefs } from 'pinia';
 
 const formSchema = {
   專案標題: 'required',
@@ -9,23 +8,46 @@ const formSchema = {
   開始時間: 'required',
   結束時間: 'required',
   專案類別: 'required',
-  募資目標金額: 'required'
+  募資目標金額: 'required',
+  專案影片: 'url'
 };
 
 const categories = ref(['校園', '公益', '市集']);
 
 const proposalStore = useProposalStore();
-const { 專案標題, 內容摘要, 專案封面, 開始時間, 結束時間, 專案類別, 募資目標金額, 專案影片 } =
-  storeToRefs(proposalStore);
-const { setProposal } = proposalStore;
+const { title, summary, cover, startDate, endDate, category, target, video } = proposalStore;
+const { saveData } = proposalStore;
+
+const data = reactive({
+  title,
+  summary,
+  cover,
+  startDate,
+  endDate,
+  category,
+  target,
+  video
+});
 
 const router = useRouter();
 const url = '/proposal/content';
 
 const handleSubmit = (values) => {
-  console.log('values:', values);
-  setProposal(values);
+  saveData(dealWithData(values));
   router.push(url);
+
+  function dealWithData(data) {
+    const title = data['專案標題'] || '';
+    const summary = data['內容摘要'] || '';
+    const cover = data['專案封面'] || '';
+    const startDate = data['開始時間'] || '';
+    const endDate = data['結束時間'] || '';
+    const category = data['專案類別'] || '';
+    const target = data['募資目標金額'] || '';
+    const video = data['專案影片'] || '';
+
+    return { title, summary, cover, startDate, endDate, category, target, video };
+  }
 };
 </script>
 
@@ -38,14 +60,14 @@ const handleSubmit = (values) => {
           type="text"
           id="title"
           name="專案標題"
-          :value="專案標題"
+          :value="data.title"
           placeholder="請輸入專案標題"
         />
         <FormTextarea
           :label="['內容摘要', '*']"
           id="summary"
           name="內容摘要"
-          :value="內容摘要"
+          :value="data.summary"
           placeholder="請輸入內容摘要"
         />
         <FormInput :label="['專案封面']" type="file" id="cover" name="專案封面" />
@@ -63,7 +85,7 @@ const handleSubmit = (values) => {
               type="date"
               id="startDate"
               name="開始時間"
-              :value="開始時間"
+              :value="data.startDate"
             />
             <FormInput
               class="flex-1"
@@ -71,7 +93,7 @@ const handleSubmit = (values) => {
               type="date"
               id="endDate"
               name="結束時間"
-              :value="結束時間"
+              :value="data.endDate"
             />
           </div>
         </div>
@@ -81,7 +103,7 @@ const handleSubmit = (values) => {
             :label="['專案類別', '*']"
             id="category"
             name="專案類別"
-            :value="專案類別"
+            :value="data.category"
             :options="categories"
           />
           <FormInput
@@ -90,7 +112,7 @@ const handleSubmit = (values) => {
             type="number"
             id="target"
             name="募資目標金額"
-            :value="募資目標金額"
+            :value="data.target"
           />
         </div>
         <FormInput
@@ -98,8 +120,8 @@ const handleSubmit = (values) => {
           type="text"
           id="video"
           name="專案影片"
-          :value="專案影片"
-          placeholder="http://example.com, https://example.com"
+          :value="data.video"
+          placeholder="https://www.youtube.com/watch?v=Abcd0e123Fg"
         />
 
         <div class="mt-12 flex justify-center">
