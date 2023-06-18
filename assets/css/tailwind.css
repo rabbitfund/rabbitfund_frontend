@@ -98,6 +98,6 @@
     @apply hover:underline hover:scale-110 transition duration-300;
   }
   .link-primary {
-    @apply hover:text-primary-dark;
+    @apply text-primary hover:text-primary-dark;
   }
 }
