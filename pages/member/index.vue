@@ -80,8 +80,12 @@ async function dealWithData() {
     if (currentRole.value === 'supporter') {
       const { data } = await getMyOrder(1);
       const orderData = data.value.data.data;
+      const processedIDs = new Set();
       const projectPromises = orderData.map((item) => {
-        return getProject(item.project._id);
+        if (!processedIDs.has(item.project._id)) {
+          processedIDs.add(item.project._id);
+          return getProject(item.project._id);
+        }
       });
 
       Promise.all(projectPromises)
