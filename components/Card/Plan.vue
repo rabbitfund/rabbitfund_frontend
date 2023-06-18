@@ -80,7 +80,7 @@ const { projectId } = route.params;
         <li class="list-disc">{{ props.content }}</li>
       </ul> -->
     </div>
-    <NuxtLink :to="`/project/${projectId}/plan/${planId}`" class="btn btn-primary mb-8 md:mb-12">
+    <NuxtLink :to="`/project/${projectId}/plan/${planId}`" class="btn btn-primary mt-auto mb-8 md:mb-12">
       贊助
     </NuxtLink>
     <ul class="flex flex-col gap-2 text-grey-500">
