@@ -22,10 +22,14 @@ const progress = ref(0);
 const target = ref(0);
 const title = ref('');
 const options = ref([]);
-const proposerInfo = ref('');
+const proposerInfo = ref({});
 const timeLeft = ref('');
 const cover = ref('');
 const totalOrder = ref(0);
+const showRisk = ref(true);
+const showQas = ref(true);
+const showNews = ref(true);
+const showCardPlans = ref(true);
 
 const projectStore = useProjectStore();
 const { setProject } = projectStore;
@@ -58,6 +62,10 @@ onMounted(async () => {
           : mockImg;
       console.log('options.value', options.value);
 
+      if (!project.project_risks) showRisk.value = false;
+      if (project.qas.length === 0) showRisk.value = false;
+      if (project.news.length === 0) showRisk.value = false;
+
       for (const item of project.option) {
         const id = item._id;
         totalOrder.value += generateRandomNumberById(id);
@@ -69,6 +77,17 @@ onMounted(async () => {
       console.log(err);
     });
 });
+
+watch(
+  () => route.path,
+  () => {
+    if (route.path.endsWith('/plans')) {
+      showCardPlans.value = false;
+    } else {
+      showCardPlans.value = true;
+    }
+  }
+);
 
 const formattedTarget = computed(() => {
   return target.value.toLocaleString();
@@ -227,6 +246,7 @@ function generateRandomNumberById(objectId) {
             回饋方案
           </NuxtLink>
           <NuxtLink
+            v-if="showRisk"
             :to="`/project/${projectId}/info/disclosures`"
             class="nav-default"
             :class="{ 'active-nav': route.path === `/project/${projectId}/info/disclosures` }"
@@ -234,6 +254,7 @@ function generateRandomNumberById(objectId) {
             資訊揭露與承諾
           </NuxtLink>
           <NuxtLink
+            v-if="showQas"
             :to="`/project/${projectId}/info/faq`"
             class="nav-default"
             :class="{ 'active-nav': route.path === `/project/${projectId}/info/faq` }"
@@ -241,6 +262,7 @@ function generateRandomNumberById(objectId) {
             常見問題
           </NuxtLink>
           <NuxtLink
+            v-if="showNews"
             :to="`/project/${projectId}/info/news`"
             class="nav-default"
             :class="{ 'active-nav': route.path === `/project/${projectId}/info/news` }"
@@ -262,19 +284,22 @@ function generateRandomNumberById(objectId) {
         <CardTeam :proposerInfo="proposerInfo" />
         <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
         <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
-        <CardPlan
-          v-for="option in options"
-          :plan-id="option._id"
-          :cover="option.option_cover"
-          :plan="option.option_name"
-          :price="option.option_price"
-          :times="generateRandomNumberById(option._id)"
-          :content="option.option_content"
-          :endDate="endDate"
-          :projectFinishedStatus="
-            projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
-          "
-        />
+        <div v-if="showCardPlans">
+          <CardPlan
+            v-for="option in options"
+            :key="option._id"
+            :plan-id="option._id"
+            :cover="option.option_cover"
+            :plan="option.option_name"
+            :price="option.option_price"
+            :times="generateRandomNumberById(option._id)"
+            :content="option.option_content"
+            :endDate="endDate"
+            :projectFinishedStatus="
+              projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
+            "
+          />
+        </div>
       </div>
     </section>
   </main>
