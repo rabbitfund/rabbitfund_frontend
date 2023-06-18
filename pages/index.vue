@@ -195,12 +195,13 @@ onMounted(async () => {
         :btn="'我要提案'"
         :link="'/proposal'"
       />
-      <CardBlockCarrot
-        :title="'每一份贊助，'"
-        :text="'都將成就更多的可能！'"
-        :btn="'我要贊助'"
-        :link="'/projects'"
-      />
+        <CardBlockCarrot
+          class="lg:mt-20"
+          :title="'每一份贊助，'"
+          :text="'都將成就更多的可能！'"
+          :btn="'我要贊助'"
+          :link="'/projects'"
+        />
     </div>
   </section>
 </template>
