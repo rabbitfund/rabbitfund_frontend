@@ -97,6 +97,23 @@ export default defineNuxtConfig({
       }
     ]
   },
+  app: {
+    head: {
+      viewport: 'width=500, initial-scale=1',
+      title: '倍而兔募資平台',
+      meta: [
+        {
+          name: 'description',
+          content:
+            '歡迎來到倍而兔募資！我們是一個致力於幫助學校、公益和市集活動籌集資金的網站。我們相信每個人都有著獨特的想法和願景，但有時候缺少資金是實現這些願景的主要障礙。因此，我們希望能夠通過我們的平台幫助更多人實現他們的夢想。'
+        },
+        { property: 'og:title', content: '倍而兔募資平台' },
+        { property: 'og:url', content: 'https://rabbitfund-frontend.vercel.app/' },
+        { property: 'og:description', content: '歡迎來到倍而兔募資！' }
+      ]
+    }
+  },
+
   css: ['~/assets/css/swiper.css'],
   routeRules: {
     '/member/**': { ssr: false }

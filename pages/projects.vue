@@ -64,6 +64,13 @@ const { data: result } = await useAsyncData(
     server: false
   }
 );
+
+useSeoMeta({
+  title: '專案列表 - 倍而兔募資平台',
+  ogTitle: '專案列表 - 倍而兔募資平台',
+  description: '這裡是我們的專案列表，您可以在這裡瀏覽和支持不同的募資專案。',
+  ogDescription: '這裡是我們的專案列表，您可以在這裡瀏覽和支持不同的募資專案。'
+});
 </script>
 <template>
   <div class="container mx-auto my-6 flex justify-between lg:my-12">
