@@ -169,7 +169,8 @@ async function dealWithData() {
           v-for="i in content[currentRole][currentTab].data"
           :key="i._id + i"
           :project="i"
-          :canModify="false"
+          :can-modify="false"
+          :navigate-to-path="`/project/${i._id}/info`"
         />
       </div>
     </div>
