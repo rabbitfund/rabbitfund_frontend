@@ -27,7 +27,7 @@
             </ul>
             <div class="flex items-center gap-2">
               <label for="productNumber" class="mb-0">輸入數量</label>
-              <input v-model="quantity" type="number" class="w-1/4" />
+              <input v-model="quantity" type="number" class="w-1/4"  pattern="[0-9]*" />
             </div>
           </div>
         </div>
