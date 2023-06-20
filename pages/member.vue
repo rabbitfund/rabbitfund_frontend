@@ -1,5 +1,8 @@
 <script setup>
 const route = useRoute();
+definePageMeta({
+  middleware: ['auth']
+});
 </script>
 
 <template>
