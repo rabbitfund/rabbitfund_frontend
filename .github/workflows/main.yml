@@ -18,6 +18,16 @@ jobs:
         run: npm install
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Create .env
+        run: |
+          touch .env
+          echo PORT=${{ secrets.PORT }} >> .env
+          echo NUXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NUXT_PUBLIC_GOOGLE_CLIENT_ID }} >> .env
+          echo NUXT_PUBLIC_API_BASE=${{ secrets.NUXT_PUBLIC_API_BASE }} >> .env
+          echo NUXT_PUBLIC_NEWEBPAY_FORM_ACTION = ${{ secrets.NUXT_PUBLIC_NEWEBPAY_FORM_ACTION }} >> .env
+          echo NUXT_PUBLIC_NEWEBPAY_MERCHANT_ID = ${{ secrets.NUXT_PUBLIC_NEWEBPAY_MERCHANT_ID }} >> .env
+          echo NUXT_PUBLIC_NEWEBPAY_VERSION = ${{ secrets.NUXT_PUBLIC_NEWEBPAY_VERSION }}
+          cat .env
       - name: Run Playwright tests
         run: npx playwright test
       - uses: actions/upload-artifact@v3
