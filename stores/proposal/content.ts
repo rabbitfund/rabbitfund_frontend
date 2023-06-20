@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+
 type FAQ = {
   question: string;
   answer: string;
