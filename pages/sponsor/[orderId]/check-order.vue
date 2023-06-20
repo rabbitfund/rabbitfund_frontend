@@ -22,6 +22,11 @@ const orderTotal = orderStore.order_total;
 
 // console.log(orderStore);
 
+// 金額加入千分位
+const formattedAmount = (price) => {
+  return price.toLocaleString();
+};
+
 onMounted(async () => {
   await nextTick();
   getOrder(orderId)
@@ -109,17 +114,22 @@ onMounted(async () => {
             </div>
             <ul class="border-b pb-6 pt-8">
               <li class="mb-4 flex justify-between">
-                <span>小計</span><span>$ {{ projectPrice }}</span>
+                <span>小計</span>
+                <span>$ {{ formattedAmount(projectPrice) }}</span>
               </li>
               <li class="mb-4 flex justify-between">
-                <span>額外贊助</span><span>$ {{ orderExtra }}</span>
+                <span>額外贊助</span>
+                <span>$ {{ formattedAmount(orderExtra) }}</span>
               </li>
-              <li class="flex justify-between"><span>運費</span><span>$ 0</span></li>
+              <li class="flex justify-between">
+                <span>運費</span>
+                <span>$ {{ formattedAmount(0) }}</span>
+              </li>
             </ul>
             <div class="pt-6">
               <div class="mb-8 flex justify-between">
-                <span class="text-lg font-bold">總計</span
-                ><span class="text-lg font-bold">$ {{ orderTotal }}</span>
+                <span class="text-lg font-bold">總計</span>
+                <span class="text-lg font-bold">$ {{ formattedAmount(orderTotal) }}</span>
               </div>
               <form :action="NEWEBPAY_FORM_ACTION" method="post">
                 <input type="hidden" name="MerchantID" :value="NEWEBPAY_MERCHANT_ID" />
