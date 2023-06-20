@@ -1,6 +1,5 @@
 <script setup>
 import { useProposalStore } from '~/stores/proposal/owner-info.ts';
-import { storeToRefs } from 'pinia';
 
 const isEmpty = (value) => {
   if (value === null || value === undefined || value === '') {
@@ -26,24 +25,40 @@ const formSchema = {
 };
 
 const proposalStore = useProposalStore();
-const { 提案負責人姓名, 電子郵件, 行動電話, 提案人身分, 登記名稱, 團隊名稱, 自我介紹, 相關網站 } =
-  storeToRefs(proposalStore);
-const { setProposal } = proposalStore;
+const { name, email, mobile, identity, registerName, teamName, introduction, site } = proposalStore;
+const { saveData } = proposalStore;
+
+const data = reactive({
+  name,
+  email,
+  mobile,
+  identity,
+  registerName,
+  teamName,
+  introduction,
+  site
+});
 
 const router = useRouter();
-const goPreviousPage = () => {
-  router.go(-1);
-};
-const handleSubmit = (values) => {
-  console.log('values:', values);
-  setProposal(values);
-};
+const url = '/proposal/outline';
 
-const modalSendProposal = ref(null);
-const sendProposal = () => {
-  modalSendProposal.value.openModal();
-  console.log('已送出，審核中。');
-}
+const handleSubmit = (values) => {
+  saveData(dealWithData(values));
+  router.push(url);
+
+  function dealWithData(data) {
+    const name = data['提案負責人姓名'] || '';
+    const email = data['電子郵件'] || '';
+    const mobile = data['行動電話'] || '';
+    const identity = data['提案人身份'] || '';
+    const registerName = data['登記名稱'] || '';
+    const teamName = data['團隊名稱'] || '';
+    const introduction = data['自我介紹'] || '';
+    const site = data['相關網站'] || '';
+
+    return { name, email, mobile, identity, registerName, teamName, introduction, site };
+  }
+};
 </script>
 
 <template>
@@ -55,7 +70,7 @@ const sendProposal = () => {
           type="text"
           id="name"
           name="提案負責人姓名"
-          :value="提案負責人姓名"
+          :value="data.name"
           placeholder="請輸入提案負責人姓名"
         />
         <FormInput
@@ -63,7 +78,7 @@ const sendProposal = () => {
           type="text"
           id="email"
           name="電子郵件"
-          :value="電子郵件"
+          :value="data.email"
           placeholder="請輸入電子郵件"
         />
         <FormInput
@@ -71,23 +86,23 @@ const sendProposal = () => {
           type="text"
           id="mobile"
           name="行動電話"
-          :value="行動電話"
+          :value="data.mobile"
           placeholder="09XXXXXXXX"
         />
-        <FormInput
-          :label="['提案人身分']"
+        <!-- <FormInput
+          :label="['提案人身份']"
           type="text"
           id="identity"
-          name="提案人身分"
-          :value="提案人身分"
-          placeholder="請輸入提案人身分"
-        />
+          name="提案人身份"
+          :value="data.identity"
+          placeholder="請輸入提案人身份"
+        /> -->
         <FormInput
           :label="['登記名稱']"
           type="text"
           id="registerName"
           name="登記名稱"
-          :value="登記名稱"
+          :value="data.registerName"
           placeholder="請輸入登記名稱"
         />
         <FormInput
@@ -95,14 +110,14 @@ const sendProposal = () => {
           type="text"
           id="teamName"
           name="團隊名稱"
-          :value="團隊名稱"
+          :value="data.teamName"
           placeholder="請輸入團隊名稱"
         />
         <FormTextarea
           :label="['自我介紹']"
           id="introduction"
           name="自我介紹"
-          :value="自我介紹"
+          :value="data.introduction"
           placeholder="請輸入自我介紹"
         />
         <FormInput
@@ -110,26 +125,16 @@ const sendProposal = () => {
           type="text"
           id="site"
           name="相關網站"
-          :value="相關網站"
+          :value="data.site"
           placeholder="http://example.com, https://example.com"
         />
 
-        <div class="mt-12 flex justify-center gap-x-6 gap-y-8 flex-wrap">
-          <button class="btn btn-primary flex-1 lg:flex-none" type="button" @click="goPreviousPage">
-            上一頁
-          </button>
-          <button class="btn btn-primary flex-1 lg:flex-none" :disabled="!meta.valid" type="submit">
-            儲存
-          </button>
-          <button class="btn btn-primary basis-full lg:basis-auto" :disabled="!meta.valid" type="button" @click="sendProposal">
-            送出提案
+        <div class="mt-12 flex justify-center">
+          <button class="btn btn-primary" :disabled="!meta.valid" type="submit">
+            儲存並前往下一頁
           </button>
         </div>
       </Form>
     </NuxtLayout>
   </div>
-
-  <ModalSendProposal
-    ref="modalSendProposal"
-  />
 </template>
