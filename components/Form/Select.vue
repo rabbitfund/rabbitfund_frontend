@@ -31,7 +31,7 @@ const props = defineProps({
     </label>
     <Field :id="id" :name="name" as="select" :value="value">
       <option value="" disabled selected>--- 請選擇 ---</option>
-      <option v-for="(item, index) in options" :key="index" :value="index + 1">
+      <option v-for="(item, index) in options" :key="index" :value="`${index + 1}`">
         {{ item }}
       </option>
     </Field>

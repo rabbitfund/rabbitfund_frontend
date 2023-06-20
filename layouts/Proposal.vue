@@ -1,6 +1,6 @@
 <script setup>
 const route = useRoute();
-const paths = reactive(['outline', 'content', 'options', 'owner-info']);
+const paths = reactive(['owner-info', 'outline', 'content', 'options']);
 const step = paths.findIndex((item) => route.path.includes(item));
 </script>
 

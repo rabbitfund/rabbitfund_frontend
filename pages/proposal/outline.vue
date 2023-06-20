@@ -30,8 +30,11 @@ const data = reactive({
 });
 
 const router = useRouter();
-const url = '/proposal/content';
+const goPreviousPage = () => {
+  router.go(-1);
+};
 
+const url = '/proposal/content';
 const handleSubmit = (values) => {
   saveData(dealWithData(values));
   router.push(url);
@@ -140,7 +143,8 @@ onMounted(async () => {
           placeholder="https://www.youtube.com/watch?v=Abcd0e123Fg"
         />
 
-        <div class="mt-12 flex justify-center">
+        <div class="mt-12 flex justify-center gap-6">
+          <button class="btn btn-primary" type="button" @click="goPreviousPage">上一頁</button>
           <button class="btn btn-primary" :disabled="!meta.valid" type="submit">
             儲存並前往下一頁
           </button>

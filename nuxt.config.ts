@@ -124,6 +124,7 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/swiper.css'],
   routeRules: {
-    '/member/**': { ssr: false }
+    '/member/**': { ssr: false },
+    '/proposal/**': { ssr: false },
   }
 });

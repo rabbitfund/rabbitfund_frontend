@@ -35,6 +35,7 @@ const handleSubmit = (values) => {
       if (key.includes('常見問題')) {
         const questionKey = key;
         const answerKey = `問題回覆${questionKey.slice(-1)}`;
+
         const question = data[questionKey];
         const answer = data[answerKey];
 
@@ -89,16 +90,16 @@ function createNewFAQ() {
               class="border-t border-grey-200 pt-3"
             >
               <FormInput
-                :id="`question${index + 1}`"
                 :label="[`常見問題`]"
+                :id="`question${index + 1}`"
                 type="text"
                 :name="`常見問題${index + 1}`"
                 :value="item.question"
                 placeholder="請輸入常見問題"
               />
               <FormInput
-                :id="`answer${index + 1}`"
                 :label="[`問題回覆`]"
+                :id="`answer${index + 1}`"
                 type="text"
                 :name="`問題回覆${index + 1}`"
                 :value="item.answer"
@@ -107,16 +108,7 @@ function createNewFAQ() {
             </li>
           </ul>
 
-          <button
-            class="btn btn-primary"
-            @click="
-              (e) => {
-                e.preventDefault();
-                createNewFAQ();
-              }
-            "
-            type="button"
-          >
+          <button class="btn btn-primary" @click.prevent="createNewFAQ" type="button">
             新增問題
           </button>
         </div>

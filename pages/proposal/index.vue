@@ -25,7 +25,7 @@ useSeoMeta({
     </div>
 
     <div class="flex justify-center">
-      <NuxtLink to="/proposal/outline" class="btn btn-primary w-full md:w-auto"> 前往提案 </NuxtLink>
+      <NuxtLink to="/proposal/owner-info" class="btn btn-primary w-full md:w-auto"> 前往提案 </NuxtLink>
     </div>
   </section>
 </template>

@@ -124,7 +124,13 @@ function resetData(project) {
   <main>
     <section class="bg-light-emphasis">
       <div class="container flex flex-col items-center px-[55.55px] py-8 md:py-16">
-        <span class="mb-4 font-bold text-warning xl:mb-8 xl:text-lg"
+        <span
+          class="mb-4 font-bold xl:mb-8 xl:text-lg"
+          :class="{
+            'text-info': category === '校園',
+            'text-warning': category === '公益',
+            'text-secondary': category === '市集'
+          }"
           >集資專案 ｜ {{ category }}</span
         >
         <h2 class="mb-4 text-h4 xl:text-h1">{{ title }}</h2>
@@ -262,27 +268,28 @@ function resetData(project) {
         </div>
       </div>
       <div
-        class="container -order-1 flex flex-col gap-4 py-16 lg:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.lg'))/2)] lg:w-[calc(theme('screens.lg')*1/3)] lg:py-0 xl:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.xl'))/2)] xl:w-[calc(theme('screens.xl')*1/3)]"
+        class="container -order-1 flex flex-col gap-4 py-16 lg:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.lg'))/2)] lg:w-[calc(theme('screens.lg')*1/3)] lg:py-0 xl:mr-[calc(((theme('width.screen')-(theme('width.screen')-100%))-theme('screens.xl'))/2)] xl:w-[calc(theme('screens.xl')*1/3)] xl:gap-10"
       >
         <CardTeam :proposerInfo="proposerInfo" />
         <!-- <CardPlan plan="單次捐款 ｜ 理念支持" :price="300" :times="100" content="列名感謝" />
         <CardPlan plan="單次捐款 ｜ 理念支持" :price="2400" :times="46" content="列名感謝" /> -->
-        <div v-if="showCardPlans">
-          <CardPlan
-            v-for="option in options"
-            :key="option._id"
-            :plan-id="option._id"
-            :cover="option.option_cover"
-            :plan="option.option_name"
-            :price="option.option_price"
-            :times="generateRandomNumberById(option._id)"
-            :content="option.option_content"
-            :endDate="endDate"
-            :projectFinishedStatus="
-              projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
-            "
-          />
-        </div>
+        <ul v-if="showCardPlans" class="flex flex-col gap-4 xl:gap-10">
+          <li v-for="option in options">
+            <CardPlan
+              :key="option._id"
+              :plan-id="option._id"
+              :cover="option.option_cover"
+              :plan="option.option_name"
+              :price="option.option_price"
+              :times="generateRandomNumberById(option._id)"
+              :content="option.option_content"
+              :endDate="endDate"
+              :projectFinishedStatus="
+                projectStatus?.status === '已結束' ? projectStatus?.finishedStatus : null
+              "
+            />
+          </li>
+        </ul>
       </div>
     </section>
   </main>
