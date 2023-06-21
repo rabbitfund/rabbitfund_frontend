@@ -16,7 +16,9 @@
               <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
             </NuxtLink>
             <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
-            <span class="mb-6 block text-h4 font-bold lg:text-h3">$ {{ price }}</span>
+            <span class="mb-6 block text-h4 font-bold lg:text-h3">
+              $ {{ formattedAmount(price) }}
+            </span>
             <ul class="mb-6">
               <li>
                 <p class="text-grey-500">已被贊助 {{ generateRandomNumberById(planId) }} 次</p>
@@ -27,7 +29,7 @@
             </ul>
             <div class="flex items-center gap-2">
               <label for="productNumber" class="mb-0">輸入數量</label>
-              <input v-model="quantity" type="number" class="w-1/4" />
+              <input v-model="quantity" type="number" class="w-1/4" pattern="[0-9]*" />
             </div>
           </div>
         </div>
@@ -101,7 +103,9 @@
             </div>
             <div class="pt-6">
               <div class="mb-8 flex justify-end">
-                <span class="text-lg font-bold">NT$ {{ total }}</span>
+                <span class="text-lg font-bold">
+                  NT$ {{ formattedAmount(total) }}
+                </span>
               </div>
               <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckout()"
                 >直接結帳</NuxtLink
@@ -241,6 +245,11 @@ const calculateTotal = () => {
   total.value = price.value * quantity.value + extra.value;
 
   // console.log('calculateTotal', total.value.data);
+};
+
+// 金額加入千分位
+const formattedAmount = (price) => {
+  return price.toLocaleString();
 };
 
 const navigateToCheckout = () => {

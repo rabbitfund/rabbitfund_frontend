@@ -291,17 +291,22 @@
           </div>
           <ul class="border-b pb-6 pt-8">
             <li class="mb-4 flex justify-between">
-              <span>小計</span><span>$ {{ projectPrice * orderOptionQuantity }}</span>
+              <span>小計</span>
+              <span>$ {{ formattedAmount(projectPrice * orderOptionQuantity) }}</span>
             </li>
             <li class="mb-4 flex justify-between">
-              <span>額外贊助</span><span>$ {{ orderExtra }}</span>
+              <span>額外贊助</span>
+              <span>$ {{ formattedAmount(orderExtra) }}</span>
             </li>
-            <li class="flex justify-between"><span>運費</span><span>$ 0</span></li>
+            <li class="flex justify-between">
+              <span>運費</span>
+              <span>$ {{ formattedAmount(0) }}</span>
+            </li>
           </ul>
           <div class="pt-6">
             <div class="mb-8 flex justify-between">
-              <span class="text-lg font-bold">總計</span
-              ><span class="text-lg font-bold">$ {{ orderTotal }}</span>
+              <span class="text-lg font-bold">總計</span>
+              <span class="text-lg font-bold">$ {{ formattedAmount(orderTotal) }}</span>
             </div>
             <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckOrder()"
               >確認訂單</NuxtLink
@@ -345,6 +350,11 @@ const orderOptionQuantity = orderStore.order_option_quantity;
 const orderExtra = orderStore.order_extra;
 const orderTotal = orderStore.order_total;
 const orderNote = orderStore.order_note;
+
+// 金額加入千分位
+const formattedAmount = (price) => {
+  return price.toLocaleString();
+};
 
 // console.log(projectPrice);
 const navigateToCheckOrder = async () => {
