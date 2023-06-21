@@ -13,11 +13,6 @@ const props = defineProps({
 });
 
 const proposalStore = useProposalStore();
-const { options } = proposalStore;
-
-const data = reactive({
-  options
-});
 
 function createNewSpecification(option, optionIndex) {
   option.specifications.push({
@@ -29,31 +24,17 @@ function createNewSpecification(option, optionIndex) {
 }
 
 function createNewOption() {
-  data.options.push({
-    name: '',
-    price: '',
-    quantity: '',
-    deliveryDate: '',
-    start: '',
-    end: '',
-    specifications: [
-      {
-        question: '',
-        answer: ''
-      }
-    ]
-  });
-
-  props.addOptionSchema(data.options.length);
+  proposalStore.addEmptyOption();
+  props.addOptionSchema(proposalStore.options.length);
 }
 </script>
 
 <template>
   <ul class="mb-10 flex flex-col gap-6">
     <li
-      v-for="(option, index) in data.options"
+      v-for="(option, index) in proposalStore.options"
       :key="index"
-      :class="{ 'border-b pb-10': index + 1 !== data.options.length }"
+      :class="{ 'border-b pb-10': index + 1 !== proposalStore.options.length }"
     >
       <h3 class="mb-2 flex items-center text-h4 font-bold">
         <span class="mr-2"><img src="~/assets/images/carrot.png" alt="carrot" class="w-10" /></span>
@@ -134,7 +115,7 @@ function createNewOption() {
         <ul>
           <li
             v-for="(specification, specIndex) in option.specifications"
-            :key="specification.question"
+            :key="`QA${index + 1}-${specIndex + 1}`"
             class="gap-6 border-t border-grey-200 pt-3 lg:flex"
           >
             <FormInput
@@ -164,7 +145,5 @@ function createNewOption() {
     </li>
   </ul>
 
-  <button class="btn btn-primary mb-6" @click="createNewOption()">
-    新增回饋項目
-  </button>
+  <button class="btn btn-primary mb-6" @click="createNewOption()">新增回饋項目</button>
 </template>

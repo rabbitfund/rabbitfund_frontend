@@ -47,9 +47,11 @@ const handleSubmit = (values) => {
 
   function dealWithData(data) {
     const options = [];
-    const specifications = [];
+    let specifications;
 
     for (const key in data) {
+      // 確保每次都是空的
+      specifications = [];
       if (key.includes('回饋方案名稱')) {
         const nameKey = key;
         const priceKey = `回饋金額${nameKey.slice(-1)}`;
