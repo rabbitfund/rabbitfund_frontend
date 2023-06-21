@@ -1,13 +1,35 @@
 <script setup>
 import { useProposalStore } from '~/stores/proposal/options.ts';
 
-const formSchema = {
-  // 回饋方案名稱: 'required',
-  // 回饋金額: 'required',
-  // 回饋數量限制: 'required',
-  // 問題: 'required',
-  // 答案選項: 'required'
-};
+const formSchema = ref({
+  回饋方案名稱1: 'required',
+  回饋金額1: 'required',
+  回饋數量限制1: 'required',
+  '問題1-1': 'required',
+  '答案選項1-1': 'required'
+});
+
+const validationNames = ['回饋方案名稱', '回饋金額', '回饋數量限制'];
+
+function addValidationRule(name, index) {
+  formSchema.value = {
+    ...formSchema.value,
+    [`${name}${index}`]: 'required'
+  };
+}
+
+function addSpecSchema(optionIndex, specIndex = '1') {
+  addValidationRule('問題', `${optionIndex}-${specIndex}`);
+  addValidationRule('答案選項', `${optionIndex}-${specIndex}`);
+}
+
+function addOptionSchema(index) {
+  validationNames.forEach((item) => {
+    addValidationRule(item, index);
+  });
+
+  addSpecSchema(index);
+}
 
 const proposalStore = useProposalStore();
 const { saveData } = proposalStore;
@@ -74,7 +96,7 @@ const sendProposal = () => {
   <div>
     <NuxtLayout name="proposal">
       <Form :validation-schema="formSchema" v-slot="{ meta }" @submit="handleSubmit">
-        <ProposalOptions />
+        <ProposalOptions :addSpecSchema="addSpecSchema" :addOptionSchema="addOptionSchema" />
 
         <div class="flex flex-wrap justify-center gap-x-6 gap-y-8 border-t border-grey-200 pt-6">
           <button class="btn btn-primary flex-1 lg:flex-none" type="button" @click="goPreviousPage">
