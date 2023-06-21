@@ -15,7 +15,10 @@ const step = paths.findIndex((item) => route.path.includes(item));
 
   <section class="bg-light-emphasis lg:bg-transparent">
     <div class="container">
-      <div class="mx-auto pb-12 pt-6 lg:w-8/12 lg:bg-light-emphasis lg:p-12 lg:pb-20">
+      <div
+        class="mx-auto pb-12 pt-6 lg:bg-light-emphasis lg:p-12 lg:pb-20"
+        :class="step !== 3 ? 'lg:w-8/12' : 'md:w-full'"
+      >
         <slot />
       </div>
     </div>
