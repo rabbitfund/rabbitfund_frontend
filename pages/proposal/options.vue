@@ -40,6 +40,8 @@ const goPreviousPage = () => {
   router.go(-1);
 };
 
+const { showSuccessMessage } = useSwalShowMessage();
+
 const handleSubmit = (values) => {
   saveData(dealWithData(values));
 
@@ -83,6 +85,8 @@ const handleSubmit = (values) => {
 
     return { options };
   }
+
+  showSuccessMessage('已儲存', '若確認資料無誤請送出提案');
 };
 
 const modalSendProposal = ref(null);
