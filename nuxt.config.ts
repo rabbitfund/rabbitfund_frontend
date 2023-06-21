@@ -125,6 +125,17 @@ export default defineNuxtConfig({
   css: ['~/assets/css/swiper.css'],
   routeRules: {
     '/member/**': { ssr: false },
-    '/proposal/**': { ssr: false },
+    '/proposal/**': { ssr: false }
+  },
+  vite: {
+    build: {
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+          dead_code: true
+        }
+      }
+    }
   }
 });
