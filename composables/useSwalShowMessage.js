@@ -26,7 +26,17 @@ export default function () {
       });
   };
 
+  const showSuccessMessage = (successTitle, successText) => {
+    nuxtApp.$swal
+      .fire({
+        icon: 'success',
+        title: successTitle,
+        text: successText
+      })
+  };
+
   return {
-    showErrorMessage
+    showErrorMessage,
+    showSuccessMessage
   };
 }
