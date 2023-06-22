@@ -142,21 +142,20 @@ onMounted(async () => {
                 <input type="hidden" name="TimeStamp" :value="order.timeStamp" />
                 <input type="hidden" name="TradeInfo" :value="order.newebpay_aes_encrypt" />
                 <input type="hidden" name="TradeSha" :value="order.newebpay_sha_encrypt" />
-                <button class="btn btn-primary block w-full">立即付款</button>
+                <button type="submit" class="btn btn-primary block w-full">立即付款</button>
               </form>
-              <!-- <NuxtLink class="btn btn-primary block w-full">立即付款</NuxtLink> -->
             </div>
           </div>
           <p class="font-sansTC font-medium leading-relaxed tracking-wider text-grey-500">
             點擊「立即付款」即表示您已閱讀並同意<NuxtLink
-              to="/terms"
-              class="cursor-pointer text-blue-600 visited:text-purple-600"
+              to="/info/terms"
+              class="link link-primary"
               target="_blank"
               >使用者條款</NuxtLink
             >與<NuxtLink
-              to="/privacy"
-              class="cursor-pointer text-blue-600 visited:text-purple-600"
-              target="blank"
+              to="/info/privacy"
+              class="link link-primary"
+              target="_blank"
               >隱私權政策</NuxtLink
             >。
           </p>
