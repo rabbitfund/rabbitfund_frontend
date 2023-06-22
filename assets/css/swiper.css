@@ -10,6 +10,10 @@
   @apply h-auto !important;
 }
 
+.swiper-slide-prev, .swiper-slide-next {
+  @apply opacity-40;
+}
+
 .swiper-pagination {
   @apply static leading-[0px] !important;
 }
