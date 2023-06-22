@@ -71,7 +71,7 @@
 
       <div class="mb-16 border-grey-200 lg:mb-20 lg:w-1/3 lg:pt-12">
         <aside class="sticky top-6">
-          <div class="rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200 mb-6">
+          <div class="mb-6 rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200">
             <div class="border-b pb-8">
               <div class="mb-4 flex items-center justify-between">
                 <label for="extra-donation" class="mb-0 font-normal text-grey-400">額外贊助</label>
@@ -103,9 +103,7 @@
             </div>
             <div class="pt-6">
               <div class="mb-8 flex justify-end">
-                <span class="text-lg font-bold">
-                  NT$ {{ formattedAmount(total) }}
-                </span>
+                <span class="text-lg font-bold"> NT$ {{ formattedAmount(total) }} </span>
               </div>
               <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckout()"
                 >直接結帳</NuxtLink
@@ -198,28 +196,28 @@ const getShipDate = (endDate) => {
 
 function generateRandomNumberById(objectId) {
   const seed = objectId.substring(20); // last four
-  let total = 1;
+  let times = 1;
   for (const el of seed) {
-    total *= el.charCodeAt(0);
+    times *= el.charCodeAt(0);
   }
   const date = moment().format('MMDD');
-  return Math.round(total / parseInt(date)) % 1000;
+  return Math.round(times / parseInt(date)) % 1000;
 }
 
 const quantity = ref(1);
 const extra = ref(0);
-// const total = ref(0);
 const note = ref('');
-// const orderData = ref('');
+
+// 計算總金額
+const total = computed({
+  get() {
+    return price.value * quantity.value + extra.value;
+  }
+});
 
 // 監聽 price、quantity 和 extra 的變化，重新計算總金額
 watch([price, quantity, extra], () => {
-  calculateTotal();
-});
-
-// 計算總金額的計算屬性
-const total = computed(() => {
-  return price.value * quantity.value + extra.value;
+  total;
 });
 
 // 額外贊助指定金額
@@ -238,13 +236,6 @@ const roundExtra = () => {
 
   // 將差額加入贊助
   addExtra(difference);
-};
-
-// 重新計算總金額
-const calculateTotal = () => {
-  total.value = price.value * quantity.value + extra.value;
-
-  // console.log('calculateTotal', total.value.data);
 };
 
 // 金額加入千分位
