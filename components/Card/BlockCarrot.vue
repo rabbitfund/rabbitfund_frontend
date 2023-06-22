@@ -14,14 +14,19 @@ const props = defineProps({
   },
   link: {
     type: String,
-    default: '/'
+    default: ''
+  },
+  close: {
+    type: Function,
+    default: () => {}
   }
 });
 // console.log('BlockCarrot', props);
 </script>
+
 <template>
   <div
-    class="lg:pb-22 flex flex-col items-center bg-[url('/assets/images/sponsor-bg.png')] bg-cover bg-center bg-no-repeat pb-[71px] pt-[98px] sm:bg-contain lg:mt-20 lg:flex-row lg:justify-center lg:self-end lg:px-10 lg:pb-20 lg:pt-40 xl:pb-[140px] xl:pl-[82px] xl:pr-[98px] xl:pt-[229px]"
+    class="lg:pb-22 flex flex-col items-center bg-[url('/assets/images/sponsor-bg.png')] bg-cover bg-center bg-no-repeat pb-[71px] pt-[98px] sm:bg-contain lg:flex-row lg:justify-center lg:self-end lg:px-10 lg:pb-20 lg:pt-40 xl:pb-[140px] xl:pl-[82px] xl:pr-[98px] xl:pt-[229px]"
   >
     <img
       src="~/assets/images/carrot.png"
@@ -33,7 +38,11 @@ const props = defineProps({
         <span class="block">{{ props.title }}</span>
         <span>{{ props.text }}</span>
       </p>
-      <NuxtLink :to="props.link" class="btn btn-primary">{{ props.btn }}</NuxtLink>
+
+      <button v-if="!props.link" class="btn btn-primary" @click="props.close">關閉</button>
+      <NuxtLink v-else :to="props.link" class="btn btn-primary" @click="props.close">
+        {{ props.btn }}
+      </NuxtLink>
     </div>
   </div>
 </template>

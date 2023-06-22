@@ -1,42 +1,122 @@
 <script setup>
-// const currentTab = ref(0);
-const currentUser = ref('proposer');
-// TODO: get user role 
+import moment from 'moment';
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/user';
+import icon1 from '@/assets/images/icons/follow-project.svg';
+import icon2 from '@/assets/images/icons/success-project.svg';
+import icon3 from '@/assets/images/icons/fail-project.svg';
+
+const { getMyOrder, getProject, getOwnerProject } = useApi();
+
+const icons = [icon1, icon2, icon3];
+// TODO: get user role
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+
+const currentRole = computed(() =>
+  userInfo.value?.user_roles?.includes?.(2) ? 'proposer' : 'supporter'
+);
+
+const isDataEmpty = computed(() =>
+  content[currentRole.value].every((item) => item.data.length === 0)
+);
+
+const currentTab = ref(0);
 
 const content = reactive({
   proposer: [
-    // {
-    //   title: '追蹤紀錄',
-    //   data: []
-    // },
     {
-      title: '贊助專案',
-      data: [1]
+      title: '所有提案',
+      data: []
     },
     {
-      title: '發起提案',
-      data: [1, 4]
+      title: '已達標',
+      data: []
+    },
+    {
+      title: '未成案',
+      data: []
     }
   ],
 
   supporter: [
     {
-      title: '收藏',
-      data: [1, 3, 4, 1, 3, 4]
+      title: '已贊助',
+      data: []
     },
     {
       title: '已達標',
-      data: [1]
+      data: []
     },
     {
       title: '未成案',
-      data: [1, 1, 1, 2]
+      data: []
     }
   ]
 });
+
+dealWithData();
+async function dealWithData() {
+  try {
+    if (currentRole.value === 'proposer') {
+      const { data } = await getOwnerProject();
+      const projectData = data.value.data;
+      projectData.forEach((eachProject) => {
+        content.proposer[0].data.push(eachProject);
+
+        const end = moment(eachProject.project_end_date);
+        const now = moment();
+
+        if (end.isBefore(now)) {
+          if (project.project_progress >= project.project_target) {
+            content.proposer[1].data.push(eachProject);
+          } else {
+            content.proposer[2].data.push(eachProject);
+          }
+        }
+      });
+    }
+
+    if (currentRole.value === 'supporter') {
+      const { data } = await getMyOrder(1);
+      const orderData = data.value.data.data;
+      const processedIDs = new Set();
+      const projectPromises = orderData.map((item) => {
+        if (!processedIDs.has(item.project._id)) {
+          processedIDs.add(item.project._id);
+          return getProject(item.project._id);
+        }
+      });
+
+      Promise.all(projectPromises)
+        .then((res) => {
+          res.forEach((eachRes) => {
+            const eachProject = JSON.parse(JSON.stringify(eachRes.data.value.data));
+            content.supporter[0].data.push(eachProject);
+
+            const end = moment(eachProject.project_end_date);
+            const now = moment();
+
+            if (end.isBefore(now)) {
+              if (project.project_progress >= project.project_target) {
+                content.supporter[1].data.push(eachProject);
+              } else {
+                content.supporter[2].data.push(eachProject);
+              }
+            }
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
 </script>
 <template>
-  <section>
+  <ClientOnly>
     <div class="mb-8 grid grid-cols-12 gap-6 lg:mb-16">
       <img
         class="col-span-12 mx-auto lg:col-span-3"
@@ -44,72 +124,57 @@ const content = reactive({
         alt=""
         srcset=""
       />
-      <div class="col-span-12 mx-auto font-bold lg:col-span-9">
+      <div class="col-span-12 mr-auto font-bold lg:col-span-9">
         <h4 class="mb-6">
-          希望無限公司
-          <!-- <span
-            class="cursor-pointer bg-primary/20 text-[12px]"
-            @click="
-              currentUser === 'proposer' ? (currentUser = 'supporter') : (currentUser = 'proposer')
-            "
-            >切換角色</span
-          > -->
+          {{ userInfo?.user_name }}
         </h4>
-        <h6 class="text-grey-500">
-          「希望無限公司」是一家致力於推動環保和公益的社會企業，成立於 2020
-          年，由一群熱心的年輕人創辦。我們的使命是透過各種創新和有趣的活動和募資專案，來提高大眾對於永續發展和社會責任的意識和參與，並支持那些為了改善環境和社會問題而努力的個人和組織。<br /><br />
-          我們的活動和募資專案涵蓋了多個領域，例如：清潔能源、氣候變遷、生態保育、減塑行動、飢餓救濟、教育平等、人權保障等等。我們透過網路平台和實體活動，來吸引和連結各方的資源和力量，並提供一個公開透明和互動友善的平台，讓捐款者、受助者和執行者能夠有效地溝通和合作。<br /><br />
-          我們相信，每一個人都可以成為改變世界的力量，只要有一顆願意付出和分享的心。我們歡迎您加入我們的行列，無論是作為捐款者、受助者、執行者或志工，您都可以在這裡找到一個適合您的角色和機會。讓我們一起為了一個更美好的未來而努力吧！
-        </h6>
+        <p v-if="userInfo?.user_intro" class="text-grey-500">
+          {{ userInfo?.user_intro }}
+        </p>
+        <p v-else>
+          還沒有設定自我介紹喔！ 前往
+          <NuxtLink class="cursor-pointer underline hover:text-primary" to="/member/manage"
+            >管理個人資料</NuxtLink
+          >
+          設定資料讓大家更認識你！
+        </p>
       </div>
     </div>
     <div class="flex justify-center gap-x-4 border-b pb-12 lg:gap-x-20 lg:border-0 lg:pb-[64px]">
-      <section class="follow-status">
-        <img src="@/assets/images/icons/follow-project.svg" alt="" srcset="" />
-        <p>{{ content[currentUser][0].title }}</p>
-        <span>{{ content[currentUser][0].data.length }}</span>
+      <section v-for="(item, index) in content[currentRole]" :key="item" class="follow-status">
+        <img :src="icons[index]" />
+        <p>{{ item.title }}</p>
+        <span>{{ item.data.length }}</span>
       </section>
-      <section class="follow-status">
-        <img src="@/assets/images/icons/success-project.svg" alt="" srcset="" />
-        <p>{{ content[currentUser][1]?.title }}</p>
-        <span>{{ content[currentUser][1]?.data.length }}</span>
-      </section>
-      <!-- <section class="follow-status">
-        <img src="@/assets/images/icons/fail-project.svg" alt="" srcset="" />
-        <p>{{ content[currentUser][2].title }}</p>
-        <span>{{ content[currentUser][2].data.length }}</span>
-      </section> -->
     </div>
-    <div>
-      <CardBlockRabbit
-        :title="'去探索更多新發現！'"
-        :btn="'瞧一瞧'"
-        :link="'/projects'"
-      />
-      <!-- 
-      <ul class="flex justify-between py-8 md:justify-center md:gap-10">
-        <li
-          v-for="(item, index) in content[currentUser]"
-          :key="item.title"
-          :class="currentTab === index ? 'active-tab' : 'default-tab'"
-          @click="currentTab = index"
+    <div v-if="isDataEmpty">
+      <CardBlockRabbit :title="'去探索更多新發現！'" :btn="'瞧一瞧'" :link="'/projects'" />
+    </div>
+    <div v-else>
+      <div class="border-y bg-white lg:-order-1 lg:basis-full">
+        <nav
+          class="container flex justify-around gap-4 overflow-x-auto whitespace-nowrap py-6 text-grey-600 lg:gap-10"
         >
-          {{ item.title }}
-        </li>
-      </ul>
-    </div>
-    <div class="flex flex-col gap-4" >
-      <CardMemberProject 
-        v-for="(item, index) in content[currentUser][currentTab].data"
-          :key="index"
-           />
+          <Badge
+            v-for="(item, index) in content[currentRole]"
+            :key="item.title"
+            :type="currentTab === index ? 'danger' : ''"
+            :name="item.title"
+            @click="currentTab = index"
+          />
+        </nav>
 
-      <p v-if='content[currentUser][currentTab].data == 0' class='text-center m-5'>
-        Oops! 這裡什麼都沒有!
-      </p>
-     -->
+        <!-- <CardMemberProject /> -->
+        <CardMemberProject
+          v-for="i in content[currentRole][currentTab].data"
+          :key="i._id + i"
+          :project="i"
+          :can-modify="false"
+          :navigate-to-path="`/project/${i._id}/info`"
+        />
+      </div>
     </div>
-  </section>
+  </ClientOnly>
 </template>
 
 <style scope>

@@ -7,6 +7,9 @@ export default function () {
       callback() {
         nuxtApp.$router.push('/users/signin');
       }
+    },
+    找不到贊助紀錄: {
+      message: '找不到贊助紀錄'
     }
   };
   const showErrorMessage = (errorMessage) => {
@@ -23,7 +26,17 @@ export default function () {
       });
   };
 
+  const showSuccessMessage = (successTitle, successText) => {
+    nuxtApp.$swal
+      .fire({
+        icon: 'success',
+        title: successTitle,
+        text: successText
+      })
+  };
+
   return {
-    showErrorMessage
+    showErrorMessage,
+    showSuccessMessage
   };
 }

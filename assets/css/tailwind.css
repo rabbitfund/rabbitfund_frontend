@@ -48,7 +48,7 @@
   [multiple],
   textarea,
   select {
-    @apply w-full rounded border-grey-300 focus:border-primary focus:ring-primary text-grey-500 disabled:border-grey-200;
+    @apply w-full rounded border-grey-300 focus:border-primary focus:ring-primary text-grey-500 disabled:border-grey-200 disabled:bg-grey-100;
   }
   [type='checkbox'],
   [type='radio'] {
@@ -92,5 +92,12 @@
 
   .progress {
     @apply h-full rounded-full;
+  }
+
+  .link {
+    @apply hover:underline hover:scale-110 transition duration-300;
+  }
+  .link-primary {
+    @apply text-primary hover:text-primary-dark;
   }
 }

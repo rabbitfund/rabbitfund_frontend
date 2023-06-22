@@ -3,16 +3,11 @@ const targetModal = ref(null);
 
 const { openModal, closeModal } = useModal(targetModal);
 
-const props = defineProps({
-  detail: [Object]
-});
-console.log('modalOrderDetail', props.detail);
-
 defineExpose({
   openModal
 });
 
-const confirm = () => {
+const goProjects = () => {
   closeModal();
 };
 </script>
@@ -46,7 +41,7 @@ const confirm = () => {
         </svg>
       </button>
 
-      <CardBlockCarrot class="lg:flex-col xl:px-10 xl:pb-20 xl:pt-40" btn="關閉" :close="confirm" :title="props.detail?.title" :text="props.detail?.text" />
+      <CardBlockRabbit btn="前往探索" link="/projects" :close="goProjects" title="兔兔感謝您的填寫" text="已送出提案，審核中。" />
     </div>
   </div>
 </template>

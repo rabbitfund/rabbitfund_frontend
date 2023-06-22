@@ -13,7 +13,7 @@ const props = defineProps({
 });
 </script>
 <template>
-  <nav aria-label="Page navigation example" class="mx-auto my-4">
+  <nav aria-label="Page navigation example" class="mx-auto">
     <ul class="inline-flex items-center gap-x-5">
       <li class="h-6 w-6 text-center">
         <button

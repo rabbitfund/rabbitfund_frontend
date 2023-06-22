@@ -15,6 +15,7 @@
     "@nuxtjs/tailwindcss": "^6.6.5",
     "@pinia-plugin-persistedstate/nuxt": "^1.1.1",
     "@pinia/nuxt": "^0.4.7",
+    "@playwright/test": "^1.35.1",
     "@tailwindcss/forms": "^0.5.3",
     "eslint": "^8.37.0",
     "eslint-config-prettier": "^8.8.0",
@@ -27,6 +28,8 @@
     "vue3-google-login": "^2.0.15"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^38.0.1",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
     "@nuxt/test-utils": "^3.3.2",
     "@vee-validate/i18n": "^4.9.6",
     "@vee-validate/rules": "^4.9.6",
