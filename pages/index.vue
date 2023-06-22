@@ -1,6 +1,6 @@
 <script setup>
 import { Navigation, Pagination } from 'swiper';
-const modules = [Navigation, Pagination];
+const modules = [Navigation, Pagination, SwiperAutoplay];
 
 const { getProjects } = useApi();
 const banners = ref([]);
@@ -52,12 +52,11 @@ try {
     </div>
   </section>
 
-  <section class="px-3 pb-12 lg:px-0 lg:pb-20">
-    <swiper
+  <section class="px-3 pb-12 md:px-0 lg:pb-20">
+    <Swiper
       :modules="modules"
       :grab-cursor="true"
       :slides-per-view="1"
-      :space-between="10"
       :centered-slides="true"
       :loop="true"
       :navigation="{
@@ -65,16 +64,19 @@ try {
         prevEl: '.swiper-button-prev'
       }"
       :pagination="{
-        el: '.swiper-pagination',
         clickable: true
       }"
       :autoplay="{
-        delay: 3000,
+        delay: 5000,
         disableOnInteraction: false
       }"
       :breakpoints="{
+        720: {
+          slidesPerView: 1.3,
+          spaceBetween: 12
+        },
         960: {
-          slidesPerView: 1.25,
+          slidesPerView: 1.4,
           spaceBetween: 24
         },
         1320: {
@@ -83,18 +85,18 @@ try {
         }
       }"
     >
-      <swiper-slide v-for="project in banners" :key="project._id">
+      <SwiperSlide v-for="project in banners" :key="project._id">
         <NuxtLink :to="`/project/${project._id}/info`">
           <img
             :src="project.project_cover"
-            class="mx-auto h-full rounded-lg object-cover lg:rounded-2xl"
+            class="h-full w-full rounded-lg object-cover lg:rounded-2xl"
           />
         </NuxtLink>
-      </swiper-slide>
+      </SwiperSlide>
       <button class="swiper-button-prev"></button>
       <button class="swiper-button-next"></button>
       <div class="swiper-pagination"></div>
-    </swiper>
+    </Swiper>
   </section>
 
   <section class="bg-light-emphasis py-16 xl:py-30">
@@ -200,6 +202,7 @@ try {
         :link="'/proposal'"
       />
       <CardBlockCarrot
+        class="lg:mt-20"
         :title="'每一份贊助，'"
         :text="'都將成就更多的可能！'"
         :btn="'我要贊助'"
