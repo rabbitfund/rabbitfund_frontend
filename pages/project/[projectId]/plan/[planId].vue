@@ -29,7 +29,15 @@
             </ul>
             <div class="flex items-center gap-2">
               <label for="productNumber" class="mb-0">輸入數量</label>
-              <input v-model="quantity" type="number" class="w-1/4" pattern="[0-9]*" />
+              <input
+                v-model="quantity"
+                type="number"
+                class="w-1/4"
+                pattern="[0-9]*"
+                min="1"
+                @keydown="handleKeyDown"
+                @input="updateQuantity($event.target.value)"
+              />
             </div>
           </div>
         </div>
@@ -207,6 +215,19 @@ function generateRandomNumberById(objectId) {
 const quantity = ref(1);
 const extra = ref(0);
 const note = ref('');
+
+function handleKeyDown(event) {
+  // 阻止輸入字母 "e"
+  if (event.key === 'e') {
+    event.preventDefault();
+  }
+}
+function updateQuantity(value) {
+  const regex = /^[0-9]+$/;
+  if (regex.test(value) && !value.includes('e')) {
+    quantity.value = value;
+  }
+}
 
 // 計算總金額
 const total = computed({
