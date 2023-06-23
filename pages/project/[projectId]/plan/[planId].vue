@@ -4,6 +4,7 @@
       <ProcessCheckout />
     </div>
   </section>
+
   <section class="bg-light-emphasis lg:bg-transparent">
     <div class="container gap-6 lg:flex">
       <div class="mb-12 bg-light-emphasis pt-12 lg:mb-0 lg:w-2/3 lg:p-12 lg:pb-20">
@@ -116,10 +117,7 @@
               class="link link-primary"
               target="_blank"
               >使用者條款</NuxtLink
-            >與<NuxtLink
-              to="/info/privacy"
-              class="link link-primary"
-              target="_blank"
+            >與<NuxtLink to="/info/privacy" class="link link-primary" target="_blank"
               >隱私權政策</NuxtLink
             >。
           </p>
@@ -209,11 +207,7 @@ const extra = ref(0);
 const note = ref('');
 
 // 計算總金額
-const total = computed({
-  get() {
-    return price.value * quantity.value + extra.value;
-  }
-});
+const total = computed(() => price.value * quantity.value + extra.value);
 
 // 監聽 price、quantity 和 extra 的變化，重新計算總金額
 watch([price, quantity, extra], () => {
