@@ -125,6 +125,11 @@ export default defineNuxtConfig({
   css: ['~/assets/css/swiper.css'],
   routeRules: {
     '/member/**': { ssr: false },
-    '/proposal/**': { ssr: false },
+    '/proposal/**': { ssr: false }
+  },
+  vite: {
+    esbuild: {
+      drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : []
+    }
   }
 });
