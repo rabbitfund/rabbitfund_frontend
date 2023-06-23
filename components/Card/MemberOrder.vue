@@ -203,7 +203,9 @@ const copy = (projectId) => {
                 </li>
                 <li class="text-left lg:px-2">
                   <span class="mb-1 mr-4 text-grey-400">訂單完成日期</span>
-                  <span>{{ formattedDate(props.order?.order_final_date) }}</span>
+                  <span v-if="props.order?.order_final_date">
+                    {{ formattedDate(props.order?.order_final_date) }}
+                  </span>
                 </li>
                 <li class="text-left lg:px-2">
                   <span class="mb-1 mr-4 text-grey-400">付款方式</span>
@@ -226,7 +228,7 @@ const copy = (projectId) => {
                   <span>中國信託</span>
                   <!-- NOTE: 可以做 random 銀行名稱 -->
                 </li>
-                <li class="text-left lg:px-2">
+                <li v-if="props.order?.order_info.newebpay_payTime" class="text-left lg:px-2">
                   <span class="mb-1 mr-4 text-grey-400">付款時間</span>
                   <span class="mr-2">{{
                     formattedDate(props.order?.order_info.newebpay_payTime)
@@ -249,7 +251,9 @@ const copy = (projectId) => {
                 </li>
                 <li class="text-left lg:px-2">
                   <span class="mb-1 mr-4 text-grey-400">發票日期</span>
-                  <span>{{ formattedDate(props.order?.order_info.invoice_date) }}</span>
+                  <span v-if="props.order?.order_info.invoice_date">
+                    {{ formattedDate(props.order?.order_info.invoice_date) }}
+                  </span>
                 </li>
                 <li class="text-left lg:px-2">
                   <span class="mb-1 mr-4 text-grey-400">載具類型</span>

@@ -16,6 +16,7 @@ const { getOrder } = useApi();
 const order = ref('');
 const projectTitle = orderStore.project_title;
 const optionName = orderStore.option_name;
+const orderOptionQuantity = orderStore.order_option_quantity;
 const projectPrice = orderStore.project_price;
 const orderExtra = orderStore.order_extra;
 const orderTotal = orderStore.order_total;
@@ -110,12 +111,11 @@ onMounted(async () => {
               </div>
               <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
               <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
-              <!-- NOTE: optionName 不知為何 undefined -->
             </div>
             <ul class="border-b pb-6 pt-8">
               <li class="mb-4 flex justify-between">
                 <span>小計</span>
-                <span>$ {{ formattedAmount(projectPrice) }}</span>
+                <span>$ {{ formattedAmount(projectPrice * orderOptionQuantity) }}</span>
               </li>
               <li class="mb-4 flex justify-between">
                 <span>額外贊助</span>
@@ -152,10 +152,7 @@ onMounted(async () => {
               class="link link-primary"
               target="_blank"
               >使用者條款</NuxtLink
-            >與<NuxtLink
-              to="/info/privacy"
-              class="link link-primary"
-              target="_blank"
+            >與<NuxtLink to="/info/privacy" class="link link-primary" target="_blank"
               >隱私權政策</NuxtLink
             >。
           </p>
