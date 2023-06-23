@@ -18,13 +18,7 @@ export default function useCalcLeftTime(project: any) {
     }
     return {
       status: FoundStatus.Finished,
-      finishedStatus: computed(() => {
-        if (project?.project_target !== undefined && project?.project_progress !== undefined) {
-          return project.project_progress >= project.project_target;
-        }
-
-        return false;
-      })
+      finishedStatus: project?.project_progress >= project?.project_target
     };
   };
 
