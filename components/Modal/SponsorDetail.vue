@@ -19,10 +19,13 @@ watch(
   }
 );
 
-const formattedAmount = computed(() => {
-  if (!props.detail) return;
-  return props.detail.order_info.payment_price.toLocaleString();
-});
+// const formattedAmount = computed((price) => {
+//   if (!props.detail) return;
+//   return price.toLocaleString();
+// });
+const formattedAmount = (price: number) => {
+  return !props.detail ? undefined : price.toLocaleString();
+};
 </script>
 
 <template>
@@ -64,24 +67,32 @@ const formattedAmount = computed(() => {
         </section>
         <!-- Modal body -->
         <section class="mb-7 rounded-lg bg-light-emphasis p-5">
-          <ul class="flex flex-col flex-wrap gap-y-5 md:flex-row -mx-2 lg:gap-y-4">
-            <li class="md:basis-1/2 lg:basis-1/3 px-2">
+          <ul class="-mx-2 flex flex-col flex-wrap gap-y-5 md:flex-row lg:gap-y-4">
+            <li class="px-2 md:basis-1/2 lg:basis-2/3">
+              <span class="mb-1 text-grey-400">訂單編號</span>
+              <p>{{ props.detail._id }}</p>
+            </li>
+            <li class="px-2 md:basis-1/2 lg:basis-1/3">
+              <span class="mb-1 text-grey-400"></span>
+              <p></p>
+            </li>
+            <li class="px-2 md:basis-1/2 lg:basis-1/3">
               <span class="mb-1 text-grey-400">方案名稱</span>
               <p>{{ props.detail.option.option_name }}</p>
             </li>
-            <li class="md:basis-1/2 lg:basis-1/3 px-2">
+            <li class="px-2 md:basis-1/2 lg:basis-1/3">
               <span class="mb-1 text-grey-400">付款人姓名</span>
               <p>{{ props.detail.user.user_name }}</p>
             </li>
-            <li class="md:basis-1/2 lg:basis-1/3 px-2">
+            <li class="px-2 md:basis-1/2 lg:basis-1/3">
               <span class="mb-1 text-grey-400">付款人手機</span>
               <p>{{ props.detail.user.user_phone }}</p>
             </li>
-            <li class="md:basis-1/2 lg:basis-2/3 px-2">
+            <li class="px-2 md:basis-1/2 lg:basis-2/3">
               <span class="mb-1 text-grey-400">E-mail</span>
               <p>{{ props.detail.user.user_email }}</p>
             </li>
-            <li class="md:basis-1/2 lg:basis-1/3 px-2">
+            <li class="px-2 md:basis-1/2 lg:basis-1/3">
               <span class="mb-1 text-grey-400">備註</span>
               <p>{{ props.detail.order_note }}</p>
             </li>
@@ -95,22 +106,74 @@ const formattedAmount = computed(() => {
             </span>
             <span class="text-h4">付款資訊</span>
           </h3>
-          <ul class="flex flex-col flex-wrap gap-y-4 sm:flex-row -mx-2 lg:gap-y-5">
-            <li class="sm:basis-1/2 lg:basis-1/4 px-2">
+          <ul class="-mx-2 flex flex-col flex-wrap gap-y-4 sm:flex-row lg:gap-y-5">
+            <li class="px-2 sm:basis-1/2 lg:basis-1/4">
               <span class="mb-1 text-grey-400">付款總額</span>
-              <p>$ {{ formattedAmount }}</p>
+              <p>$ {{ formattedAmount(props.detail.order_total) }}</p>
             </li>
-            <li class="sm:basis-1/2 lg:basis-3/4 px-2">
+            <li class="px-2 sm:basis-1/2 lg:basis-1/4">
+              <span class="mb-1 text-grey-400">方案金額</span>
+              <p>$ {{ formattedAmount(props.detail.option.option_price) }}</p>
+            </li>
+            <li class="px-2 sm:basis-1/2 lg:basis-1/4">
+              <span class="mb-1 text-grey-400">方案份數</span>
+              <p>{{ props.detail.order_option_quantity }} 份</p>
+            </li>
+            <li class="px-2 sm:basis-1/2 lg:basis-1/4">
+              <span class="mb-1 text-grey-400">額外贊助</span>
+              <p>$ {{ formattedAmount(props.detail.order_extra) }}</p>
+            </li>
+            <li class="px-2 sm:basis-1/2 lg:basis-3/4">
               <span class="mb-1 text-grey-400">付款方式</span>
               <p>{{ props.detail.order_info.payment_method }}</p>
             </li>
-            <li class="sm:basis-1/2 lg:basis-1/4 px-2">
+            <li
+              v-if="props.detail.order_info.payment_method == 'WEBATM'"
+              class="px-2 sm:basis-1/2 lg:basis-1/4"
+            >
+              <span class="mb-1 text-grey-400">付款銀行</span>
+              <p>
+                {{ props.detail.order_info.newebpay_payBankCode == 809 ? '華南銀行' : '其他' }}
+              </p>
+            </li>
+            <li
+              v-else-if="props.detail.order_info.payment_method == 'CREDIT'"
+              class="px-2 sm:basis-1/2 lg:basis-1/4"
+            >
+              <span class="mb-1 text-grey-400">刷卡銀行</span>
+              <p>中國信託</p>
+              <!-- NOTE: 可以做 random 銀行名稱 -->
+            </li>
+            <li
+              v-if="props.detail.order_info.newebpay_payTime"
+              class="px-2 sm:basis-1/2 lg:basis-1/4"
+            >
+              <span class="mb-1 text-grey-400">付款時間</span>
+              <p>{{ formattedDate(props.detail.order_info.newebpay_payTime) }}</p>
+              <span>{{ props.detail.order_info.newebpay_payTime.slice(10) }}</span>
+            </li>
+          </ul>
+          <ul class="-mx-2 mt-5 flex flex-col flex-wrap gap-y-4 sm:flex-row lg:gap-y-5">
+            <li class="px-2 sm:basis-1/2 lg:basis-1/4">
               <span class="mb-1 text-grey-400">發票號碼</span>
               <p>{{ props.detail.order_info.invoice_number }}</p>
             </li>
-            <li class="sm:basis-1/2 lg:basis-3/4 px-2">
-              <span class="mb-1 text-grey-400">發票類型</span>
+            <li class="px-2 sm:basis-1/2 lg:basis-1/4">
+              <span class="mb-1 text-grey-400">發票日期</span>
+              <p v-if="props.detail.order_info.invoice_date">
+                {{ formattedDate(props.detail.order_info.invoice_date) }}
+              </p>
+            </li>
+            <li class="px-2 sm:basis-1/2 lg:basis-1/4">
+              <span class="mb-1 text-grey-400">載具類型</span>
               <p>{{ props.detail.order_info.invoice_type }}</p>
+            </li>
+            <li
+              v-if="props.detail.order_info.invoice_type == '電子載具'"
+              class="px-2 sm:basis-1/2 lg:basis-1/4"
+            >
+              <span class="mb-1 text-grey-400">載具條碼</span>
+              <span>{{ props.detail.order_info.invoice_carrier }}</span>
             </li>
           </ul>
         </section>
