@@ -37,16 +37,8 @@ export default function useCalcLeftTime(project: any) {
   });
   function countdownTimer() {
     if (timeLeft.value && timeLeft.value > 0) {
-      if (timeLeft.value >= 86400) {
-        timeLeft.value -= 3600;
-        timerInstance.value = setTimeout(countdownTimer, 3600000);
-      } else if (timeLeft.value >= 3600) {
-        timeLeft.value -= 60;
-        timerInstance.value = setTimeout(countdownTimer, 60000);
-      } else {
-        timeLeft.value--;
-        timerInstance.value = setTimeout(countdownTimer, 1000);
-      }
+      timeLeft.value--;
+      timerInstance.value = setTimeout(countdownTimer, 1000);
     }
   }
 
@@ -56,13 +48,16 @@ export default function useCalcLeftTime(project: any) {
     const hours = duration.hours();
     const minutes = duration.minutes();
     const remainingSeconds = duration.seconds();
+    let result = '';
+
     if (days > 0) {
-      return `${days} 天 ${hours} 小時`;
-    } else if (hours > 0) {
-      return `${hours} 小時 ${minutes} 分`;
-    } else {
-      return `${minutes} 分 ${remainingSeconds} 秒`;
+      result += `${days} 天 `;
     }
+    if (hours > 0) {
+      result += `${hours} 小時 `;
+    }
+    result += `${minutes} 分 ${remainingSeconds} 秒`;
+    return result;
   };
 
   const formatTimeLeft = computed(() => {
