@@ -37,8 +37,8 @@ function handleSearch(value) {
 }
 
 const { getUserDetail } = useApi();
-watch(isSigned, async () => {
-  if (isSigned) {
+watch(isSigned.value, async () => {
+  if (isSigned.value) {
     const { data } = await getUserDetail();
     userStore.handleGetUserData(data);
   }
@@ -109,7 +109,7 @@ function signUp() {
             <div
               class="absolute right-0 top-full z-10 hidden cursor-default group-hover:block group-focus:block"
             >
-              <div class="shadow rounded-xl bg-white px-10 py-8">
+              <div class="rounded-xl bg-white px-10 py-8 shadow">
                 <ul class="mb-8 flex min-w-[124px] flex-col gap-7">
                   <li class="inline-block">
                     <NuxtLink
