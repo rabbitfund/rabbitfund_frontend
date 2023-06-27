@@ -36,7 +36,7 @@ function handlePostUserDetail() {
     cover: userCover.value,
     intro: userIntro.value,
     website: userWebsite.value
-  }).then(async (res) => {
+  }).then((res) => {
     if (res.error.value) {
       return;
     }
@@ -44,7 +44,7 @@ function handlePostUserDetail() {
     userInfo.value.user_cover = userCover.value;
 
     // 重新拿一次資料更新其他地方
-    const { data } = await getUserDetail();
+    const { data } = res.data.value;
     userStore.handleGetUserData(data);
   });
 }
