@@ -5,126 +5,154 @@
     </div>
   </section>
 
-  <section class="bg-light-emphasis lg:bg-transparent">
-    <div class="container gap-6 lg:flex">
-      <div class="mb-12 bg-light-emphasis pt-12 lg:mb-0 lg:w-2/3 lg:p-12 lg:pb-20">
-        <div class="mb-20 flex flex-col gap-6 lg:flex-row">
-          <div class="rounded-2 lg:w-3/8">
-            <img :src="coverUrl" :alt="projectTitle" />
-          </div>
-          <div class="lg:w-5/8">
-            <NuxtLink :to="`/project/${projectId}/info`">
-              <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
-            </NuxtLink>
-            <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
-            <span class="mb-6 block text-h4 font-bold lg:text-h3">
-              $ {{ formattedAmount(price) }}
-            </span>
-            <ul class="mb-6">
-              <li>
-                <p class="text-grey-500">已被贊助 {{ generateRandomNumberById(planId) }} 次</p>
-              </li>
-              <li>
-                <p class="text-grey-500">預計 {{ shipDate }}出貨</p>
-              </li>
-            </ul>
-            <div class="flex items-center gap-2">
-              <label for="productNumber" class="mb-0">輸入數量</label>
-              <input v-model="quantity" type="number" class="w-1/4" pattern="[0-9]*" />
+  <Form :validation-schema="formSchema" v-slot="{ meta }" @submit="handleSubmit">
+    <section class="bg-light-emphasis lg:bg-transparent">
+      <div class="container gap-6 lg:flex">
+        <div class="mb-12 bg-light-emphasis pt-12 lg:mb-0 lg:w-2/3 lg:p-12 lg:pb-20">
+          <div class="mb-20 flex flex-col gap-6 lg:flex-row">
+            <div class="rounded-2 lg:w-3/8">
+              <img :src="coverUrl" :alt="projectTitle" />
             </div>
-          </div>
-        </div>
-        <div>
-          <div class="mb-6 flex items-center gap-2">
-            <span><img src="~/assets/images/icons/gift.svg" alt="禮物" /></span>
-            <h2>理念支持回饋品</h2>
-          </div>
-          <h3 class="mb-4 text-lg">◆ {{ optionName }}</h3>
-          <ul class="mb-6">
-            <li class="mb-2">
-              <p v-html="content"></p>
-            </li>
-            <li class="mb-2">
-              <p>
-                ❖ 操作指引：自訂金額可於「額外贊助」欄位中輸入。電腦版於頁面右方，手機版於頁面下方。
-              </p>
-            </li>
-            <li>
-              <p>
-                ❖
-                提醒您若未來信停止訂閱，定期定額方案將會扣款至信用卡到期日，感謝您的支持！若您想終止贊助請來信至：rabbitfund@fundation.com
-              </p>
-            </li>
-          </ul>
-          <div class="mb-6">
-            <label for="thanks-to-name">列名感謝顯示名稱</label>
-            <input id="thanks-to-name" type="text" name="thanks-to-name" class="mb-2 w-1/2" />
-            <p class="text-grey-400">
-              非必填。請於此欄填寫您希望露出的名稱，若無填寫則會以收據抬頭列名感謝。
-            </p>
-          </div>
-          <div>
-            <label for="remark">備註</label>
-            <textarea id="remark" v-model="note" name="remark" rows="4"></textarea>
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-16 border-grey-200 lg:mb-20 lg:w-1/3 lg:pt-12">
-        <aside class="sticky top-6">
-          <div class="mb-6 rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200">
-            <div class="border-b pb-8">
-              <div class="mb-4 flex items-center justify-between">
-                <label for="extra-donation" class="mb-0 font-normal text-grey-400">額外贊助</label>
-                <div class="flex w-1/2 items-center gap-4">
-                  <span class="text-grey-400">$</span>
-                  <input id="extra-donation" v-model="extra" type="number" name="extra-donation" />
-                </div>
-              </div>
-              <ul class="flex flex-wrap gap-4">
-                <li
-                  class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
-                  @click="addExtra(100)"
-                >
-                  <span>+100</span>
+            <div class="lg:w-5/8">
+              <NuxtLink :to="`/project/${projectId}/info`">
+                <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
+              </NuxtLink>
+              <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
+              <span class="mb-6 block text-h4 font-bold lg:text-h3">
+                $ {{ formattedAmount(price) }}
+              </span>
+              <ul class="mb-6">
+                <li>
+                  <p class="text-grey-500">已被贊助 {{ generateRandomNumberById(planId) }} 次</p>
                 </li>
-                <li
-                  class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
-                  @click="addExtra(1000)"
-                >
-                  <span>+1000</span>
-                </li>
-                <li
-                  class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
-                  @click="roundExtra()"
-                >
-                  <span>補整數</span>
+                <li>
+                  <p class="text-grey-500">預計 {{ shipDate }}出貨</p>
                 </li>
               </ul>
-            </div>
-            <div class="pt-6">
-              <div class="mb-8 flex justify-end">
-                <span class="text-lg font-bold"> NT$ {{ formattedAmount(total) }} </span>
-              </div>
-              <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckout()"
-                >直接結帳</NuxtLink
-              >
+              <FormInput
+                class="w-1/2"
+                :label="['贊助數量', '*']"
+                type="number"
+                id="quantity"
+                name="贊助數量"
+                :value="quantity"
+                @keydown="handleKeyDown"
+                @input="updateQuantity($event.target.value)"
+              />
             </div>
           </div>
-          <p class="font-sansTC font-medium leading-relaxed tracking-wider text-grey-500">
-            點擊「直接結帳」即表示您已閱讀並同意<NuxtLink
-              to="/info/terms"
-              class="link link-primary"
-              target="_blank"
-              >使用者條款</NuxtLink
-            >與<NuxtLink to="/info/privacy" class="link link-primary" target="_blank"
-              >隱私權政策</NuxtLink
-            >。
-          </p>
-        </aside>
+          <div>
+            <h2 class="mb-6 flex items-center gap-2">
+              <span><img src="~/assets/images/icons/gift.svg" alt="禮物" /></span>
+              <span>理念支持回饋品</span>
+            </h2>
+            <h3 class="mb-4 text-lg">◆ {{ optionName }}</h3>
+            <ul class="mb-6">
+              <li class="mb-2">
+                <p v-html="content"></p>
+              </li>
+              <li class="mb-2">
+                <p>
+                  ❖
+                  操作指引：自訂金額可於「額外贊助」欄位中輸入。電腦版於頁面右方，手機版於頁面下方。
+                </p>
+              </li>
+              <li>
+                <p>
+                  ❖
+                  提醒您若未來信停止訂閱，定期定額方案將會扣款至信用卡到期日，感謝您的支持！若您想終止贊助請來信至：rabbitfund@fundation.com
+                </p>
+              </li>
+            </ul>
+            <div class="mb-6">
+              <FormInput
+                class="!mb-2 lg:w-1/2"
+                :label="['列名感謝顯示名稱']"
+                type="text"
+                id="thanks-to-name"
+                name="列名感謝顯示名稱"
+              />
+              <p class="text-grey-400">
+                請於此欄填寫您希望露出的名稱，若無填寫則會以收據抬頭列名感謝。
+              </p>
+            </div>
+            <FormTextarea
+              class="!mb-0"
+              :label="['備註']"
+              id="remark"
+              name="備註"
+              placeholder="請輸入備註"
+              v-model="note"
+            />
+          </div>
+        </div>
+        <div class="border-grey-200 pb-16 lg:mb-20 lg:w-1/3 lg:pb-0 lg:pt-12">
+          <aside class="sticky top-6">
+            <div class="mb-6 rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200">
+              <div class="border-b pb-8">
+                <div class="mb-4 flex items-center justify-between">
+                  <label for="extra-donation" class="mb-0 font-normal text-grey-400"
+                    >額外贊助</label
+                  >
+                  <div class="flex w-1/2 flex-wrap">
+                    <div class="flex items-center gap-x-4">
+                      <span class="inline-block text-grey-400">$</span>
+                      <Field
+                        type="number"
+                        id="extra-donation"
+                        name="額外贊助"
+                        v-model.number="extra"
+                        @keydown="handleKeyDown"
+                      />
+                    </div>
+                    <ErrorMessage name="額外贊助" class="mt-2 block text-sm text-primary" />
+                  </div>
+                </div>
+                <ul class="flex flex-wrap gap-4">
+                  <li
+                    class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+                    @click="addExtra(100)"
+                  >
+                    <span>+100</span>
+                  </li>
+                  <li
+                    class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+                    @click="addExtra(1000)"
+                  >
+                    <span>+1000</span>
+                  </li>
+                  <li
+                    class="cursor-pointer rounded-full bg-light-emphasis px-3 py-1 text-primary ring-1 ring-primary"
+                    @click="roundExtra()"
+                  >
+                    <span>補整數</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="pt-6">
+                <div class="mb-8 flex justify-end">
+                  <span class="text-lg font-bold"> NT$ {{ formattedAmount(total) }} </span>
+                </div>
+                <button class="btn btn-primary block w-full" type="submit" :disabled="!meta.valid">
+                  直接結帳
+                </button>
+              </div>
+            </div>
+            <p class="font-sansTC font-medium leading-relaxed tracking-wider text-grey-500">
+              點擊「直接結帳」即表示您已閱讀並同意<NuxtLink
+                to="/info/terms"
+                class="link link-primary"
+                target="_blank"
+                >使用者條款</NuxtLink
+              >與<NuxtLink to="/info/privacy" class="link link-primary" target="_blank"
+                >隱私權政策</NuxtLink
+              >。
+            </p>
+          </aside>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </Form>
 </template>
 
 <script setup>
@@ -206,8 +234,19 @@ const quantity = ref(1);
 const extra = ref(0);
 const note = ref('');
 
+function handleKeyDown(event) {
+  // 阻止輸入字母 "e"
+  if (event.key === 'e') {
+    event.preventDefault();
+  }
+}
+
 // 計算總金額
 const total = computed(() => price.value * quantity.value + extra.value);
+
+function updateQuantity(value) {
+  quantity.value = value;
+}
 
 // 監聽 price、quantity 和 extra 的變化，重新計算總金額
 watch([price, quantity, extra], () => {
@@ -260,5 +299,15 @@ const navigateToCheckout = () => {
 
   const url = `/sponsor/${planId}/checkout`;
   router.push(url);
+};
+
+const formSchema = {
+  贊助數量: 'required|min_value:1',
+  額外贊助: 'min_value:0'
+};
+
+const handleSubmit = (values) => {
+  console.log('values:', values);
+  navigateToCheckout();
 };
 </script>
