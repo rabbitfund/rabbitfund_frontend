@@ -79,14 +79,22 @@ async function dealWithData() {
 
     if (currentRole.value === 'supporter') {
       const { data } = await getMyOrder(1);
-      const orderData = data.value.data.data;
+      const totalPage = data.value.data.totalPages;
+      const orderData = [];
+      for (let i = 2; i <= totalPage; i++) {
+        const { data } = await getMyOrder(i);
+        orderData.push(...data.value.data.data);
+      }
       const processedIDs = new Set();
-      const projectPromises = orderData.map((item) => {
-        if (!processedIDs.has(item.project._id)) {
-          processedIDs.add(item.project._id);
-          return getProject(item.project._id);
-        }
-      });
+      const projectPromises = orderData
+        .filter((item) => {
+          if (!processedIDs.has(item.project._id)) {
+            processedIDs.add(item.project._id);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => getProject(item.project._id));
 
       Promise.all(projectPromises)
         .then((res) => {
