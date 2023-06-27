@@ -13,14 +13,25 @@ const props = defineProps({
     required: true
   },
   options: {
-    type: Array,
+    type: [Array, Number],
     required: true
   },
   value: {
-    type: String,
+    type: [String, Number],
     required: true
   }
 });
+
+const selectedValue = ref(props.value);
+const emit = defineEmits(['changed']);
+const act = (val) => emit('changed', val);
+
+watch(
+  () => selectedValue.value,
+  (newValue) => {
+    act(newValue)
+  }
+)
 </script>
 
 <template>
@@ -29,7 +40,7 @@ const props = defineProps({
       {{ props.label[0] }}
       <span v-if="props.label[1]" class="ml-1 text-primary">*</span>
     </label>
-    <Field :id="id" :name="name" as="select" :value="value">
+    <Field :id="id" :name="name" as="select" v-model="selectedValue">
       <option value="" disabled selected>--- 請選擇 ---</option>
       <option v-for="(item, index) in options" :key="index" :value="`${index + 1}`">
         {{ item }}
