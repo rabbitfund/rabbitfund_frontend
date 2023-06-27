@@ -17,21 +17,22 @@ try {
 
 try {
   const { data: hotData } = await getProjects(1, 'hot');
-  hotProjects.value = hotData.value.data.projects.splice(0, 3);
+
+  hotProjects.value = [...hotData.value.data.projects].splice(0, 3);
 } catch (err) {
   console.log(err);
 }
 
 try {
   const { data: recentData } = await getProjects(1, 'recent');
-  recentProjects.value = recentData.value.data.projects.splice(0, 3);
+  recentProjects.value = [...recentData.value.data.projects].splice(0, 3);
 } catch (err) {
   console.log(err);
 }
 
 try {
   const { data: longData } = await getProjects(1, 'long');
-  longProjects.value = longData.value.data.projects.splice(0, 3);
+  longProjects.value = [...longData.value.data.projects].splice(0, 3);
 } catch (err) {
   console.log(err);
 }
