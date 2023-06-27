@@ -23,6 +23,10 @@ const props = defineProps({
   value: {
     type: [String, Object, Number],
     default: ''
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 });
 </script>
@@ -38,8 +42,19 @@ const props = defineProps({
       :type="type"
       :id="id"
       :name="name"
-      accept="image/*, image/heic, image/heif, video/*,  video/x-m4v, video/webm, video/x-ms-wmv, video/x-msvideo, video/3gpp, video/flv, video/x-flv, video/mp4, video/quicktime, video/mpeg, video/ogv, .ts, .mkv" :value="value" />
-    <Field v-else :type="type" :id="id" :name="name" :placeholder="placeholder" :value="value" />
+      accept="image/*, image/heic, image/heif, video/*,  video/x-m4v, video/webm, video/x-ms-wmv, video/x-msvideo, video/3gpp, video/flv, video/x-flv, video/mp4, video/quicktime, video/mpeg, video/ogv, .ts, .mkv"
+      :value="value"
+      :disabled="disabled"
+    />
+    <Field
+      v-else
+      :type="type"
+      :id="id"
+      :name="name"
+      :placeholder="placeholder"
+      :value="value"
+      :disabled="disabled"
+    />
     <ErrorMessage :name="name" class="mt-2 block text-sm text-primary" />
   </div>
 </template>
