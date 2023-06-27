@@ -37,12 +37,15 @@ function handleSearch(value) {
 }
 
 const { getUserDetail } = useApi();
-watch(isSigned.value, async () => {
-  if (isSigned.value) {
-    const { data } = await getUserDetail();
-    userStore.handleGetUserData(data);
+watch(
+  () => isSigned.value,
+  async () => {
+    if (isSigned.value) {
+      const { data } = await getUserDetail();
+      userStore.handleGetUserData(data);
+    }
   }
-});
+);
 
 const isHamburgerMenuVisible = ref(false);
 function toggleHamburgerMenu() {
