@@ -337,7 +337,7 @@ const router = useRouter();
 // const { planId } = route.params;
 
 const paymentMethod = ref('');
-const invoiceType = ref('');
+const invoiceType = ref('紙本發票');
 const invoiceCarrier = ref('');
 
 const userId = orderStore.user_id;
