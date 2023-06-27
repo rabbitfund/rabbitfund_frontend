@@ -4,14 +4,15 @@
       <ProcessCheckout :step="2" />
     </div>
   </section>
+
   <section class="bg-light-emphasis lg:bg-transparent">
     <div class="container gap-6 lg:flex">
       <div class="mb-12 bg-light-emphasis pt-12 lg:mb-0 lg:w-2/3 lg:p-12 lg:pb-20">
         <div class="mb-12">
-          <div class="mb-6 flex items-center gap-2">
+          <h2 class="mb-6 flex items-center gap-2">
             <span><img src="~/assets/images/icons/user-fill.svg" alt="使用者" /></span>
-            <h2>購買（贊助）人</h2>
-          </div>
+            <span>購買（贊助）人</span>
+          </h2>
           <!-- NOTE: 這邊所有 user 的資料暫時直接抓 userStore 的，未來可以優化成這邊有修改等於修改會員資料 -->
           <div class="md:flex md:gap-6">
             <div class="mb-6 md:w-1/2">
@@ -79,10 +80,10 @@
           </p>
         </div>
         <div class="mb-12 border-t border-grey-200 pt-12">
-          <div class="mb-6 flex items-center gap-2">
+          <h2 class="mb-6 flex items-center gap-2">
             <span><img src="~/assets/images/icons/book.svg" alt="書" /></span>
-            <h2>發票類型</h2>
-          </div>
+            <span>發票類型</span>
+          </h2>
           <ul class="mb-6 flex flex-col gap-4">
             <li class="relative flex items-center">
               <input
@@ -225,10 +226,10 @@
           </ol>
         </div> -->
         <div class="border-t border-grey-200 pt-12">
-          <div class="mb-6 flex items-center gap-2">
+          <h2 class="mb-6 flex items-center gap-2">
             <span><img src="~/assets/images/icons/credit-card.svg" alt="信用卡" /></span>
-            <h2>付款方式</h2>
-          </div>
+            <span>付款方式</span>
+          </h2>
           <!-- 
           <ul class="mb-6 flex flex-col gap-4">
             <li class="relative flex items-center">
