@@ -34,6 +34,7 @@ const props = defineProps({
       :name="name"
       :value="value"
       :placeholder="placeholder"
+      rows="3"
       as="textarea"
     >
     </Field>
