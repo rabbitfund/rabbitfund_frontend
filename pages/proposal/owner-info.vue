@@ -1,5 +1,6 @@
 <script setup>
 import { useProposalStore } from '~/stores/proposal/owner-info.ts';
+import { defineRule } from 'vee-validate';
 
 const isEmpty = (value) => {
   if (value === null || value === undefined || value === '') {
@@ -8,18 +9,18 @@ const isEmpty = (value) => {
   return false;
 };
 
-const isPhone = (value) => {
+defineRule('mobile', (value) => {
   if (isEmpty(value)) {
     return true;
   }
   const re = /^(09)[0-9]{8}$/;
-  return re.test(value) ? true : '需要正確的電話號碼';
-};
+  return re.test(value) ? true : '請輸入正確的手機號碼';
+});
 
 const formSchema = {
   提案負責人姓名: 'required',
   電子郵件: 'required|email',
-  行動電話: isPhone,
+  手機號碼: 'mobile',
   團隊名稱: 'required',
   相關網站: 'url'
 };
@@ -49,7 +50,7 @@ const handleSubmit = (values) => {
   function dealWithData(data) {
     const name = data['提案負責人姓名'] || '';
     const email = data['電子郵件'] || '';
-    const mobile = data['行動電話'] || '';
+    const mobile = data['手機號碼'] || '';
     const identity = data['提案人身份'] || '';
     const registerName = data['登記名稱'] || '';
     const teamName = data['團隊名稱'] || '';
@@ -82,10 +83,10 @@ const handleSubmit = (values) => {
           placeholder="請輸入電子郵件"
         />
         <FormInput
-          :label="['行動電話']"
+          :label="['手機號碼']"
           type="text"
           id="mobile"
-          name="行動電話"
+          name="手機號碼"
           :value="data.mobile"
           placeholder="09XXXXXXXX"
         />
