@@ -5,136 +5,138 @@
     </div>
   </section>
 
-  <section class="bg-light-emphasis lg:bg-transparent">
-    <div class="container gap-6 lg:flex">
-      <div class="mb-12 bg-light-emphasis pt-12 lg:mb-0 lg:w-2/3 lg:p-12 lg:pb-20">
-        <div class="mb-12">
-          <h2 class="mb-6 flex items-center gap-2">
-            <span><img src="~/assets/images/icons/user-fill.svg" alt="使用者" /></span>
-            <span>購買（贊助）人</span>
-          </h2>
-          <!-- NOTE: 這邊所有 user 的資料暫時直接抓 userStore 的，未來可以優化成這邊有修改等於修改會員資料 -->
-          <div class="md:flex md:gap-6">
-            <div class="mb-6 md:w-1/2">
-              <label for="name">真實姓名</label>
-              <input
-                id="name"
+  <Form :validation-schema="formSchema" v-slot="{ meta }" @submit="handleSubmit">
+    <section class="bg-light-emphasis lg:bg-transparent">
+      <div class="container gap-6 lg:flex">
+        <div class="mb-12 bg-light-emphasis pt-12 lg:mb-0 lg:w-2/3 lg:p-12 lg:pb-20">
+          <div class="mb-12">
+            <h2 class="mb-6 flex items-center gap-2">
+              <span><img src="~/assets/images/icons/user-fill.svg" alt="使用者" /></span>
+              <span>購買（贊助）人</span>
+            </h2>
+            <!-- NOTE: 這邊所有 user 的資料暫時直接抓 userStore 的，未來可以優化成這邊有修改等於修改會員資料 -->
+            <div class="md:flex md:gap-6 lg:flex-col lg:gap-0 xl:flex-row xl:gap-6">
+              <FormInput
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2"
+                :label="['真實姓名']"
                 type="text"
-                name="name"
+                id="name"
+                name="真實姓名"
                 :value="userInfo.user_name"
-                placeholder="姓名"
-                disabled
+                placeholder="請輸入姓名"
+                :disabled="true"
+              />
+              <!-- <FormInput
+              :label="['手機']"
+              type="tel"
+              id="cellphone"
+              name="手機"
+              :value="userInfo.user_phone"
+              placeholder="09XX-XXX-XXX"
+              :disabled="true"
+              /> -->
+              <FormInput
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2"
+                :label="['電子信箱']"
+                type="email"
+                id="email"
+                name="電子信箱"
+                :value="userInfo.user_email"
+                placeholder="example@rabbitfund.com"
+                :disabled="true"
               />
             </div>
-            <div class="mb-6 md:w-1/2">
-              <label for="cellphone">手機</label>
-              <input
-                id="cellphone"
-                type="tel"
-                name="cellphone"
-                :value="userInfo.user_phone"
-                placeholder="09XX-XXX-XXX"
-                disabled
-              />
+            <!-- <div class="md:flex md:gap-6">
+              <div class="mb-6 md:w-1/3">
+                <label for="country">國家 / 地區</label>
+                <input id="country" type="text" name="country" />
+              </div>
+              <div class="mb-6 md:w-1/3">
+                <label for="city">城市 / 州 / 區</label>
+                <input id="city" type="text" name="city" />
+              </div>
+              <div class="mb-6 md:w-1/3">
+                <label for="district">鄉 / 鎮 / 市 / 區</label>
+                <input id="district" type="text" name="district" />
+              </div>
             </div>
+            <div class="md:flex md:gap-6">
+              <div class="mb-6 md:w-1/5">
+                <label for="postcode">郵遞區號</label>
+                <input id="postcode" type="number" name="postcode" />
+              </div>
+              <div class="mb-6 md:w-4/5">
+                <label for="address">地址</label>
+                <input id="address" type="text" name="address" />
+              </div>
+            </div> -->
+            <p class="text-grey-500">
+              當您確認參與本專案贊助方案時，您已確實暸解此專案資訊揭露與承諾之內容。若您發現有與實際情況不符之處，請透過【檢舉與回報】功能通報平台，我們會盡速確認。
+            </p>
           </div>
-          <div class="mb-6">
-            <label for="email">電子信箱</label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              :value="userInfo.user_email"
-              placeholder="example@rabbitfund.com"
-              disabled
-            />
-          </div>
-          <!-- 
-          <div class="md:flex md:gap-6">
-            <div class="mb-6 md:w-1/3">
-              <label for="country">國家 / 地區</label>
-              <input id="country" type="text" name="country" />
-            </div>
-            <div class="mb-6 md:w-1/3">
-              <label for="city">城市 / 州 / 區</label>
-              <input id="city" type="text" name="city" />
-            </div>
-            <div class="mb-6 md:w-1/3">
-              <label for="district">鄉 / 鎮 / 市 / 區</label>
-              <input id="district" type="text" name="district" />
-            </div>
-          </div>
-          <div class="md:flex md:gap-6">
-            <div class="mb-6 md:w-1/5">
-              <label for="postcode">郵遞區號</label>
-              <input id="postcode" type="number" name="postcode" />
-            </div>
-            <div class="mb-6 md:w-4/5">
-              <label for="address">地址</label>
-              <input id="address" type="text" name="address" />
-            </div>
-          </div>
-           -->
-          <p class="text-grey-500">
-            當您確認參與本專案贊助方案時，您已確實暸解此專案資訊揭露與承諾之內容。若您發現有與實際情況不符之處，請透過【檢舉與回報】功能通報平台，我們會盡速確認。
-          </p>
-        </div>
-        <div class="mb-12 border-t border-grey-200 pt-12">
-          <h2 class="mb-6 flex items-center gap-2">
-            <span><img src="~/assets/images/icons/book.svg" alt="書" /></span>
-            <span>發票類型</span>
-          </h2>
-          <ul class="mb-6 flex flex-col gap-4">
-            <li class="relative flex items-center">
-              <input
-                id="invoiceType-1"
-                v-model="invoiceType"
-                class="peer absolute left-5"
-                type="radio"
-                name="invoiceType"
-                value="紙本發票"
-              />
-              <label
-                for="invoiceType-1"
-                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
-              >
-                <span class="mb-1.5 font-bold">紙本發票</span>
-                <p class="text-grey-500">一般購買證明</p>
-              </label>
-            </li>
-            <li class="relative flex items-center">
-              <input
-                id="invoiceType-2"
-                v-model="invoiceType"
-                class="peer absolute left-5"
-                type="radio"
-                name="invoiceType"
-                value="電子載具"
-              />
-              <label
-                for="invoiceType-2"
-                class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
-              >
-                <span class="mb-1.5 font-bold">電子載具</span>
-                <p class="text-grey-500">
-                  可於財政部申請手機載具條碼，開立的發票會自動歸戶，請於下一欄位填寫
-                </p>
-              </label>
-            </li>
-          </ul>
+          <div class="mb-12 border-t border-grey-200 pt-12">
+            <h2 class="mb-6 flex items-center gap-2">
+              <span><img src="~/assets/images/icons/book.svg" alt="書" /></span>
+              <span>發票類型</span>
+            </h2>
+            <ul class="mb-6 flex flex-col gap-4">
+              <li class="relative flex items-center">
+                <input
+                  id="invoiceType-1"
+                  v-model="invoiceType"
+                  class="peer absolute left-5"
+                  type="radio"
+                  name="invoiceType"
+                  value="紙本發票"
+                />
+                <label
+                  for="invoiceType-1"
+                  class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
+                >
+                  <span class="mb-1.5 font-bold">紙本發票</span>
+                  <p class="text-grey-500">一般購買證明</p>
+                </label>
+              </li>
+              <li class="relative flex items-center">
+                <input
+                  id="invoiceType-2"
+                  v-model="invoiceType"
+                  class="peer absolute left-5"
+                  type="radio"
+                  name="invoiceType"
+                  value="電子載具"
+                />
+                <label
+                  for="invoiceType-2"
+                  class="mb-0 flex w-full cursor-pointer flex-col rounded bg-white py-4 pl-[68px] pr-5 font-normal text-current ring-1 ring-grey-200 peer-checked:ring-primary"
+                >
+                  <span class="mb-1.5 font-bold">電子載具</span>
+                  <p class="text-grey-500">
+                    可於財政部申請手機載具條碼，開立的發票會自動歸戶，請於下一欄位填寫
+                  </p>
+                </label>
+              </li>
+            </ul>
 
-          <div v-if="invoiceType === '電子載具'" class="mb-6">
-            <label for="tax-receipt-header">手機載具條碼</label>
-            <input id="tax-receipt-header" v-model="invoiceCarrier" type="text" />
+            <div v-if="invoiceType === '電子載具'">
+              <FormInput
+                :label="['手機載具條碼', '*']"
+                type="text"
+                id="invoiceCarrier"
+                name="手機載具條碼"
+                :value="invoiceCarrier"
+                @input="invoiceCarrier = $event.target.value"
+                placeholder="請輸入手機載具條碼"
+              />
+            </div>
+            <ol class="list-decimal ps-5 text-grey-500">
+              <li class="mb-2">
+                訂單成立後，您會收到由倍而兔平台所寄出的 Email 交易通知信，此信並非電子收據。
+              </li>
+              <li>本平台不會隨意聯繫您，若有任何疑問，請聯繫專案團隊聯絡信箱。</li>
+            </ol>
           </div>
-          <ol class="list-decimal ps-5 text-grey-500">
-            <li class="mb-2">
-              訂單成立後，您會收到由倍而兔平台所寄出的 Email 交易通知信，此信並非電子收據。
-            </li>
-            <li>本平台不會隨意聯繫您，若有任何疑問，請聯繫專案團隊聯絡信箱。</li>
-          </ol>
-        </div>
-        <!-- <div class="mb-12 border-t border-grey-200 pt-12">
+          <!-- <div class="mb-12 border-t border-grey-200 pt-12">
           <div class="mb-6 flex items-center gap-2">
             <span><img src="~/assets/images/icons/book.svg" alt="書" /></span>
             <h2>稅捐收據</h2>
@@ -225,12 +227,12 @@
             </li>
           </ol>
         </div> -->
-        <div class="border-t border-grey-200 pt-12">
-          <h2 class="mb-6 flex items-center gap-2">
-            <span><img src="~/assets/images/icons/credit-card.svg" alt="信用卡" /></span>
-            <span>付款方式</span>
-          </h2>
-          <!-- 
+          <div class="border-t border-grey-200 pt-12">
+            <h2 class="mb-6 flex items-center gap-2">
+              <span><img src="~/assets/images/icons/credit-card.svg" alt="信用卡" /></span>
+              <span>付款方式</span>
+            </h2>
+            <!-- 
           <ul class="mb-6 flex flex-col gap-4">
             <li class="relative flex items-center">
               <input
@@ -268,61 +270,63 @@
             </li>
           </ul>
            -->
-          <ol class="list-decimal ps-5 text-grey-500">
-            <li class="mb-2">本募資平台目前開放的支付方式為信用卡付款及線上 ATM。</li>
-            <li class="mb-2">
-              您將會直接導入藍新金流支付平台，請勿返回其他頁面，以免造成交易失敗。
-            </li>
-            <li class="mb-2">支付需於指定時間內完成付款，超過時限則會取消交易。</li>
-            <li>
-              信用卡授權成功後，本系統不會存留該刷卡人信用卡相關資料，只會保留刷卡成功之授權碼。
-            </li>
-          </ol>
+            <ol class="list-decimal ps-5 text-grey-500">
+              <li class="mb-2">本募資平台目前開放的支付方式為信用卡付款及線上 ATM。</li>
+              <li class="mb-2">
+                您將會直接導入藍新金流支付平台，請勿返回其他頁面，以免造成交易失敗。
+              </li>
+              <li class="mb-2">支付需於指定時間內完成付款，超過時限則會取消交易。</li>
+              <li>
+                信用卡授權成功後，本系統不會存留該刷卡人信用卡相關資料，只會保留刷卡成功之授權碼。
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div class="mb-16 border-grey-200 lg:mb-20 lg:w-1/3 lg:pt-12">
+          <aside class="sticky top-6 rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200">
+            <div class="border-b pb-6">
+              <div class="mb-6 flex items-center gap-2">
+                <span><img src="~/assets/images/icons/bars.svg" alt="信用卡" class="w-8" /></span>
+                <h2 class="text-h5">訂單明細</h2>
+              </div>
+              <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
+              <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
+            </div>
+            <ul class="border-b pb-6 pt-8">
+              <li class="mb-4 flex justify-between">
+                <span>小計</span>
+                <span>$ {{ formattedAmount(projectPrice * orderOptionQuantity) }}</span>
+              </li>
+              <li class="mb-4 flex justify-between">
+                <span>額外贊助</span>
+                <span>$ {{ formattedAmount(orderExtra) }}</span>
+              </li>
+              <li class="flex justify-between">
+                <span>運費</span>
+                <span>$ {{ formattedAmount(0) }}</span>
+              </li>
+            </ul>
+            <div class="pt-6">
+              <div class="mb-8 flex justify-between">
+                <span class="text-lg font-bold">總計</span>
+                <span class="text-lg font-bold">$ {{ formattedAmount(orderTotal) }}</span>
+              </div>
+              <button class="btn btn-primary block w-full" type="submit" :disabled="!meta.valid">
+                確認訂單
+              </button>
+            </div>
+          </aside>
         </div>
       </div>
-      <div class="mb-16 border-grey-200 lg:mb-20 lg:w-1/3 lg:pt-12">
-        <aside class="sticky top-6 rounded-lg bg-white px-8 py-10 ring-1 ring-grey-200">
-          <div class="border-b pb-6">
-            <div class="mb-6 flex items-center gap-2">
-              <span><img src="~/assets/images/icons/bars.svg" alt="信用卡" class="w-8" /></span>
-              <h2 class="text-h5">訂單明細</h2>
-            </div>
-            <h2 class="mb-4 text-h4">{{ projectTitle }}</h2>
-            <span class="mb-3 block lg:text-lg">{{ optionName }}</span>
-          </div>
-          <ul class="border-b pb-6 pt-8">
-            <li class="mb-4 flex justify-between">
-              <span>小計</span>
-              <span>$ {{ formattedAmount(projectPrice * orderOptionQuantity) }}</span>
-            </li>
-            <li class="mb-4 flex justify-between">
-              <span>額外贊助</span>
-              <span>$ {{ formattedAmount(orderExtra) }}</span>
-            </li>
-            <li class="flex justify-between">
-              <span>運費</span>
-              <span>$ {{ formattedAmount(0) }}</span>
-            </li>
-          </ul>
-          <div class="pt-6">
-            <div class="mb-8 flex justify-between">
-              <span class="text-lg font-bold">總計</span>
-              <span class="text-lg font-bold">$ {{ formattedAmount(orderTotal) }}</span>
-            </div>
-            <NuxtLink class="btn btn-primary block w-full" @click="navigateToCheckOrder()"
-              >確認訂單</NuxtLink
-            >
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
+    </section>
+  </Form>
 </template>
 
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useOrderStore } from '@/stores/order';
 import { useUserStore } from '@/stores/user';
+import { defineRule } from 'vee-validate';
 
 definePageMeta({
   middleware: ['auth']
@@ -398,5 +402,28 @@ const navigateToCheckOrder = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+defineRule('mobileBarcode', (value) => {
+  const re = /^\/[0-9A-Z.+-]{7}$/;
+  return re.test(value) ? true : '請輸入正確的手機載具條碼';
+});
+
+const formSchema = ref({});
+
+watch(invoiceType, (type) => {
+  if (type === '電子載具') {
+    formSchema.value = {
+      ...formSchema.value,
+      手機載具條碼: 'required|mobileBarcode'
+    };
+  } else {
+    delete formSchema.value['手機載具條碼'];
+  }
+});
+
+const handleSubmit = (values) => {
+  console.log('values:', values);
+  navigateToCheckOrder();
 };
 </script>
