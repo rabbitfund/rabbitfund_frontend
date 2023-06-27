@@ -6,12 +6,16 @@ import icon1 from '@/assets/images/icons/follow-project.svg';
 import icon2 from '@/assets/images/icons/success-project.svg';
 import icon3 from '@/assets/images/icons/fail-project.svg';
 
-const { getMyOrder, getProject, getOwnerProject } = useApi();
+const { getUserDetail, getMyOrder, getProject, getOwnerProject } = useApi();
 
 const icons = [icon1, icon2, icon3];
 // TODO: get user role
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
+
+// 進入會員中心重新拿一次資料
+const { data } = await getUserDetail();
+userStore.handleGetUserData(data);
 
 const currentRole = computed(() =>
   userInfo.value?.user_roles?.includes?.(2) ? 'proposer' : 'supporter'
@@ -80,7 +84,7 @@ async function dealWithData() {
     if (currentRole.value === 'supporter') {
       const { data } = await getMyOrder(1);
       const totalPage = data.value.data.totalPages;
-      const orderData = [];
+      const orderData = [...data.value.data.data];
       for (let i = 2; i <= totalPage; i++) {
         const { data } = await getMyOrder(i);
         orderData.push(...data.value.data.data);
@@ -96,6 +100,7 @@ async function dealWithData() {
         })
         .map((item) => getProject(item.project._id));
 
+      console.log('projectPromises', projectPromises);
       Promise.all(projectPromises)
         .then((res) => {
           res.forEach((eachRes) => {

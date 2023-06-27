@@ -36,12 +36,16 @@ function handlePostUserDetail() {
     cover: userCover.value,
     intro: userIntro.value,
     website: userWebsite.value
-  }).then((res) => {
+  }).then(async (res) => {
     if (res.error.value) {
       return;
     }
     userInfo.value.user_name = userName.value;
     userInfo.value.user_cover = userCover.value;
+
+    // 重新拿一次資料更新其他地方
+    const { data } = await getUserDetail();
+    userStore.handleGetUserData(data);
   });
 }
 
