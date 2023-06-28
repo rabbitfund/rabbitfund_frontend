@@ -1,5 +1,19 @@
 <script setup>
 import { Navigation, Pagination } from 'swiper';
+import { useGlobalStateStore } from '@/stores/globalState';
+
+// 等待swiper載入完成後，移除loading
+const globalState = useGlobalStateStore();
+const { addLoadingRequest, removeLoadingRequest } = globalState;
+// client再執行loading
+if (process.client) {
+  addLoadingRequest({});
+}
+
+function onSwiperReady() {
+  removeLoadingRequest();
+}
+
 const modules = [Navigation, Pagination, SwiperAutoplay];
 
 const { getProjects } = useApi();
@@ -55,6 +69,7 @@ try {
 
   <section class="px-3 pb-12 md:px-0 lg:pb-20">
     <Swiper
+      @afterInit="onSwiperReady"
       :modules="modules"
       :grab-cursor="true"
       :slides-per-view="1"
