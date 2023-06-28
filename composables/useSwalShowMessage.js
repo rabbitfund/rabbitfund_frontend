@@ -10,6 +10,12 @@ export default function () {
     },
     找不到贊助紀錄: {
       message: '找不到贊助紀錄'
+    },
+    Unauthorized: {
+      message: '請先登入',
+      callback() {
+        nuxtApp.$router.push('/users/signin');
+      }
     }
   };
   const showErrorMessage = (errorMessage) => {
@@ -27,12 +33,11 @@ export default function () {
   };
 
   const showSuccessMessage = (successTitle, successText) => {
-    nuxtApp.$swal
-      .fire({
-        icon: 'success',
-        title: successTitle,
-        text: successText
-      })
+    nuxtApp.$swal.fire({
+      icon: 'success',
+      title: successTitle,
+      text: successText
+    });
   };
 
   return {
