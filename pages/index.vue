@@ -35,14 +35,7 @@ try {
   const { data: recentData } = recentResult;
   const { data: longData } = longResult;
 
-<<<<<<< HEAD
-  banners.value = [...bannerData.value.data.projects].splice(0, 3);
-=======
-<<<<<<< Updated upstream
-=======
   banners.value = bannerData.value.data.projects;
->>>>>>> Stashed changes
->>>>>>> ad42ddc (fix: 資料要有5筆)
   hotProjects.value = [...hotData.value.data.projects].splice(0, 3);
   recentProjects.value = [...recentData.value.data.projects].splice(0, 3);
   longProjects.value = [...longData.value.data.projects].splice(0, 3);
