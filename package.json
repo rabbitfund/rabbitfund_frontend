@@ -10,6 +10,7 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@nuxt/image": "^1.0.0-rc.1",
     "@nuxtjs/eslint-config": "^12.0.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/tailwindcss": "^6.6.5",

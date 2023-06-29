@@ -4,20 +4,21 @@
       <div
         class="mb-6 flex flex-row items-center justify-between md:mb-0 md:flex-col md:gap-2 lg:gap-4"
       >
-        <img
+        <NuxtImg
           class="inline-block h-[58px] self-start"
-          src="@/assets/images/logo-white.svg"
+          src="images/logo-white.svg"
           alt="logo"
+          loading="lazy"
         />
         <div class="flex gap-4">
           <NuxtLink class="link"
-            ><img src="@/assets/images/icons/youtube.svg" alt="youtube"
+            ><NuxtImg src="images/icons/youtube.svg" alt="youtube" loading="lazy"
           /></NuxtLink>
           <NuxtLink class="link"
-            ><img src="@/assets/images/icons/instagram.svg" alt="instagram"
+            ><NuxtImg src="images/icons/instagram.svg" alt="instagram" loading="lazy"
           /></NuxtLink>
           <NuxtLink class="link"
-            ><img src="@/assets/images/icons/facebook.svg" alt="facebook"
+            ><NuxtImg src="images/icons/facebook.svg" alt="facebook" loading="lazy"
           /></NuxtLink>
         </div>
       </div>
@@ -37,8 +38,6 @@
       </div>
     </nav>
 
-    <p class="bg-primary-dark py-6 text-center text-sm lg:text-lg">
-      Copyright ©2023 北二有限公司
-    </p>
+    <p class="bg-primary-dark py-6 text-center text-sm lg:text-lg">Copyright ©2023 北二有限公司</p>
   </footer>
 </template>
