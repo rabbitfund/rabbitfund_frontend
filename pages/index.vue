@@ -23,29 +23,21 @@ const recentProjects = ref([]);
 const longProjects = ref([]);
 
 try {
-  const { data: bannerData } = await getProjects(1, 'banner');
-  banners.value = bannerData.value.data.projects;
-} catch (err) {
-  console.log(err);
-}
+  const [bannerResult, hotResult, recentResult, longResult] = await Promise.all([
+    getProjects(1, 'banner'),
+    getProjects(1, 'hot'),
+    getProjects(1, 'recent'),
+    getProjects(1, 'long')
+  ]);
 
-try {
-  const { data: hotData } = await getProjects(1, 'hot');
+  const { data: bannerData } = bannerResult;
+  const { data: hotData } = hotResult;
+  const { data: recentData } = recentResult;
+  const { data: longData } = longResult;
 
+  banners.value = [...bannerData.value.data.projects].splice(0, 3);
   hotProjects.value = [...hotData.value.data.projects].splice(0, 3);
-} catch (err) {
-  console.log(err);
-}
-
-try {
-  const { data: recentData } = await getProjects(1, 'recent');
   recentProjects.value = [...recentData.value.data.projects].splice(0, 3);
-} catch (err) {
-  console.log(err);
-}
-
-try {
-  const { data: longData } = await getProjects(1, 'long');
   longProjects.value = [...longData.value.data.projects].splice(0, 3);
 } catch (err) {
   console.log(err);
