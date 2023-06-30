@@ -18,7 +18,7 @@ const classes = computed(() => {
       'bg-warning-emphasis text-warning': props.type === '公益',
       'bg-secondary-emphasis text-secondary': props.type === '市集',
       'bg-success-emphasis text-success': props.type === 'success',
-      'bg-primary-light text-primary': props.type === 'danger',
+      'bg-primary-light text-primary': props.type === 'primary',
     }
   ];
 });

@@ -45,18 +45,16 @@ export default function useCalcLeftTime(project: any) {
   const formatTime = (seconds: number) => {
     const duration = moment.duration(seconds, 'seconds');
     const days = Math.floor(duration.asDays());
-    const hours = duration.hours();
-    const minutes = duration.minutes();
-    const remainingSeconds = duration.seconds();
+    const hours = duration.hours().toString().padStart(2, '0');
+    const minutes = duration.minutes().toString().padStart(2, '0');
+    const remainingSeconds = duration.seconds().toString().padStart(2, '0');
     let result = '';
 
     if (days > 0) {
       result += `${days} 天 `;
     }
-    if (hours > 0) {
-      result += `${hours} 小時 `;
-    }
-    result += `${minutes} 分 ${remainingSeconds} 秒`;
+
+    result += `${hours}:${minutes}:${remainingSeconds} `;
     return result;
   };
 

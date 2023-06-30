@@ -8,6 +8,7 @@ import icon3 from '@/assets/images/icons/fail-project.svg';
 
 const { getUserDetail, getMyOrder, getProject, getOwnerProject } = useApi();
 
+const borderColors = ['border-primary-light', 'border-secondary-emphasis', 'border-grey-100'];
 const icons = [icon1, icon2, icon3];
 // TODO: get user role
 const userStore = useUserStore();
@@ -130,90 +131,77 @@ async function dealWithData() {
 </script>
 <template>
   <ClientOnly>
-    <div class="mb-8 grid grid-cols-12 gap-6 lg:mb-16">
+    <div class="container grid grid-cols-12 gap-x-6 sm:mb-10 lg:mb-20 lg:items-center">
       <img
-        class="col-span-12 mx-auto lg:col-span-3"
+        class="col-span-12 mx-auto w-36 rounded-full border-4 border-primary lg:col-span-3"
         src="@/assets/images/avatar.png"
-        alt=""
-        srcset=""
+        alt="rabbit icon"
       />
-      <div class="col-span-12 mr-auto font-bold lg:col-span-9">
-        <h4 class="mb-6">
+      <div class="col-span-12 mx-auto py-6 lg:col-span-9 lg:py-4">
+        <h2 class="mb-6 text-center text-h4 lg:text-left">
           {{ userInfo?.user_name }}
-        </h4>
+        </h2>
         <p v-if="userInfo?.user_intro" class="text-grey-500">
           {{ userInfo?.user_intro }}
         </p>
-        <p v-else>
-          還沒有設定自我介紹喔！ 前往
-          <NuxtLink class="cursor-pointer underline hover:text-primary" to="/member/manage"
-            >管理個人資料</NuxtLink
-          >
+        <p v-else class="text-grey-500">
+          還沒有設定自我介紹喔！前往
+          <NuxtLink class="link link-primary" to="/member/manage">管理個人資料</NuxtLink>
           設定資料讓大家更認識你！
         </p>
       </div>
     </div>
-    <div class="flex justify-center gap-x-4 border-b pb-12 lg:gap-x-20 lg:border-0 lg:pb-[64px]">
-      <section v-for="(item, index) in content[currentRole]" :key="item" class="follow-status">
-        <img :src="icons[index]" />
-        <p>{{ item.title }}</p>
-        <span>{{ item.data.length }}</span>
-      </section>
-    </div>
+
+    <ul class="container mb-12 flex justify-center gap-x-4 md:gap-x-20 lg:mb-16">
+      <li
+        v-for="(item, index) in content[currentRole]"
+        :key="item"
+        class="flex flex-1 flex-col items-center rounded-lg border-2 px-4 py-5 sm:relative sm:pt-10 lg:border-4 lg:px-12 lg:pb-5 xl:flex-none xl:px-16"
+        :class="borderColors[index]"
+      >
+        <img :src="icons[index]" class="mb-6 sm:absolute sm:top-0 sm:mb-0 sm:translate-y-[-50%]" />
+        <span class="mb-1 block text-grey-400">{{ item.title }}</span>
+        <span class="text-h4">{{ item.data.length }}</span>
+      </li>
+    </ul>
+
     <div v-if="isDataEmpty">
       <CardBlockRabbit :title="'去探索更多新發現！'" :btn="'瞧一瞧'" :link="'/projects'" />
     </div>
-    <div v-else>
-      <div class="border-y bg-white lg:-order-1 lg:basis-full">
-        <nav
-          class="container flex justify-around gap-4 overflow-x-auto whitespace-nowrap py-6 text-grey-600 lg:gap-10"
-        >
-          <Badge
-            v-for="(item, index) in content[currentRole]"
-            :key="item.title"
-            :type="currentTab === index ? 'danger' : ''"
-            :name="item.title"
-            @click="currentTab = index"
-          />
-        </nav>
 
-        <!-- <CardMemberProject /> -->
-        <CardMemberProject
-          v-for="i in content[currentRole][currentTab].data"
-          :key="i._id + i"
-          :project="i"
-          :can-modify="false"
-          :navigate-to-path="`/project/${i._id}/info`"
-        />
+    <div v-else>
+      <nav class="border-y border-grey-200 lg:border-none">
+        <ul
+          class="container flex justify-between whitespace-nowrap py-6 lg:justify-center lg:gap-6"
+        >
+          <li v-for="(item, index) in content[currentRole]" :key="item.title">
+            <button
+              class="rounded-full px-4 py-2 text-lg hover:bg-primary hover:font-bold hover:text-white"
+              :class="{ 'bg-primary-light font-bold text-primary': currentTab === index }"
+              @click="currentTab = index"
+            >
+              {{ item.title }}
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <div class="bg-light-emphasis lg:bg-transparent">
+        <ul
+          class="container flex flex-col gap-6 py-12 md:flex-row md:flex-wrap lg:py-0 xl:flex-col"
+        >
+          <li
+            v-for="i in content[currentRole][currentTab].data"
+            :key="i._id + i"
+            class="md:w-[calc(50%-12px)] xl:w-full"
+          >
+            <CardMemberProject
+              :project="i"
+              :can-modify="false"
+              :navigate-to-path="`/project/${i._id}/info`"
+            />
+          </li>
+        </ul>
       </div>
     </div>
   </ClientOnly>
 </template>
-
-<style scope>
-.follow-status {
-  @apply w-[104px] border-2 border-primary-light py-5 lg:w-[196px]   lg:pt-10;
-  @apply relative flex flex-col items-center justify-center;
-
-  p {
-    @apply text-grey-400;
-  }
-  span {
-    @apply text-xl font-bold lg:text-2xl;
-  }
-  img {
-    @apply w-14 lg:w-[64px];
-    @apply lg:absolute lg:top-0 lg:translate-y-[-50%];
-  }
-}
-
-.default-tab {
-  @apply rounded-full text-lg;
-  @apply inline-block cursor-pointer px-4 py-2;
-}
-
-.active-tab {
-  @apply rounded-full bg-primary-light text-lg font-bold text-primary;
-  @apply inline-block cursor-pointer px-4  py-2;
-}
-</style>
