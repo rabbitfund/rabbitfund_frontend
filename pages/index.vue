@@ -35,7 +35,7 @@ try {
   const { data: recentData } = recentResult;
   const { data: longData } = longResult;
 
-  banners.value = [...bannerData.value.data.projects].splice(0, 3);
+  banners.value = bannerData.value.data.projects;
   hotProjects.value = [...hotData.value.data.projects].splice(0, 3);
   recentProjects.value = [...recentData.value.data.projects].splice(0, 3);
   longProjects.value = [...longData.value.data.projects].splice(0, 3);
