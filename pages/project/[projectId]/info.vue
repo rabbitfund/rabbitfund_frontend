@@ -34,7 +34,6 @@ const badgeName = ref('未達標');
 const projectStore = useProjectStore();
 
 const projectStatus = ref(null);
-resetData(projectStore.projectInfo);
 
 watch(
   () => route.path,
@@ -46,6 +45,10 @@ watch(
     }
   }
 );
+
+watchEffect(() => {
+  resetData(projectStore.projectInfo);
+});
 
 const formattedTarget = computed(() => {
   return target.value.toLocaleString();
@@ -102,7 +105,7 @@ function resetData(project) {
     startDate.value = project.project_start_date && project.project_start_date.substring(0, 10); // 要不要用 moment.js?
     endDate.value = project.project_end_date && project.project_end_date.substring(0, 10);
     progress.value = project.project_progress;
-    options.value = project.option;
+    options.value = project.option || [];
     proposerInfo.value = project.ownerInfo;
     timeLeft.value = getDaysLeft(project.project_end_date);
     cover.value =
@@ -110,10 +113,10 @@ function resetData(project) {
         ? project.project_cover
         : mockImg;
 
-    for (const item of project.option) {
+    options.value.forEach((item) => {
       const id = item._id;
       totalOrder.value += generateRandomNumberById(id);
-    }
+    });
   } catch (e) {
     console.error(e);
   }
@@ -134,7 +137,7 @@ function resetData(project) {
           >集資專案 ｜ {{ category }}</span
         >
         <h2 class="mb-4 text-h4 xl:text-h1">{{ title }}</h2>
-        <p class="text-grey-500 xl:text-lg">提案者 {{ proposerInfo.proposer_name }}</p>
+        <p class="text-grey-500 xl:text-lg">提案者 {{ proposerInfo?.proposer_name }}</p>
       </div>
     </section>
 
