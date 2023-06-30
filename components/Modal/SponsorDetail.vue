@@ -26,6 +26,10 @@ watch(
 const formattedAmount = (price: number) => {
   return !props.detail ? undefined : price.toLocaleString();
 };
+const formattedDate = (date: string) => {
+  // console.log(date, typeof date, date.slice(0, 10));
+  return date.slice(0, 10);
+};
 </script>
 
 <template>
@@ -123,7 +127,7 @@ const formattedAmount = (price: number) => {
               <span class="mb-1 text-grey-400">額外贊助</span>
               <p>$ {{ formattedAmount(props.detail.order_extra) }}</p>
             </li>
-            <li class="px-2 sm:basis-1/2 lg:basis-3/4">
+            <li class="px-2 sm:basis-1/2 lg:basis-1/4">
               <span class="mb-1 text-grey-400">付款方式</span>
               <p>{{ props.detail.order_info.payment_method }}</p>
             </li>
@@ -146,11 +150,13 @@ const formattedAmount = (price: number) => {
             </li>
             <li
               v-if="props.detail.order_info.newebpay_payTime"
-              class="px-2 sm:basis-1/2 lg:basis-1/4"
+              class="px-2 sm:basis-1/2 lg:basis-2/4"
             >
               <span class="mb-1 text-grey-400">付款時間</span>
-              <p>{{ formattedDate(props.detail.order_info.newebpay_payTime) }}</p>
-              <span>{{ props.detail.order_info.newebpay_payTime.slice(10) }}</span>
+              <p>
+                {{ formattedDate(props.detail.order_info.newebpay_payTime) }}
+                {{ props.detail.order_info.newebpay_payTime.slice(10) }}
+              </p>
             </li>
           </ul>
           <ul class="-mx-2 mt-5 flex flex-col flex-wrap gap-y-4 sm:flex-row lg:gap-y-5">
@@ -173,7 +179,7 @@ const formattedAmount = (price: number) => {
               class="px-2 sm:basis-1/2 lg:basis-1/4"
             >
               <span class="mb-1 text-grey-400">載具條碼</span>
-              <span>{{ props.detail.order_info.invoice_carrier }}</span>
+              <p>{{ props.detail.order_info.invoice_carrier }}</p>
             </li>
           </ul>
         </section>
