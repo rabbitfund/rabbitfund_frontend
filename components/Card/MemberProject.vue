@@ -26,64 +26,85 @@ const copy = (projectId) => {
 </script>
 
 <template>
-  <section
-    class="flex cursor-pointer flex-col justify-between gap-12 rounded-lg border p-5 lg:flex-row lg:px-8 lg:py-6"
+  <div
+    class="flex h-full w-full cursor-pointer flex-col gap-6 rounded-lg border border-grey-200 bg-white p-5 xl:flex-row xl:gap-10 xl:px-10 xl:py-6"
     @click="navigateTo(props.navigateToPath)"
   >
-    <div class="grid grid-cols-12 gap-6">
-      <div class="col-span-12 overflow-hidden rounded-t-lg xl:col-span-5">
-        <img
-          :src="
-            props.project?.project_cover && props.project?.project_cover !== 'cover URL'
-              ? props.project?.project_cover
-              : mockImg
-          "
-          class="object-contain"
-          alt="carrot"
-        />
-      </div>
-      <div class="col-span-12 xl:col-span-7">
-        <span class="block w-[72px]"
-          ><Badge
-            :type="props.project?.project_category"
-            :name="props.project?.project_category"
-          ></Badge
-        ></span>
-
-        <h4 class="mt-2">{{ props.project?.project_title }}</h4>
-        <div class="mt-6 flex justify-between gap-6 bg-light-emphasis px-5 py-3">
-          <div>
-            <p>贊助人次</p>
-            <p class="text-[20px] font-bold xl:text-2xl">{{ props.project?.order?.length }}</p>
+    <div class="h-full xl:basis-[78%]">
+      <div class="flex h-full flex-col gap-6 xl:flex-row">
+        <div class="xl:basis-[280px]">
+          <img
+            :src="
+              props.project?.project_cover && props.project?.project_cover !== 'cover URL'
+                ? props.project?.project_cover
+                : mockImg
+            "
+            class="h-full rounded-lg object-cover"
+            alt="project cover"
+          />
+        </div>
+        <div class="flex h-full flex-col gap-6 xl:flex-1">
+          <div class="mb-auto">
+            <Badge
+              :type="props.project?.project_category"
+              :name="props.project?.project_category"
+              class="mb-2"
+            >
+            </Badge>
+            <h3 class="text-h4">{{ props.project?.project_title }}</h3>
           </div>
-          <div>
-            <p>提案倒數</p>
-            <p class="text-[20px] font-bold xl:text-2xl">{{ formatTimeLeft }}</p>
-          </div>
-          <div>
-            <p>目標金額</p>
-            <p class="text-[20px] font-bold xl:text-2xl">
-              {{ formattedAmount(props.project?.project_target) }}
-            </p>
-          </div>
+          <ul
+            class="flex flex-wrap justify-between gap-6 whitespace-nowrap rounded-md bg-light-emphasis px-4 py-3 xl:flex-nowrap"
+          >
+            <!-- <li class="flex-1">
+              <span class="mb-1 block text-grey-400">贊助人次</span>
+              <span v-if="props.project?.order?.length" class="text-lg font-bold"
+                >{{ props.project?.order?.length }} 人</span
+              >
+            </li> -->
+            <li class="basis-1/2">
+              <span class="mb-1 block text-grey-400">目標金額</span>
+              <span class="text-lg font-bold">
+                $ {{ formattedAmount(props.project?.project_target) }}
+              </span>
+            </li>
+            <li class="basis-full">
+              <span class="mb-1 block text-grey-400">提案倒數</span>
+              <span class="text-lg font-bold">{{ formatTimeLeft }}</span>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="col-span-12 hidden lg:block">
-        {{ props.project?.project_description }}
-      </div>
+      <div class="mt-6 hidden w-full xl:line-clamp-3" v-html="props.project?.project_content"></div>
     </div>
 
-    <div class="flex flex-col items-center justify-center lg:min-w-[140px]">
-      <div class="mb-11 flex gap-1 lg:block">
-        <p class="leading-10 lg:leading-normal">目前募資金額</p>
-        <p class="text-2xl font-bold">{{ formattedAmount(props.project?.project_progress) }}</p>
-      </div>
-      <div class="flex gap-4 lg:block">
-        <!-- <button v-if="props.canModify" class="btn btn-primary-outline lg:mb-7" @click.stop="">修改提案</button> -->
-        <button class="flex justify-center text-grey-400" @click.stop="copy(props.project?._id)">
-          <img class="mr-1 inline-block w-6" src="~/assets/images/icons/copy.svg" />分享連結
+    <div
+      class="flex flex-col items-center gap-6 border-t-2 border-grey-200 pt-6 xl:basis-[24%] xl:border-l-2 xl:border-t-0 xl:pb-5 xl:pl-10 xl:pt-[60px]"
+    >
+      <ul class="flex flex-col gap-1">
+        <li class="flex items-center gap-1 xl:flex-col">
+          <span class="text-grey-400">贊助人次</span>
+          <span v-if="props.project?.order?.length" class="text-h3"
+            >{{ props.project?.order?.length }} 人</span
+          >
+        </li>
+        <li class="flex items-center gap-1 xl:flex-col">
+          <span class="text-grey-400">目前募資金額</span>
+          <span class="text-h3"> $ {{ formattedAmount(props.project?.project_progress) }} </span>
+        </li>
+      </ul>
+      <div class="flex items-center gap-4">
+        <!-- <button v-if="props.canModify" class="btn btn-primary-outline" @click.stop="">
+          修改提案
+        </button> -->
+        <button
+          class="flex items-center gap-1 text-grey-400 md:mt-auto"
+          @click.stop="copy(props.project?._id)"
+        >
+          <img class="inline-block w-6" src="~/assets/images/icons/copy.svg" />
+          <span>分享連結</span>
         </button>
       </div>
     </div>
-  </section>
+  </div>
 </template>
