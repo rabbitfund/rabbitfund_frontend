@@ -111,7 +111,7 @@ async function dealWithData() {
             const now = moment();
 
             if (end.isBefore(now)) {
-              if (project.project_progress >= project.project_target) {
+              if (eachProject.project_progress >= eachProject.project_target) {
                 content.supporter[1].data.push(eachProject);
               } else {
                 content.supporter[2].data.push(eachProject);
