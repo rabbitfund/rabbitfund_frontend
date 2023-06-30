@@ -149,7 +149,7 @@ const copy = (projectId) => {
             <Badge
               :type="
                 option.option_total > 0 && optionsPercent?.[option._id]?.times > option.option_total
-                  ? 'danger'
+                  ? 'primary'
                   : 'success'
               "
               :name="
@@ -234,7 +234,7 @@ const copy = (projectId) => {
             />
           </div>
           <div class="w-[140px]">
-            <Badge :type="false ? 'success' : 'danger'" :name="false ? '已完成' : '未完成'" />
+            <Badge :type="false ? 'success' : 'primary'" :name="false ? '已完成' : '未完成'" />
           </div>
           <div class="w-[108px]">
             <p class="cursor-pointer text-primary underline" @click="seeMoreModal(supporter)">
@@ -276,7 +276,7 @@ const copy = (projectId) => {
             </div>
             <div class="flex flex-col gap-2 px-5">
               <p class="text-grey-400">付款狀態</p>
-              <Badge :type="false ? 'success' : 'danger'" :name="false ? '已完成' : '未完成'" />
+              <Badge :type="false ? 'success' : 'primary'" :name="false ? '已完成' : '未完成'" />
             </div>
           </div>
 

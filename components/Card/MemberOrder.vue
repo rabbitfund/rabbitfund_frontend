@@ -76,21 +76,21 @@ const copy = (projectId) => {
           <div>
             <p class="mb-1">訂單狀態</p>
             <Badge
-              :type="props.order.order_status > 0 ? 'success' : 'danger'"
+              :type="props.order.order_status > 0 ? 'success' : 'primary'"
               :name="props.order.order_status > 0 ? '已完成' : '未完成'"
             />
           </div>
           <!-- <div>
             <p>商品運送狀態</p>
             <Badge
-              :type="props.order.order_shipping_status > 0 ? 'success' : 'danger' "
+              :type="props.order.order_shipping_status > 0 ? 'success' : 'primary' "
               :name="props.order.order_shipping_status > 0 ? '已送達' : '未出貨'"
             />
           </div> -->
           <div>
             <p class="mb-1">付款狀態</p>
             <Badge
-              :type="props.order.order_info.payment_status > 0 ? 'success' : 'danger'"
+              :type="props.order.order_info.payment_status > 0 ? 'success' : 'primary'"
               :name="props.order.order_info.payment_status > 0 ? '已付款' : '未付款'"
             />
           </div>
