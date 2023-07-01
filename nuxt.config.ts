@@ -4,8 +4,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/tailwindcss',
-    'nuxt-swiper',
-    '@nuxt/image'
+    'nuxt-swiper'
   ],
   runtimeConfig: {
     SERVER_API_BASE: 'http://localhost:3000',
@@ -15,9 +14,6 @@ export default defineNuxtConfig({
       NEWEBPAY_FORM_ACTION: '',
       NEWEBPAY_MERCHANT_ID: '',
       NEWEBPAY_VERSION: ''
-    },
-    ipx: {
-      dir: './assets'
     }
   },
   head: {
@@ -135,8 +131,5 @@ export default defineNuxtConfig({
     esbuild: {
       drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : []
     }
-  },
-  image: {
-    dir: 'assets'
   }
 });
