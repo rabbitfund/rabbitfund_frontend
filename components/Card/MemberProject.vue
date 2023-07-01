@@ -20,8 +20,12 @@ const formattedAmount = (price) => {
   return price.toLocaleString();
 };
 
+const { showSuccessMessage } = useSwalShowMessage();
+
 const copy = (projectId) => {
   navigator.clipboard.writeText(`${window.location.origin}/project/${projectId}/info`);
+
+  showSuccessMessage('已複製連結', `${window.location.origin}/project/${projectId}/info`);
 };
 </script>
 
@@ -87,6 +91,7 @@ const copy = (projectId) => {
           <span v-if="props.project?.order?.length" class="text-h3"
             >{{ props.project?.order?.length }} 人</span
           >
+          <span v-else class="text-h3">0 人</span>
         </li>
         <li class="flex items-center gap-1 xl:flex-col">
           <span class="text-grey-400">目前募資金額</span>

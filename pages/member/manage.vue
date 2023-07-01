@@ -62,64 +62,71 @@ const doUploadImage = async (event) => {
 </script>
 
 <template>
-  <div class="mx-auto w-full">
-    <h2>管理個人資料</h2>
-    <form class="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
-      <div class="md:flex md:gap-6">
-        <div class="mb-6 md:w-1/2">
-          <div class="mb-6">
-            <label for="name">姓名</label>
-            <input id="name" v-model="userName" type="text" name="name" placeholder="姓名" />
+  <div class="container">
+    <h2 class="my-6 flex items-center gap-2 lg:mb-12 lg:mt-0">
+      <span class="w-8"><img src="~/assets/images/icons/user-fill.svg" alt="note" /></span>
+      <span>管理個人資料</span>
+    </h2>
+  </div>
+  <div class="bg-light-emphasis lg:bg-transparent">
+    <div class="container py-12 lg:py-0">
+      <form class="rounded-lg bg-white p-5 shadow-md lg:px-10 lg:py-6">
+        <div class="md:flex md:gap-6">
+          <div class="mb-6 md:w-1/2">
+            <div class="mb-6">
+              <label for="name">姓名</label>
+              <input id="name" v-model="userName" type="text" name="name" placeholder="姓名" />
+            </div>
+            <div class="mb-6">
+              <label for="cellphone">手機</label>
+              <input
+                id="cellphone"
+                v-model="userPhone"
+                type="tel"
+                name="cellphone"
+                placeholder="手機"
+              />
+            </div>
           </div>
-          <div class="mb-6">
-            <label for="cellphone">手機</label>
-            <input
-              id="cellphone"
-              v-model="userPhone"
-              type="tel"
-              name="cellphone"
-              placeholder="手機"
-            />
+          <div class="mb-6 md:w-1/2">
+            <div class="mb-6">
+              <label for="cover">大頭照</label>
+              <input id="cover" type="file" name="cover" accept="image/*" @change="doUploadImage" />
+            </div>
+            <img class="h-[100px] w-[100px] rounded-full object-cover ring-4 ring-primary" :src="userCover || avatar" />
           </div>
         </div>
-        <div class="mb-6 md:w-1/2">
-          <div class="mb-6">
-            <label for="cover">大頭照</label>
-            <input id="cover" type="file" name="cover" accept="image/*" @change="doUploadImage" />
-          </div>
-          <img class="h-[100px]" :src="userCover || avatar" />
+        <div class="mb-6">
+          <label for="email">登入帳號</label>
+          <input id="email" v-model="userEmail" type="email" name="email" disabled />
         </div>
-      </div>
-
-      <div class="mb-6">
-        <label for="email">登入帳號</label>
-        <input id="email" v-model="userEmail" type="email" name="email" disabled />
-      </div>
-      <div class="mb-6">
-        <label for="summary">自我介紹</label>
-        <textarea
-          id="summary"
-          v-model="userIntro"
-          type="text"
-          name="summary"
-          placeholder="自我介紹"
-        ></textarea>
-      </div>
-      <div class="mb-6">
-        <label for="website">相關網站</label>
-        <input
-          id="website"
-          v-model="userWebsite"
-          type="text"
-          name="website"
-          placeholder="相關網站"
-        />
-      </div>
-      <div class="flex items-center justify-between">
-        <button class="btn btn-primary mt-6 px-4 py-2" type="button" @click="handlePostUserDetail">
-          修改
-        </button>
-      </div>
-    </form>
+        <div class="mb-6">
+          <label for="summary">自我介紹</label>
+          <textarea
+            id="summary"
+            v-model="userIntro"
+            type="text"
+            name="summary"
+            rows="4"
+            placeholder="自我介紹"
+          ></textarea>
+        </div>
+        <div class="mb-6">
+          <label for="website">相關網站</label>
+          <input
+            id="website"
+            v-model="userWebsite"
+            type="text"
+            name="website"
+            placeholder="相關網站"
+          />
+        </div>
+        <div class="text-center">
+          <button class="btn btn-primary mt-6" type="button" @click="handlePostUserDetail">
+            修改
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>

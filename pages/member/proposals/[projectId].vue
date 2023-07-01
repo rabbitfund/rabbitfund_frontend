@@ -41,8 +41,13 @@ function seeMoreModal(data) {
   currentSupporterData.value = data;
   modalSponsorDetail.value.openModal();
 }
+
+const { showSuccessMessage } = useSwalShowMessage();
+
 const copy = (projectId) => {
   navigator.clipboard.writeText(`${window.location.origin}/project/${projectId}/info`);
+
+  showSuccessMessage('已複製連結', `${window.location.origin}/project/${projectId}/info`);
 };
 </script>
 <template>

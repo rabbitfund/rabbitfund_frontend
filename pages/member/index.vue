@@ -128,14 +128,22 @@ async function dealWithData() {
     console.error(e);
   }
 }
+
+// const avatar = userInfo?.user_cover ? userInfo?.user_cover : '@/assets/images/avatar.png'
+
 </script>
 <template>
   <ClientOnly>
     <div class="container grid grid-cols-12 gap-x-6 sm:mb-10 lg:mb-20 lg:items-center">
-      <img
-        class="col-span-12 mx-auto w-36 rounded-full border-4 border-primary lg:col-span-3"
+      <img v-if="userInfo?.user_cover"
+        class="col-span-12 mx-auto w-36 h-36 object-cover rounded-full border-4 border-primary lg:col-span-3"
+        :src="userInfo?.user_cover"
+        alt="user icon"
+      />
+      <img v-else
+        class="col-span-12 mx-auto w-36 h-36 object-cover rounded-full border-4 border-primary lg:col-span-3"
         src="@/assets/images/avatar.png"
-        alt="rabbit icon"
+        alt="user icon"
       />
       <div class="col-span-12 mx-auto py-6 lg:col-span-9 lg:py-4">
         <h2 class="mb-6 text-center text-h4 lg:text-left">
