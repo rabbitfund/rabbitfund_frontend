@@ -95,10 +95,9 @@ try {
     >
       <SwiperSlide v-for="project in banners" :key="project._id">
         <NuxtLink :to="`/project/${project._id}/info`">
-          <NuxtImg
+          <img
             :src="project.project_cover"
             class="h-full w-full rounded-lg object-cover lg:rounded-2xl"
-            format="webp"
           />
         </NuxtLink>
       </SwiperSlide>
@@ -111,7 +110,7 @@ try {
   <section class="bg-light-emphasis py-16 xl:py-30">
     <div class="container">
       <div class="flex flex-col items-center">
-        <NuxtImg format="webp" src="images/rabbit-ears.png" alt="rabbit ears" class="mb-2" />
+        <img src="~/assets/images/rabbit-ears.png" alt="rabbit ears" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">精選專案</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
           <li v-for="project in hotProjects" :key="project._id" class="lg:w-1/3">
@@ -135,27 +134,24 @@ try {
       </p>
       <ul class="flex flex-col justify-around gap-12 text-h4 text-primary-dark md:flex-row">
         <li class="text-center">
-          <NuxtImg
-            format="webp"
-            src="images/certification.png"
+          <img
+            src="~/assets/images/certification.png"
             alt="platform certification"
             class="mx-auto mb-4 w-[120px] lg:mb-7 xl:w-[200px]"
           />
           <span class="text-h4 text-primary-dark lg:text-h3">平台認證</span>
         </li>
         <li class="text-center">
-          <NuxtImg
-            format="webp"
-            src="images/credibility.png"
+          <img
+            src="~/assets/images/credibility.png"
             alt="credibility assessment"
             class="mx-auto mb-4 w-[120px] lg:mb-7 xl:w-[200px]"
           />
           <span class="text-h4 text-primary-dark lg:text-h3">公信力檢測</span>
         </li>
         <li class="text-center">
-          <NuxtImg
-            format="webp"
-            src="images/timeline.png"
+          <img
+            src="~/assets/images/timeline.png"
             alt="project timeline marking"
             class="mx-auto mb-4 w-[120px] lg:mb-7 xl:w-[200px]"
           />
@@ -168,7 +164,7 @@ try {
   <section class="bg-light-emphasis py-16 xl:py-30">
     <div class="container">
       <div class="flex flex-col items-center">
-        <NuxtImg format="webp" src="images/sparkle.png" alt="sparkle" class="mb-2" />
+        <img src="~/assets/images/sparkle.png" alt="sparkle" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">募資進行中</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
           <li v-for="project in recentProjects" :key="project._id" class="lg:w-1/3">
@@ -187,7 +183,7 @@ try {
   <section class="bg-light py-16 xl:py-30">
     <div class="container">
       <div class="flex flex-col items-center">
-        <NuxtImg format="webp" src="images/heart1.png" alt="heart" class="mb-2" />
+        <img src="~/assets/images/heart1.png" alt="heart" class="mb-2" />
         <h2 class="mb-8 text-h3 lg:mb-12 lg:text-h2">長期贊助</h2>
         <ul class="mb-8 flex w-full flex-col gap-x-6 gap-y-8 lg:mb-12 lg:flex-row">
           <li v-for="project in longProjects" :key="project._id" class="lg:w-1/3">

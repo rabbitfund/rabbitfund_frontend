@@ -69,7 +69,7 @@ function signUp() {
   <nav class="relative bg-light">
     <div class="container flex items-center justify-between py-4">
       <NuxtLink to="/">
-        <NuxtImg class="h-[58px]" src="images/logo.png" alt="logo" />
+        <img class="h-[58px]" src="@/assets/images/logo.png" alt="logo" />
       </NuxtLink>
 
       <ClientOnly>
@@ -83,7 +83,7 @@ function signUp() {
               class="flex items-center gap-1 p-2 hover:text-primary-dark"
               @click="toggleSearchInput"
             >
-              <NuxtImg class="w-6" src="images/icons/search.svg" alt="search icon" />
+              <img class="w-6" src="@/assets/images/icons/search.svg" alt="search icon" />
               搜尋
             </button>
             <input
@@ -102,7 +102,7 @@ function signUp() {
             <button class="btn btn-primary-outline" @click="signUp">註冊</button>
           </div>
           <button v-else class="group relative flex cursor-pointer items-center">
-            <NuxtImg
+            <img
               class="mr-2 h-12 rounded-full"
               :src="userInfo?.user_cover || avatar"
               alt="avatar"
@@ -119,7 +119,7 @@ function signUp() {
                       to="/member"
                       class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
                     >
-                      <NuxtImg class="w-5" src="images/icons/user.svg" alt="會員中心" />
+                      <img class="w-5" src="@/assets/images/icons/user.svg" alt="會員中心" />
                       <span>會員中心</span></NuxtLink
                     >
                   </li>
@@ -128,7 +128,7 @@ function signUp() {
                       to="/member/proposals"
                       class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
                     >
-                      <NuxtImg class="w-5" src="images/icons/time.svg" alt="提案紀錄" />
+                      <img class="w-5" src="@/assets/images/icons/time.svg" alt="提案紀錄" />
                       <span>提案紀錄</span></NuxtLink
                     >
                   </li>
@@ -137,7 +137,7 @@ function signUp() {
                       to="/member/orders"
                       class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
                     >
-                      <NuxtImg class="w-5" src="images/icons/heart.svg" alt="贊助紀錄" />
+                      <img class="w-5" src="@/assets/images/icons/heart.svg" alt="贊助紀錄" />
                       <span>贊助紀錄</span></NuxtLink
                     >
                   </li>
@@ -147,7 +147,7 @@ function signUp() {
                       to="/member/notifications"
                       class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
                     >
-                      <NuxtImg class="w-5" src="images/icons/bell.svg" alt="通知中心" />
+                      <img class="w-5" src="@/assets/images/icons/bell.svg" alt="通知中心" />
                       <span>通知中心</span></NuxtLink
                     >
                   </li>
@@ -156,7 +156,7 @@ function signUp() {
                       to="/member/manage"
                       class="flex items-center gap-2 border-b-2 border-transparent pb-[2px] hover:border-primary"
                     >
-                      <NuxtImg class="w-5" src="images/icons/setting.svg" alt="管理個人資料" />
+                      <img class="w-5" src="@/assets/images/icons/setting.svg" alt="管理個人資料" />
                       <span>管理個人資料</span></NuxtLink
                     >
                   </li>
@@ -172,7 +172,7 @@ function signUp() {
         <!-- 手機板 -->
         <div class="flex self-stretch font-bold text-primary md:hidden">
           <button ref="hamburgerMenu" @click="toggleHamburgerMenu">
-            <NuxtImg class="h-10" src="images/icons/bars.svg" alt="bars" />
+            <img class="h-10" src="@/assets/images/icons/bars.svg" alt="bars" />
           </button>
 
           <div
@@ -208,9 +208,9 @@ function signUp() {
                       class="block w-full rounded-lg py-3 hover:bg-light-emphasis"
                       @click="toggleSearchInput"
                     >
-                      <NuxtImg
+                      <img
                         class="mr-1 inline-block h-8"
-                        src="images/icons/search.svg"
+                        src="@/assets/images/icons/search.svg"
                         alt="search icon"
                       />
                       <span>搜尋</span>
@@ -227,7 +227,7 @@ function signUp() {
                   <div class="my-5 border-t border-primary"></div>
                   <li class="mb-3 mt-6">
                     <NuxtLink to="/member" class="flex items-center justify-center">
-                      <NuxtImg
+                      <img
                         class="mr-2 h-12 rounded-full"
                         :src="userInfo?.user_cover || avatar"
                         alt="avatar"
@@ -242,7 +242,7 @@ function signUp() {
                       to="/member"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
-                      <NuxtImg class="w-5" src="images/icons/user-fill.svg" alt="會員中心" />
+                      <img class="w-5" src="@/assets/images/icons/user-fill.svg" alt="會員中心" />
                       <span class="text-lg">會員中心</span></NuxtLink
                     >
                   </li>
@@ -251,7 +251,7 @@ function signUp() {
                       to="/member/proposals"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
-                      <NuxtImg class="w-5" src="images/icons/time-fill.svg" alt="提案紀錄" />
+                      <img class="w-5" src="@/assets/images/icons/time-fill.svg" alt="提案紀錄" />
                       <span class="text-lg">提案紀錄</span></NuxtLink
                     >
                   </li>
@@ -260,7 +260,7 @@ function signUp() {
                       to="/member/orders"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
-                      <NuxtImg class="w-5" src="images/icons/heart-fill.svg" alt="贊助紀錄" />
+                      <img class="w-5" src="@/assets/images/icons/heart-fill.svg" alt="贊助紀錄" />
                       <span class="text-lg">贊助紀錄</span></NuxtLink
                     >
                   </li>
@@ -269,7 +269,7 @@ function signUp() {
                       to="/member/notifications"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
-                      <NuxtImg class="w-5" src="images/icons/bell-fill.svg" alt="通知中心" />
+                      <img class="w-5" src="@/assets/images/icons/bell-fill.svg" alt="通知中心" />
                       <span class="text-lg">通知中心</span></NuxtLink
                     >
                   </li>
@@ -278,7 +278,11 @@ function signUp() {
                       to="/member/manage"
                       class="flex items-center justify-center gap-2 rounded-lg py-3 hover:bg-light-emphasis"
                     >
-                      <NuxtImg class="w-5" src="images/icons/setting-fill.svg" alt="管理個人資料" />
+                      <img
+                        class="w-5"
+                        src="@/assets/images/icons/setting-fill.svg"
+                        alt="管理個人資料"
+                      />
                       <span class="text-lg">管理個人資料</span></NuxtLink
                     >
                   </li>

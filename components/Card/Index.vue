@@ -26,13 +26,12 @@ const formattedAmount = computed(() => {
     @click="navigateTo(`/project/${props.project?._id}/info`)"
   >
     <div class="relative overflow-hidden rounded-t-lg">
-      <NuxtImg
+      <img
         :src="
           props.project?.project_cover && props.project?.project_cover !== 'cover URL'
             ? props.project?.project_cover
             : mockImg
         "
-        loading="lazy"
         class="object-cover"
         alt="project cover"
       />
