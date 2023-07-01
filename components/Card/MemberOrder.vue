@@ -40,237 +40,229 @@ const copy = (projectId) => {
   navigator.clipboard.writeText(`${window.location.origin}/project/${projectId}/info`);
 };
 </script>
+
 <template>
-  <section
-    class="flex flex-col justify-between gap-12 rounded-lg border p-5 lg:flex-row lg:px-8 lg:py-6"
-  >
+  <div class="flex flex-col gap-6 rounded-lg border bg-white p-5 xl:px-10 xl:py-6">
     <div class="grid grid-cols-12 gap-6">
-      <div class="col-span-12 overflow-hidden rounded-t-lg xl:col-span-5">
+      <div class="col-span-12 xl:col-span-5">
         <img
           :src="
             props.order.project?.project_cover && props.order.project?.project_cover !== 'cover URL'
               ? props.order.project?.project_cover
               : mockImg
           "
-          class="object-contain"
+          class="h-full rounded-lg object-cover"
           alt="carrot"
         />
       </div>
-      <div class="col-span-12 xl:col-span-7">
-        <div class="grid grid-cols-12 items-end gap-6 px-5 py-3">
-          <div class="col-span-10">
-            <h4 class="mt-2 font-bold text-grey-600">{{ props.order.project?.project_title }}</h4>
-            <h5 class="mt-2 font-bold text-grey-600">{{ props.order.option?.option_name }}</h5>
-          </div>
-          <div class="min-w-[100px]">
-            <button
-              class="flex justify-center text-grey-400"
-              @click="copy(props.order.project?._id)"
-            >
-              <img class="mr-1 inline-block w-6" src="~/assets/images/icons/copy.svg" />分享連結
-            </button>
-          </div>
-        </div>
-
-        <div class="mt-6 flex justify-between gap-6 bg-light-emphasis px-5 py-3">
+      <div class="col-span-12 flex flex-col gap-6 xl:col-span-7">
+        <div class="flex items-baseline justify-between">
           <div>
-            <p class="mb-1">訂單狀態</p>
+            <h2 class="mt-2 text-h4">{{ props.order.project?.project_title }}</h2>
+            <h3 class="mt-2 text-base text-primary">{{ props.order.option?.option_name }}</h3>
+          </div>
+          <button
+            class="flex items-center gap-1 text-grey-400"
+            @click="copy(props.order.project?._id)"
+          >
+            <img class="inline-block w-6" src="~/assets/images/icons/copy.svg" />
+            <span>分享連結</span>
+          </button>
+        </div>
+        <ul class="flex flex-wrap justify-between gap-6 rounded-md bg-light-emphasis px-4 py-3">
+          <li class="basis-[calc(50%-12px)] whitespace-nowrap md:basis-0">
+            <span class="mb-1 block text-grey-400">訂單狀態</span>
             <Badge
               :type="props.order.order_status > 0 ? 'success' : 'primary'"
               :name="props.order.order_status > 0 ? '已完成' : '未完成'"
             />
-          </div>
-          <!-- <div>
-            <p>商品運送狀態</p>
+          </li>
+          <!-- <li class="basis-[calc(50%-12px)] md:basis-0 whitespace-nowrap">
+            <span class="mb-1 block text-grey-400">商品運送狀態</span>
             <Badge
-              :type="props.order.order_shipping_status > 0 ? 'success' : 'primary' "
+              :type="props.order.order_shipping_status > 0 ? 'success' : 'primary'"
               :name="props.order.order_shipping_status > 0 ? '已送達' : '未出貨'"
             />
-          </div> -->
-          <div>
-            <p class="mb-1">付款狀態</p>
+          </li> -->
+          <li class="basis-[calc(50%-12px)] whitespace-nowrap md:basis-0">
+            <span class="mb-1 block text-grey-400">付款狀態</span>
             <Badge
               :type="props.order.order_info.payment_status > 0 ? 'success' : 'primary'"
               :name="props.order.order_info.payment_status > 0 ? '已付款' : '未付款'"
             />
-          </div>
-          <div>
-            <p>訂單日期</p>
-            <p class="text-[20px] font-bold xl:text-2xl">
+          </li>
+          <li class="basis-[calc(50%-12px)] whitespace-nowrap md:basis-0">
+            <span class="mb-1 block text-grey-400">訂單日期</span>
+            <span class="text-lg font-bold">
               {{ formattedDate(props.order.order_create_date) }}
-            </p>
-          </div>
-          <div>
-            <p>訂單金額</p>
-            <p class="text-[20px] font-bold xl:text-2xl">
+            </span>
+          </li>
+          <li class="basis-[calc(50%-12px)] whitespace-nowrap md:basis-0">
+            <span class="mb-1 block text-grey-400">訂單金額</span>
+            <span class="text-lg font-bold">
               {{ formattedAmount(props.order.order_total) }}
-            </p>
-          </div>
-        </div>
+            </span>
+          </li>
+        </ul>
       </div>
       <div class="col-span-12">
-        <p
-          class="mb-1 flex cursor-pointer items-center justify-center p-2 text-grey-600"
-          @click="toggleSeeMore()"
-        >
-          {{ !showDetails ? '看更多' : '收起' }}
-          <img class="ml-2" :src="showDetails ? arrowTop : arrowBottom" alt="see more" />
-        </p>
+        <div class="mb-1">
+          <button
+            type="button"
+            class="flex w-full cursor-pointer items-center justify-center p-2 text-grey-400"
+            @click="toggleSeeMore()"
+          >
+            <span>{{ !showDetails ? '看更多' : '收起' }}</span>
+            <img class="ml-2" :src="showDetails ? arrowTop : arrowBottom" alt="see more" />
+          </button>
+        </div>
 
         <div
           :class="showDetails ? 'h-auto' : 'h-0'"
-          class="w-full overflow-hidden text-center transition duration-500 ease-in-out"
+          class="flex flex-col flex-wrap gap-x-6 gap-y-12 overflow-hidden transition duration-500 ease-in-out md:flex-row"
         >
-          <div class="mb-7 rounded-lg bg-light-emphasis p-5">
-            <ul class="flex flex-col flex-wrap gap-y-5 lg:-mx-2 lg:flex-row lg:gap-y-4">
+          <section class="rounded-md bg-light-emphasis px-4 py-3 md:basis-full">
+            <ul class="flex flex-col flex-wrap gap-x-6 gap-y-4 sm:flex-row whitespace-nowrap">
               <!-- NOTE: 這邊所有 user 的資料暫時直接抓 userStore 的，未來資料庫有增加欄位，可以再調整成付款人與會員姓名資料不同 -->
-              <li class="basis-1/3 lg:px-2">
+              <li class="sm:basis-[calc(50%-12px)] xl:basis-0">
                 <span class="mb-1 text-grey-400">付款人姓名</span>
                 <p>{{ userInfo?.user_name }}</p>
               </li>
-              <li class="basis-1/3 lg:px-2">
-                <span class="mb-1 text-grey-400">E-mail</span>
-                <p>{{ userInfo?.user_email }}</p>
-              </li>
-              <li v-if="userInfo?.user_phone" class="basis-1/3 lg:px-2">
+              <li v-if="userInfo?.user_phone" class="sm:basis-[calc(50%-12px)] xl:basis-0">
                 <span class="mb-1 text-grey-400">付款人手機</span>
                 <p>{{ userInfo?.user_phone }}</p>
               </li>
-              <li class="basis-1/3 lg:px-2">
+              <li class="sm:basis-full md:basis-[calc(50%-12px)] xl:basis-0">
+                <span class="mb-1 text-grey-400">E-mail</span>
+                <p>{{ userInfo?.user_email }}</p>
+              </li>
+              <li class="sm:basis-full md:basis-[calc(50%-12px)] xl:basis-0">
                 <span class="mb-1 text-grey-400">備註</span>
-                <p>{{ props.order?.order_note }}</p>
+                <p>{{ props.order?.order_note }} </p>
               </li>
             </ul>
-          </div>
-          <div class="mb-[46px] lg:mb-12">
-            <h3 class="mb-3.5 flex items-center gap-2">
+          </section>
+
+          <section class="md:basis-full">
+            <h3 class="mb-6 flex items-center gap-2">
               <span>
-                <img src="~/assets/images/icons/book.svg" class="w-7" alt="訂單" />
+                <img src="~/assets/images/icons/book.svg" class="w-8" alt="book" />
               </span>
               <span class="text-h4">訂單詳細資訊</span>
             </h3>
-            <div class="flex flex-col lg:flex-row">
-              <ul class="mx-2 mb-4 flex flex-col gap-y-4 lg:mx-6 lg:min-w-[45%]">
-                <li class="text-left lg:px-2">
+            <div class="flex flex-col gap-x-6 gap-y-4 md:flex-row">
+              <ul class="flex basis-1/2 flex-col gap-y-4">
+                <li>
                   <span class="mb-1 mr-4 text-grey-400">專案名稱</span>
                   <span>{{ props.order?.project.project_title }}</span>
                 </li>
-                <li class="text-left lg:px-2">
+                <li>
                   <span class="mb-1 mr-4 text-grey-400">方案名稱</span>
                   <span>{{ props.order?.option.option_name }}</span>
                 </li>
-                <li class="text-left lg:px-2">
+                <li>
                   <span class="mb-1 mr-4 text-grey-400">訂單編號</span>
                   <span>{{ props.order?._id }}</span>
                 </li>
-                <li class="text-left lg:px-2">
+                <li>
                   <span class="mb-1 mr-4 text-grey-400">實現日期</span>
                   <span>預計於 2024 年四月送出</span>
                 </li>
               </ul>
-              <ul class="mx-2 mb-4 flex flex-col gap-y-4 lg:mx-6 lg:min-w-[45%]">
-                <li class="text-left lg:px-2">
+              <ul class="flex basis-1/2 flex-col gap-y-4">
+                <li>
                   <span class="mb-1 mr-4 text-grey-400">付款總額</span>
                   <span>NT$ {{ formattedAmount(props.order?.order_total) }}</span>
                 </li>
-                <li class="text-left lg:px-2">
+                <li>
                   <span class="mb-1 mr-4 text-grey-400">方案金額</span>
                   <span>NT$ {{ formattedAmount(props.order?.option.option_price) }}</span>
                 </li>
-                <li class="text-left lg:px-2">
+                <li>
                   <span class="mb-1 mr-4 text-grey-400">方案份數</span>
                   <span>{{ props.order?.order_option_quantity }} 份</span>
                 </li>
-                <li class="text-left lg:px-2">
+                <li>
                   <span class="mb-1 mr-4 text-grey-400">額外贊助</span>
                   <span>NT$ {{ formattedAmount(props.order?.order_extra) }}</span>
                 </li>
               </ul>
             </div>
-          </div>
-          <div class="flex flex-col lg:flex-row">
-            <div class="mb-[46px] lg:mb-12 lg:min-w-[50%]">
-              <h3 class="mb-3.5 flex items-center gap-2">
-                <span>
-                  <img src="~/assets/images/icons/credit-card.svg" class="w-7" alt="信用卡" />
+          </section>
+
+          <section class="md:basis-[calc(50%-12px)]">
+            <h3 class="mb-6 flex items-center gap-2">
+              <span>
+                <img src="~/assets/images/icons/credit-card.svg" class="w-8" alt="信用卡" />
+              </span>
+              <span class="text-h4">付款資訊</span>
+            </h3>
+            <ul class="flex flex-col gap-y-4">
+              <li>
+                <span class="mb-1 mr-4 text-grey-400">訂單建立日期</span>
+                <span>{{ formattedDate(props.order?.order_create_date) }}</span>
+              </li>
+              <li>
+                <span class="mb-1 mr-4 text-grey-400">訂單完成日期</span>
+                <span v-if="props.order?.order_final_date">
+                  {{ formattedDate(props.order?.order_final_date) }}
                 </span>
-                <span class="text-h4">付款資訊</span>
-              </h3>
-              <ul class="mx-2 flex flex-col flex-wrap gap-y-4 lg:-mx-2 lg:mx-6 lg:gap-y-5">
-                <li class="text-left lg:px-2">
-                  <span class="mb-1 mr-4 text-grey-400">訂單建立日期</span>
-                  <span>{{ formattedDate(props.order?.order_create_date) }}</span>
-                </li>
-                <li class="text-left lg:px-2">
-                  <span class="mb-1 mr-4 text-grey-400">訂單完成日期</span>
-                  <span v-if="props.order?.order_final_date">
-                    {{ formattedDate(props.order?.order_final_date) }}
-                  </span>
-                </li>
-                <li class="text-left lg:px-2">
-                  <span class="mb-1 mr-4 text-grey-400">付款方式</span>
-                  <span>{{ props.order?.order_info.payment_method }}</span>
-                </li>
-                <li
-                  v-if="props.order?.order_info.payment_method == 'WEBATM'"
-                  class="text-left lg:px-2"
-                >
-                  <span class="mb-1 mr-4 text-grey-400">付款銀行</span>
-                  <span>
-                    {{ props.order?.order_info.newebpay_payBankCode == 809 ? '華南銀行' : '其他' }}
-                  </span>
-                </li>
-                <li
-                  v-else-if="props.order?.order_info.payment_method == 'CREDIT'"
-                  class="text-left lg:px-2"
-                >
-                  <span class="mb-1 mr-4 text-grey-400">刷卡銀行</span>
-                  <span>中國信託</span>
-                  <!-- NOTE: 可以做 random 銀行名稱 -->
-                </li>
-                <li v-if="props.order?.order_info.newebpay_payTime" class="text-left lg:px-2">
-                  <span class="mb-1 mr-4 text-grey-400">付款時間</span>
-                  <span class="mr-2">{{
-                    formattedDate(props.order?.order_info.newebpay_payTime)
-                  }}</span>
-                  <span>{{ props.order?.order_info.newebpay_payTime.slice(10) }}</span>
-                </li>
-              </ul>
-            </div>
-            <div class="mb-[46px] lg:mb-12 lg:min-w-[50%]">
-              <h3 class="mb-3.5 flex items-center gap-2">
+              </li>
+              <li>
+                <span class="mb-1 mr-4 text-grey-400">付款方式</span>
+                <span>{{ props.order?.order_info.payment_method }}</span>
+              </li>
+              <li v-if="props.order?.order_info.payment_method == 'WEBATM'">
+                <span class="mb-1 mr-4 text-grey-400">付款銀行</span>
                 <span>
-                  <img src="~/assets/images/icons/detail.svg" class="w-7" alt="發票資訊" />
+                  {{ props.order?.order_info.newebpay_payBankCode == 809 ? '華南銀行' : '其他' }}
                 </span>
-                <span class="text-h4">發票資訊</span>
-              </h3>
-              <ul class="mx-2 flex flex-col flex-wrap gap-y-4 lg:-mx-2 lg:mx-6 lg:gap-y-5">
-                <li class="text-left lg:px-2">
-                  <span class="mb-1 mr-4 text-grey-400">發票號碼</span>
-                  <span>{{ props.order?.order_info.invoice_number }}</span>
-                </li>
-                <li class="text-left lg:px-2">
-                  <span class="mb-1 mr-4 text-grey-400">發票日期</span>
-                  <span v-if="props.order?.order_info.invoice_date">
-                    {{ formattedDate(props.order?.order_info.invoice_date) }}
-                  </span>
-                </li>
-                <li class="text-left lg:px-2">
-                  <span class="mb-1 mr-4 text-grey-400">載具類型</span>
-                  <span>{{ props.order?.order_info.invoice_type }}</span>
-                </li>
-                <li
-                  v-if="props.order?.order_info.invoice_type == '電子載具'"
-                  class="text-left lg:px-2"
-                >
-                  <span class="mb-1 mr-4 text-grey-400">載具條碼</span>
-                  <span>{{ props.order?.order_info.invoice_carrier }}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
+              </li>
+              <li v-else-if="props.order?.order_info.payment_method == 'CREDIT'">
+                <span class="mb-1 mr-4 text-grey-400">刷卡銀行</span>
+                <span>中國信託</span>
+                <!-- NOTE: 可以做 random 銀行名稱 -->
+              </li>
+              <li v-if="props.order?.order_info.newebpay_payTime">
+                <span class="mb-1 mr-4 text-grey-400">付款時間</span>
+                <span class="mr-2">{{
+                  formattedDate(props.order?.order_info.newebpay_payTime)
+                }}</span>
+                <span>{{ props.order?.order_info.newebpay_payTime.slice(10) }}</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="md:basis-[calc(50%-12px)]">
+            <h3 class="mb-6 flex items-center gap-2">
+              <span>
+                <img src="~/assets/images/icons/detail.svg" class="w-8" alt="note" />
+              </span>
+              <span class="text-h4">發票資訊</span>
+            </h3>
+            <ul class="flex flex-col gap-y-4">
+              <li>
+                <span class="mb-1 mr-4 text-grey-400">發票號碼</span>
+                <span>{{ props.order?.order_info.invoice_number }}</span>
+              </li>
+              <li>
+                <span class="mb-1 mr-4 text-grey-400">發票日期</span>
+                <span v-if="props.order?.order_info.invoice_date">
+                  {{ formattedDate(props.order?.order_info.invoice_date) }}
+                </span>
+              </li>
+              <li>
+                <span class="mb-1 mr-4 text-grey-400">載具類型</span>
+                <span>{{ props.order?.order_info.invoice_type }}</span>
+              </li>
+              <li v-if="props.order?.order_info.invoice_type == '電子載具'">
+                <span class="mb-1 mr-4 text-grey-400">載具條碼</span>
+                <span>{{ props.order?.order_info.invoice_carrier }}</span>
+              </li>
+            </ul>
+          </section>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
