@@ -103,7 +103,7 @@ function signUp() {
           </div>
           <button v-else class="group relative flex cursor-pointer items-center">
             <img
-              class="mr-2 h-12 rounded-full"
+              class="mr-2 h-12 w-12 rounded-full object-cover"
               :src="userInfo?.user_cover || avatar"
               alt="avatar"
             />
