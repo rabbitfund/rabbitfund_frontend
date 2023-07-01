@@ -75,7 +75,7 @@ const copy = (projectId) => {
           </ul>
         </div>
       </div>
-      <div class="mt-6 hidden w-full xl:line-clamp-3" v-html="props.project?.project_content"></div>
+      <div class="mt-6 hidden w-full xl:line-clamp-3" v-html="props.project?.project_summary"></div>
     </div>
 
     <div
