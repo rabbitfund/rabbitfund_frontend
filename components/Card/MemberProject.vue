@@ -20,8 +20,12 @@ const formattedAmount = (price) => {
   return price.toLocaleString();
 };
 
+const { showSuccessMessage } = useSwalShowMessage();
+
 const copy = (projectId) => {
   navigator.clipboard.writeText(`${window.location.origin}/project/${projectId}/info`);
+
+  showSuccessMessage('已複製連結', `${window.location.origin}/project/${projectId}/info`);
 };
 </script>
 

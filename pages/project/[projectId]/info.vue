@@ -65,8 +65,12 @@ function getDaysLeft(projectEndDate) {
   return `${days} 天`;
 }
 
+const { showSuccessMessage } = useSwalShowMessage();
+
 const copy = () => {
   navigator.clipboard.writeText(window.location.href);
+
+  showSuccessMessage('已複製連結', `${window.location.origin}/project/${projectId}/info`);
 };
 
 // 生成 2~3 位數的隨機數
