@@ -43,7 +43,7 @@ watch([page], () => {
       </li>
     </ul>
 
-    <div class="text-center">
+    <div class="text-center pb-8 lg:pb-0">
       <LayoutPagination
         :total-page="totalPages"
         :current-page="page"
